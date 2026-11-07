@@ -928,7 +928,7 @@ function k:Section(b)
 		Position = UDim2.fromOffset(2, 8),
 		Size = UDim2.new(0, 0, 0, 16),
 		AutomaticSize = Enum.AutomaticSize.X,
-		Text = string.upper(b),
+		Text = string.upper(tostring(b)),
 		TextSize = 12,
 		TextColor3 = a.Muted,
 		TextTruncate = Enum.TextTruncate.None,
@@ -952,11 +952,272 @@ function k:Section(b)
 	e:GetPropertyChangedSignal("AbsoluteSize"):Connect(g)
 	task.defer(g)
 	return q(self, {}, {
-		Set = function(b, a)
-			e.Text = string.upper(a)
+		Set = function(s, a)
+			e.Text = string.upper(tostring(a))
 		end,
 	}, d, "Section")
 end
+
+function k:SubTab(optsParam, iconParam)
+	local tab = self._tab or self
+	local opts = {}
+	if type(optsParam) == "table" then
+		opts = optsParam
+	elseif type(iconParam) == "table" then
+		opts = iconParam
+		opts.Name = optsParam
+	else
+		opts = { Name = optsParam, Icon = iconParam }
+	end
+
+	local subName = opts.Name or opts.Title or "SubTab"
+
+	if not tab._sectionBar then
+		return self
+	end
+
+	tab._sectionBar.Visible = true
+	tab.List.Visible = false
+	if tab._emptyPlaceholder then
+		tab._emptyPlaceholder.Visible = false
+	end
+
+	local subPage = c(
+		"ScrollingFrame",
+		{
+			Name = "SubTabPage_" .. subName,
+			Position = UDim2.fromOffset(0, tab._contentOffset + 38),
+			Size = UDim2.new(1, 0, 1, -(tab._contentOffset + 38)),
+			BackgroundTransparency = 1,
+			BorderSizePixel = 0,
+			ScrollBarThickness = 2,
+			ScrollBarImageColor3 = a.Accent,
+			ScrollBarImageTransparency = 0.5,
+			AutomaticCanvasSize = Enum.AutomaticSize.Y,
+			CanvasSize = UDim2.new(),
+			Visible = false,
+			Parent = tab._page,
+		}
+	)
+	o(subPage, 24, 24, 2, 24)
+	if m then
+		subPage:SetAttribute("NoDrag", true)
+	end
+	c("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 8), Parent = subPage })
+
+	local subBtn = c(
+		"TextButton",
+		{
+			Size = UDim2.fromOffset(0, 30),
+			AutomaticSize = Enum.AutomaticSize.X,
+			BackgroundColor3 = a.Surface2,
+			BackgroundTransparency = 1,
+			Text = "",
+			AutoButtonColor = false,
+			LayoutOrder = #(tab.SubTabs or tab.Sections) + 1,
+			Parent = tab._sectionBar,
+		}
+	)
+	g(subBtn, UDim.new(0, 7))
+	local subStroke = i(subBtn, a.Stroke, 1)
+	o(subBtn, 12, 12)
+
+	local subIcon
+	if opts.Icon then
+		subIcon = c(
+			"ImageLabel",
+			{
+				AnchorPoint = Vector2.new(0, 0.5),
+				Position = UDim2.new(0, 0, 0.5, 0),
+				Size = UDim2.fromOffset(14, 14),
+				BackgroundTransparency = 1,
+				ImageColor3 = a.Muted,
+				ScaleType = Enum.ScaleType.Fit,
+				Parent = subBtn,
+			}
+		)
+		u(subIcon, opts.Icon)
+	end
+
+	local subLabel = f({
+		Position = UDim2.fromOffset(subIcon and 20 or 0, 0),
+		Size = UDim2.new(0, 0, 1, 0),
+		AutomaticSize = Enum.AutomaticSize.X,
+		Text = subName,
+		TextSize = 13,
+		TextColor3 = a.Muted,
+		TextTruncate = Enum.TextTruncate.None,
+		Parent = subBtn,
+	})
+
+	local subObj
+	local function selectSubTab()
+		if tab.CurrentSubTab == subObj then
+			return
+		end
+		tab.CurrentSubTab = subObj
+		for _, other in ipairs(tab.SubTabs) do
+			local isCur = other == subObj
+			other._page.Visible = isCur
+			b(other._btn, { BackgroundTransparency = isCur and 0 or 1 }, 0.15)
+			b(other._stroke, { Transparency = isCur and 0 or 1 }, 0.15)
+			b(other._label, { TextColor3 = isCur and a.Text or a.Muted }, 0.15)
+			if other._icon then
+				b(other._icon, { ImageColor3 = isCur and a.Accent or a.Muted }, 0.15)
+			end
+		end
+		if type(opts.Callback) == "function" then
+			opts.Callback(subName)
+		end
+	end
+
+	subBtn.MouseButton1Click:Connect(selectSubTab)
+	subBtn.MouseEnter:Connect(function()
+		if tab.CurrentSubTab ~= subObj then
+			b(subBtn, { BackgroundTransparency = 0.5 }, 0.12)
+			b(subStroke, { Transparency = 0.5 }, 0.12)
+			b(subLabel, { TextColor3 = a.Text }, 0.12)
+		end
+	end)
+	subBtn.MouseLeave:Connect(function()
+		if tab.CurrentSubTab ~= subObj then
+			b(subBtn, { BackgroundTransparency = 1 }, 0.2)
+			b(subStroke, { Transparency = 1 }, 0.2)
+			b(subLabel, { TextColor3 = a.Muted }, 0.2)
+		end
+	end)
+
+	subObj = setmetatable({
+		Name = subName,
+		List = subPage,
+		Window = tab.Window,
+		_order = 0,
+		_tab = tab,
+		_page = subPage,
+		_btn = subBtn,
+		_stroke = subStroke,
+		_label = subLabel,
+		_icon = subIcon,
+		Select = selectSubTab,
+	}, k)
+
+	table.insert(tab.SubTabs, subObj)
+
+	if #tab.SubTabs == 1 then
+		selectSubTab()
+	end
+
+	return subObj
+end
+
+function k:Box(optsParam, descParam)
+	local opts = {}
+	if type(optsParam) == "table" then
+		opts = optsParam
+	elseif type(descParam) == "table" then
+		opts = descParam
+		opts.Name = optsParam
+	else
+		opts = { Name = optsParam, Desc = descParam }
+	end
+
+	local boxName = opts.Name or opts.Title or ""
+	local target = self._activeSection or self
+
+	local boxFrame = c(
+		"Frame",
+		{
+			Name = "Box_" .. (boxName ~= "" and boxName or "Card"),
+			Size = UDim2.new(1, 0, 0, 0),
+			AutomaticSize = Enum.AutomaticSize.Y,
+			BackgroundColor3 = a.Surface,
+			BackgroundTransparency = 0.35,
+			BorderSizePixel = 0,
+			LayoutOrder = target:_nextOrder(),
+			Parent = target.List,
+		}
+	)
+	g(boxFrame, UDim.new(0, 10))
+	i(boxFrame, a.Stroke, 1)
+	o(boxFrame, 12, 12, 12, 12)
+	c("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 8), Parent = boxFrame })
+
+	if boxName ~= "" then
+		local header = c(
+			"Frame",
+			{
+				Name = "Header",
+				Size = UDim2.new(1, 0, 0, 20),
+				BackgroundTransparency = 1,
+				LayoutOrder = 1,
+				Parent = boxFrame,
+			}
+		)
+		local iconOffset = 2
+		if opts.Icon then
+			local boxIcon = c(
+				"ImageLabel",
+				{
+					AnchorPoint = Vector2.new(0, 0.5),
+					Position = UDim2.new(0, 2, 0.5, 0),
+					Size = UDim2.fromOffset(14, 14),
+					BackgroundTransparency = 1,
+					ImageColor3 = a.Accent,
+					ScaleType = Enum.ScaleType.Fit,
+					Parent = header,
+				}
+			)
+			u(boxIcon, opts.Icon)
+			iconOffset = 20
+		end
+		local titleLabel = f({
+			Position = UDim2.fromOffset(iconOffset, 0),
+			Size = UDim2.new(0, 0, 1, 0),
+			AutomaticSize = Enum.AutomaticSize.X,
+			Text = string.upper(boxName),
+			TextSize = 11,
+			FontFace = j.Bold,
+			TextColor3 = a.Muted,
+			TextTruncate = Enum.TextTruncate.None,
+			Parent = header,
+		})
+		local line = c(
+			"Frame",
+			{
+				AnchorPoint = Vector2.new(0, 0.5),
+				Position = UDim2.new(0, 0, 0.5, 0),
+				Size = UDim2.new(1, 0, 0, 1),
+				BackgroundColor3 = a.Stroke,
+				BorderSizePixel = 0,
+				Parent = header,
+			}
+		)
+		local win = target.Window
+		local function updateLine()
+			local scale = (win and win.Scale and win.Scale.Scale) or 1
+			local titleW = titleLabel.AbsoluteSize.X / scale
+			local leftOffset = iconOffset + titleW + 8
+			line.Position = UDim2.new(0, leftOffset, 0.5, 0)
+			line.Size = UDim2.new(1, -leftOffset, 0, 1)
+		end
+		titleLabel:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateLine)
+		task.defer(updateLine)
+	end
+
+	local boxObj = setmetatable({
+		Name = boxName,
+		List = boxFrame,
+		Window = target.Window,
+		_order = 1,
+		_tab = target._tab or target,
+		_frame = boxFrame,
+	}, k)
+
+	return boxObj
+end
+k.CreateBox = k.Box
+k.SectionBox = k.Box
+k.CreateSectionBox = k.Box
 function k:Divider()
 	local b = c(
 		"Frame",
@@ -5793,6 +6054,31 @@ function h:Tab(e, v)
 		})
 	end
 	local w = e.Desc and 70 or 58
+	d.SubTabs = {}
+	d.CurrentSubTab = nil
+	d.Sections = d.SubTabs
+	d.CurrentSection = nil
+	d._contentOffset = w
+	d._sectionBar = c(
+		"Frame",
+		{
+			Name = "SectionBar",
+			Position = UDim2.fromOffset(24, w),
+			Size = UDim2.new(1, -48, 0, 32),
+			BackgroundTransparency = 1,
+			Visible = false,
+			Parent = p,
+		}
+	)
+	c(
+		"UIListLayout",
+		{
+			FillDirection = Enum.FillDirection.Horizontal,
+			SortOrder = Enum.SortOrder.LayoutOrder,
+			Padding = UDim.new(0, 6),
+			Parent = d._sectionBar,
+		}
+	)
 	local l = c(
 		"ScrollingFrame",
 		{
@@ -5815,6 +6101,7 @@ function h:Tab(e, v)
 	c("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 8), Parent = l })
 	d.List = l
 	local t, q = aJ(p, e.Icon or "layout-grid", e.EmptyText or "Nothing here yet"), 0
+	d._emptyPlaceholder = t
 	l.ChildAdded:Connect(function(a)
 		if a:IsA("GuiObject") then
 			q += 1

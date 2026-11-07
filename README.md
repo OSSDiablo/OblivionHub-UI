@@ -45,6 +45,15 @@ local Main = Window:CreateTab({ Name = "Main", Icon = "zap" })
 
 `Icon` is any [Lucide](https://lucide.dev/icons) icon name.
 
+You can also add sub-tabs along the top of a tab:
+
+```lua
+local Player = Main:CreateSubTab({ Name = "Player", Icon = "user" })
+local Combat = Main:CreateSubTab({ Name = "Combat", Icon = "swords" })
+
+Player:CreateButton({ Name = "Click me", Callback = function() end })
+```
+
 ## 4. Add things to the tab
 
 ```lua
@@ -163,6 +172,7 @@ Window:LoadConfig()
 
 | Element | Code | Callback gets |
 | --- | --- | --- |
+| SubTab | `Tab:CreateSubTab({ Name, Icon })` | |
 | Section | `Tab:CreateSection("Title")` | |
 | Divider | `Tab:CreateDivider()` | |
 | Label | `Tab:CreateLabel("Text")` | |
