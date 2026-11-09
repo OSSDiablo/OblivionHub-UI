@@ -187,6 +187,7 @@ Window:LoadConfig()
 | Input | `Tab:CreateInput({ Name, PlaceholderText, Callback })` | text |
 | Keybind | `Tab:CreateKeybind({ Name, CurrentKeybind = "F", Callback })` | key |
 | Color picker | `Tab:CreateColorPicker({ Name, Color, Callback })` | Color3 |
+| Menu | `Tab:CreateMenu({ Name, Icon, Width, Row })` | |
 
 Every element also takes:
 
@@ -221,6 +222,18 @@ Info:Add({ Name = "Deaths", Icon = "heart-crack", Value = 0 })
 Info:Remove("Deaths")
 ```
 
+A Menu is a row that opens a side window glued to the main window (right if it fits, else left). The side window has its own tabs and takes any element. Only one Menu is open at a time. `Row = false` hides the row so you can open it from your own button.
+
+```lua
+local Fly = Main:CreateMenu({ Name = "Fly", Icon = "plane" })
+local General = Fly:CreateTab({ Name = "General", Icon = "sliders-horizontal" })
+General:CreateToggle({ Name = "Enabled", Callback = function(v) end })
+General:CreateSlider({ Name = "Speed", Range = { 10, 200 } })
+
+Fly:Open()
+Fly:Close()
+```
+
 ## Built-in tabs
 
 | Tab | What it does | Turn it off |
@@ -228,10 +241,39 @@ Info:Remove("Deaths")
 | Home | Greeting and live stats (FPS, ping, time in server) | off unless `Home = true` |
 | Server | Rejoin, server hop, join the smallest server, live server list | `Server = false` |
 | ESP | Boxes, names, distance, health, tracers, chams and outlines, with a live avatar preview | `Esp = false` |
+| Music | Full songs from SoundCloud, your own files, queue, synced lyrics in a side window | `Music = false` |
 | Settings | Theme, hide key, saved configs, unload | `Settings = false` |
 
 ```lua
 Oblivion:CreateWindow({ Name = "My Hub", Home = true, Server = false })
+```
+
+### Music
+
+Search plays full songs from SoundCloud. Your own `.mp3` and `.ogg` files go in `workspace/OblivionUI/Music` and show up in Library. Lyrics come from lrclib and open in a side window from the mic button.
+
+SoundCloud streams are AAC, which Roblox can't play, so the tab downloads them, decodes them to WAV with [`aac/AAC.luau`](aac/AAC.luau) and plays that file. A 4 minute song takes about 20 seconds the first time. The last few decoded songs are kept, so replays start right away.
+
+| Option | What it does | Default |
+| --- | --- | --- |
+| `Volume` | Starting volume, 0 to 100 | `50` |
+| `Folder` | Where your own songs and the cache live | `"OblivionUI/Music"` |
+| `CacheSongs` | How many decoded songs to keep | `4` |
+| `Mono` | Decode to one channel (half the file size) | `false` |
+| `AAC` | A decoder you already loaded | none |
+| `AACUrl` | Where to load the decoder from | this repo |
+
+```lua
+Oblivion:CreateWindow({ Name = "My Hub", Music = { Volume = 30, CacheSongs = 8 } })
+
+local Music = Window.Music
+local results = Music:Search("daft punk get lucky")
+Music:Play(results[1])
+Music:Pause()
+Music:Resume()
+Music:Next()
+Music:Previous()
+Music:Add(results[2]) -- add to the queue
 ```
 
 ## Popups
@@ -248,7 +290,7 @@ Oblivion:Confirm({
 
 ## Themes
 
-Built in: `Default`, `Midnight`, `Crimson`, `Ember`, `Rose`, `Mono`.
+Built in: `Mono` (default), `Moss` (green, `"Default"` before), `Midnight`, `Crimson`, `Ember`, `Rose`. Passing `"Default"` still works and gives Mono.
 
 ```lua
 Oblivion:SetTheme("Midnight")
@@ -262,13 +304,13 @@ Oblivion:SetTheme({ Accent = Color3.fromRGB(0, 227, 255) })
 | `Name` | Name of the ScreenGui. The sidebar title is always Oblivion, use `Subtitle` for your script name | `"Oblivion"` |
 | `Subtitle` | Small line under the title | none |
 | `Icon` | Logo next to the title | Oblivion logo |
-| `Theme` | Starting theme | `"Default"` |
+| `Theme` | Starting theme | `"Mono"` |
 | `ToggleUIKeybind` | Key that hides and shows the menu | `"RightControl"` |
 | `Size` | Starting size | `UDim2.fromOffset(640, 480)` |
 | `ConfigurationSaving` | `{ Enabled, FolderName, FileName, AutoSave }` | off |
 | `OpenButton` | The draggable Oblivion button. `false` removes it | on |
 | `Loading` | Loading screen. `false` skips it | on |
-| `Home`, `Server`, `Esp`, `Settings` | Built-in tabs | see above |
+| `Home`, `Server`, `Esp`, `Music`, `Settings` | Built-in tabs | see above |
 
 ## Window functions
 
@@ -284,4 +326,8 @@ Oblivion:SetTheme({ Accent = Color3.fromRGB(0, 227, 255) })
 
 <p align="center">
   Based on <a href="https://github.com/PookiePepelsss/Airflow-UI">Airflow UI</a> by Pookie.
+</p>
+
+<p align="center">
+  <code>aac/AAC.luau</code> is a Luau port of <a href="https://github.com/audiocogs/aac.js">aac.js</a> and is licensed LGPL-3.0, separate from the rest of the library.
 </p>

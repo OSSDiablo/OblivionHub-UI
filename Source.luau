@@ -18,13 +18,13 @@ d then d:Destroy()end end if d then ac(a,d,b)end return a end local K={
 'AccentDark','Text','Muted','Glow','Warning','Success','Error'}local function d(
 a,b,c)return Color3.fromRGB(a,b,c)end local ap={Warning=d(244,184,96),Success=d(
 95,211,141),Error=d(255,107,107)}local function x(a)for b,c in pairs(ap)do if a[
-b]==nil then a[b]=c end end return a end e.Themes={Default=x({Background=d(11,12
-,14),Surface=d(16,17,20),Surface2=d(21,23,26),Surface3=d(33,36,41),Stroke=d(34,
-37,42),StrokeHover=d(80,104,64),Accent=d(150,214,110),AccentDark=d(14,26,8),Text
-=d(236,238,241),Muted=d(138,144,153),Glow=d(206,236,186)}),Mono=x({Background=d(
-11,12,14),Surface=d(16,17,20),Surface2=d(21,23,26),Surface3=d(33,36,41),Stroke=
-d(34,37,42),StrokeHover=d(84,88,86),Accent=d(232,234,233),AccentDark=d(14,15,15)
-,Text=d(236,238,241),Muted=d(138,144,153),Glow=d(220,222,221)}),Midnight=x({
+b]==nil then a[b]=c end end return a end e.Themes={Moss=x({Background=d(11,12,14
+),Surface=d(16,17,20),Surface2=d(21,23,26),Surface3=d(33,36,41),Stroke=d(34,37,
+42),StrokeHover=d(80,104,64),Accent=d(150,214,110),AccentDark=d(14,26,8),Text=d(
+236,238,241),Muted=d(138,144,153),Glow=d(206,236,186)}),Mono=x({Background=d(11,
+12,14),Surface=d(16,17,20),Surface2=d(21,23,26),Surface3=d(33,36,41),Stroke=d(34
+,37,42),StrokeHover=d(84,88,86),Accent=d(232,234,233),AccentDark=d(14,15,15),
+Text=d(236,238,241),Muted=d(138,144,153),Glow=d(220,222,221)}),Midnight=x({
 Background=d(11,12,14),Surface=d(16,17,20),Surface2=d(21,23,26),Surface3=d(33,36
 ,41),Stroke=d(34,37,42),StrokeHover=d(58,86,116),Accent=d(107,184,255),
 AccentDark=d(6,18,32),Text=d(236,238,241),Muted=d(138,144,153),Glow=d(190,220,
@@ -37,11 +37,11 @@ AccentDark=d(6,18,32),Text=d(236,238,241),Muted=d(138,144,153),Glow=d(190,220,
 d(255,220,160)}),Rose=x({Background=d(11,12,14),Surface=d(16,17,20),Surface2=d(
 21,23,26),Surface3=d(33,36,41),Stroke=d(34,37,42),StrokeHover=d(116,64,78),
 Accent=d(255,120,150),AccentDark=d(32,8,14),Text=d(236,238,241),Muted=d(138,144,
-153),Glow=d(255,200,214)})}e.Theme=table.clone(e.Themes.Default)e.ThemeName=
-'Default'e.Assets={Shadow='rbxassetid://6014261993',Glow=
-'rbxassetid://8992230677',Logo='triangle'}e.Assets.ShadowSlice=Rect.new(49,49,
-450,450)local function bake(data,path)local ok,id=pcall(function()if not(
-writefile and getcustomasset)then return nil end local chars=
+153),Glow=d(255,200,214)})}e.Theme=table.clone(e.Themes.Mono)e.ThemeName='Mono'e
+.Assets={Shadow='rbxassetid://6014261993',Glow='rbxassetid://8992230677',Logo=
+'triangle'}e.Assets.ShadowSlice=Rect.new(49,49,450,450)local function bake(data,
+path)local ok,id=pcall(function()if not(writefile and getcustomasset)then return
+nil end local chars=
 [[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/]]local map={}
 for i=1,64 do map[chars:byte(i)]=i-1 end local out=table.create(#data//4)for i=1
 ,#data,4 do local a,b,c,d=data:byte(i,i+3)local v=map[a]*262144+map[b]*4096+(map
@@ -159,34 +159,38 @@ TextTransparency=c and 1 or 0},0.2)b(m,{TextTransparency=c and 0 or 1,TextColor3
 =c and a.Accent or a.Muted},0.2)end return d end local V={}local function at(e,i
 )local f=s()local h=math.max(e.AbsoluteSize.X,e.AbsoluteSize.Y)*2.2 local d=
 table.remove(V)if not d then d=c('Frame',{AnchorPoint=Vector2.new(0.5,0.5),
-BorderSizePixel=0})g(d,UDim.new(1,0))end d.BackgroundColor3=i or a.Accent d.
-Position=UDim2.fromOffset(f.X-e.AbsolutePosition.X,f.Y-e.AbsolutePosition.Y)d.
-Size=UDim2.fromOffset(0,0)d.BackgroundTransparency=0.82 d.ZIndex=e.ZIndex+1 d.
-Parent=e b(d,{Size=UDim2.fromOffset(h,h),BackgroundTransparency=1},0.55)task.
-delay(0.55,function()if d.Parent~=e then return end d.Parent=nil if#V<4 then
-table.insert(V,d)else d:Destroy()end end)end local function w(c)if not c then
-return end b(c,{Color=a.Accent,Transparency=0.2},0.08)task.delay(0.12,function()
-b(c,{Color=a.Stroke,Transparency=0},0.35)end)end local function L(c,d)c.
-MouseEnter:Connect(function()b(d,{Color=a.StrokeHover},0.12)end)c.MouseLeave:
-Connect(function()b(d,{Color=a.Stroke},0.25)end)end local au={[Enum.KeyCode.
-LeftControl]='LCtrl',[Enum.KeyCode.RightControl]='RCtrl',[Enum.KeyCode.LeftShift
-]='LShift',[Enum.KeyCode.RightShift]='RShift',[Enum.KeyCode.LeftAlt]='LAlt',[
-Enum.KeyCode.RightAlt]='RAlt',[Enum.KeyCode.Return]='Enter',[Enum.KeyCode.Escape
-]='Esc',[Enum.KeyCode.Backspace]='Backspace'}local function W(a)if a==nil then
-return'None'end return au[a]or a.Name end local function F(a)if typeof(a)==
-'EnumItem'then return a end if type(a)~='string'or a==''or a=='None'then return
-nil end local b,c=pcall(function()return Enum.KeyCode[a]end)if b then return c
-end warn('[Oblivion] unknown key name: '..a)return nil end local function l(a,
-...)if type(a)~='function'then return end local b,c=pcall(a,...)if not b then
-warn('[Oblivion] callback error: '..tostring(c))end end local function ai(b,c,a)
-if c<b then b,c=c,b end if not a or a<=0 then a=1 end local d=0 while d<6 do
-local b=a*10^d if math.abs(b-math.floor(b+0.5))<1e-9 then break end d+=1 end
-local e='%.'..d..'f'return{snap=function(d)d=math.floor(d/a+0.5)*a d=tonumber(
-string.format(e,d))or d return math.clamp(d,b,c)end,format=function(a)return
-string.format(e,a)end}end local function shadeSeq(lo)local k={}for i=0,8 do
-local t=i/8 local v=1-(1-lo/255)*(t*t*(3-2*t))k[#k+1]=ColorSequenceKeypoint.new(
-t,Color3.new(v,v,v))end return ColorSequence.new(k)end local function G(e,f,h,k)
-local d={Size=UDim2.new(1,0,0,h),BackgroundColor3=a.Surface2,BorderSizePixel=0,
+BorderSizePixel=0})g(d,UDim.new(1,0))end d.BackgroundColor3=i or a.Accent local
+clip=e:FindFirstChild('RippleClip')if not clip then clip=c('CanvasGroup',{Name=
+'RippleClip',Size=UDim2.fromScale(1,1),BackgroundTransparency=1,BorderSizePixel=
+0,ZIndex=e.ZIndex+1,Parent=e})local corner=e:FindFirstChildOfClass('UICorner')g(
+clip,corner and corner.CornerRadius or UDim.new(0,8))end d.Position=UDim2.
+fromOffset(f.X-e.AbsolutePosition.X,f.Y-e.AbsolutePosition.Y)d.Size=UDim2.
+fromOffset(0,0)d.BackgroundTransparency=0.82 d.ZIndex=1 d.Parent=clip b(d,{Size=
+UDim2.fromOffset(h,h),BackgroundTransparency=1},0.55)task.delay(0.55,function()
+if d.Parent~=clip then return end d.Parent=nil if#V<4 then table.insert(V,d)else
+d:Destroy()end end)end local function w(c)if not c then return end b(c,{Color=a.
+Accent,Transparency=0.2},0.08)task.delay(0.12,function()b(c,{Color=a.Stroke,
+Transparency=0},0.35)end)end local function L(c,d)c.MouseEnter:Connect(function(
+)b(d,{Color=a.StrokeHover},0.12)end)c.MouseLeave:Connect(function()b(d,{Color=a.
+Stroke},0.25)end)end local au={[Enum.KeyCode.LeftControl]='LCtrl',[Enum.KeyCode.
+RightControl]='RCtrl',[Enum.KeyCode.LeftShift]='LShift',[Enum.KeyCode.RightShift
+]='RShift',[Enum.KeyCode.LeftAlt]='LAlt',[Enum.KeyCode.RightAlt]='RAlt',[Enum.
+KeyCode.Return]='Enter',[Enum.KeyCode.Escape]='Esc',[Enum.KeyCode.Backspace]=
+'Backspace'}local function W(a)if a==nil then return'None'end return au[a]or a.
+Name end local function F(a)if typeof(a)=='EnumItem'then return a end if type(a)
+~='string'or a==''or a=='None'then return nil end local b,c=pcall(function()
+return Enum.KeyCode[a]end)if b then return c end warn(
+'[Oblivion] unknown key name: '..a)return nil end local function l(a,...)if
+type(a)~='function'then return end local b,c=pcall(a,...)if not b then warn(
+'[Oblivion] callback error: '..tostring(c))end end local function ai(b,c,a)if c<
+b then b,c=c,b end if not a or a<=0 then a=1 end local d=0 while d<6 do local b=
+a*10^d if math.abs(b-math.floor(b+0.5))<1e-9 then break end d+=1 end local e=
+'%.'..d..'f'return{snap=function(d)d=math.floor(d/a+0.5)*a d=tonumber(string.
+format(e,d))or d return math.clamp(d,b,c)end,format=function(a)return string.
+format(e,a)end}end local function shadeSeq(lo)local k={}for i=0,8 do local t=i/8
+local v=1-(1-lo/255)*(t*t*(3-2*t))k[#k+1]=ColorSequenceKeypoint.new(t,Color3.
+new(v,v,v))end return ColorSequence.new(k)end local function G(e,f,h,k)local d={
+Size=UDim2.new(1,0,0,h),BackgroundColor3=a.Surface2,BorderSizePixel=0,
 LayoutOrder=e:_nextOrder(),Parent=e.List}if f=='TextButton'then d.
 AutoButtonColor=false d.Text=''end local b=c(f,d)b:SetAttribute('NoDrag',true)g(
 b,UDim.new(0,10))c('UIGradient',{Rotation=90,Color=shadeSeq(175),Parent=b})local
@@ -843,61 +847,190 @@ end a:Confirm({Title='Delete config',Content='Remove '..d..
 function(b)a:SetAutoSave(b)end})return b end function k:ThemePicker(a)a=n(a,{
 Title='Name',Description='Desc'})local b=a.Callback return self:Dropdown({Name=a
 .Name or'Theme',Desc=a.Desc,Options=e:GetThemes(),Default=e.ThemeName,Flag=a.
-Flag,Callback=function(a)if a then e:SetTheme(a)end l(b,a)end})end local aw={
-Select=true}function k:Select()self.Window:SelectTab(self)end for a,b in pairs(
-table.clone(k))do if type(b)=='function'and a:sub(1,1)~='_'and a:sub(1,6)~=
-'Create'and not aw[a]then k['Create'..a]=b end end local function ax()local a
-pcall(function()if typeof(identifyexecutor)=='function'then a=(identifyexecutor(
-))elseif typeof(getexecutorname)=='function'then a=getexecutorname()end end)if
-type(a)=='string'and#a>0 then return a end return ab:IsStudio()and'Studio'or
-'Unknown'end local function ay()local b,a=pcall(function()return game:
-GetService('MarketplaceService'):GetProductInfo(game.PlaceId)end)if b and type(a
-)=='table'and a.Name then return a.Name end return'Unknown game'end local aB={
-Info=O,Success='Success',Warning='Warning',Error='Error'}local h={}h.__index=h
-function e.Window(ac,k)local H,q,I,M,J,B='OblivionUI','Frame','CanvasGroup',
-'UIListLayout','AbsoluteSize','table'k=n(k,{Name='Title',LoadingSubtitle=
-'Subtitle',ToggleUIKeybind='Keybind'})if k.Theme~=nil then e:SetTheme(k.Theme)
-end local V=k.Size or UDim2.fromOffset(640,480)local N=F(k.Keybind)or Enum.
-KeyCode.RightControl local d=setmetatable({Tabs={},Flags={},CurrentTab=nil,Open=
-true,Keybind=N,_connections={},_controls={},_inputListeners={Began={},Changed={}
-,Ended={},Render={}},_frameSteps={},_destroyed=false},h)local function C(a)
-return function(...)for b,a in ipairs(d._inputListeners[a])do a(...)end end end
-local X=C('Render')table.insert(d._connections,ab.RenderStepped:Connect(function
-(a)X(a)for c,b in ipairs(d._frameSteps)do b(a)end end))table.insert(d.
-_connections,p.InputBegan:Connect(C('Began')))table.insert(d._connections,p.
-InputChanged:Connect(C('Changed')))table.insert(d._connections,p.InputEnded:
-Connect(C('Ended')))local s=c('ScreenGui',{Name=k.Name or H,IgnoreGuiInset=true,
-ResetOnSpawn=false,DisplayOrder=999,ZIndexBehavior=Enum.ZIndexBehavior.Sibling})
-d.Gui=s local y=c(q,{Name='Window',AnchorPoint=Vector2.new(0.5,0.5),Position=
-UDim2.fromScale(0.5,0.5),Size=V,BackgroundTransparency=1,Parent=s})d.Root=y
-local O=c('UIScale',{Parent=y})d.Scale=O local P=c('ImageLabel',{Position=UDim2.
-fromOffset(-25,-25),Size=UDim2.new(1,50,1,50),BackgroundTransparency=1,Image=v.
-Shadow,ImageColor3=Color3.new(0,0,0),ImageTransparency=0.6,ScaleType=Enum.
-ScaleType.Slice,SliceCenter=v.ShadowSlice,Parent=y})d.Shadow=P local l=c(I,{Name
-='Body',Size=UDim2.fromScale(1,1),BackgroundColor3=a.Background,BorderSizePixel=
-0,Parent=y})d.Body=l g(l,UDim.new(0,14))d.BodyStroke=i(l,a.Stroke)T(l)local D=c(
-q,{Name='Sidebar',Size=UDim2.new(0,170,1,0),BackgroundTransparency=1,Parent=l})
-local sp=c(q,{Name='Panel',Position=UDim2.fromOffset(8,8),Size=UDim2.new(1,-12,1
-,-16),BackgroundColor3=a.Surface,BorderSizePixel=0,ZIndex=0,Parent=D})g(sp,UDim.
-new(0,8))i(sp,a.Stroke)local base=c(q,{Name='Base',Size=UDim2.fromScale(1,1),
-BackgroundColor3=a.Background,BorderSizePixel=0,ZIndex=-1,Parent=l})c(
-'UIGradient',{Rotation=90,Color=shadeSeq(150),Parent=base})for _,g2 in ipairs({{
-UDim2.new(1,-40,0,20),UDim2.fromScale(1.3,1.5),0.82},{UDim2.new(0,60,1,0),UDim2.
-fromScale(0.9,0.9),0.93}})do c('ImageLabel',{Name='Glow',AnchorPoint=Vector2.
-new(0.5,0.5),Position=g2[1],Size=g2[2],BackgroundTransparency=1,Image=v.Glow,
-ImageColor3=a.Accent,ImageTransparency=g2[3],ZIndex=0,Parent=l})end sp.
-BackgroundTransparency=0.25 c('UIGradient',{Rotation=90,Color=shadeSeq(120),
-Transparency=NumberSequence.new(0,0.3),Parent=sp})dither(sp)dither(l,nil,0)local
-K=c(q,{Name='Header',Size=UDim2.new(1,0,0,72),BackgroundTransparency=1,Parent=D}
-)local Q=c('ImageLabel',{Position=UDim2.fromOffset(22,27),Size=UDim2.fromOffset(
-30,28),BackgroundTransparency=1,Image='',ImageColor3=a.Text,ScaleType=Enum.
-ScaleType.Fit,Parent=K})u(Q,k.Icon or v.Logo)d._logo=Q d._titleLabel=f({Position
-=UDim2.fromOffset(60,25),Size=UDim2.new(1,-70,0,20),Text=k.Name or'Oblivion',
-TextSize=20,TextTruncate=Enum.TextTruncate.AtEnd,Parent=K})d._subtitleLabel=f({
-Position=UDim2.fromOffset(60,45),Size=UDim2.new(1,-70,0,14),Text=k.Subtitle or''
-,TextSize=13,FontFace=j.Regular,TextColor3=a.Muted,Parent=K})local t=c(
-'ScrollingFrame',{Name='Tabs',Position=UDim2.fromOffset(0,80),Size=UDim2.new(1,0
-,1,-116),BackgroundTransparency=1,BorderSizePixel=0,ScrollBarThickness=0,
+Flag,Callback=function(a)if a then e:SetTheme(a)end l(b,a)end})end function k:
+Menu(opts)opts=n(opts,{Title='Name',Description='Desc'})local win=self.Window
+local menuName=opts.Name or'Menu'local width=opts.Width or 300 local gap=10
+local rowH=opts.Desc and y or R local row,rowStroke=G(self,'TextButton',rowH,
+opts)row.ClipsDescendants=true if opts.Row==false then row.Visible=false end L(
+row,rowStroke)local shift=0 if opts.Icon then A(row,opts.Icon,a.Accent,UDim2.
+new(0,14,0.5,0))shift=26 end local rowTitle=M(row,menuName,opts.Desc,30)if shift
+>0 then for _,lbl in ipairs(row:GetChildren())do if lbl:IsA('TextLabel')then lbl
+.Position+=UDim2.fromOffset(shift,0)lbl.Size-=UDim2.fromOffset(shift,0)end end
+end local arrowHolder,arrow=A(row,'panel-right-open',a.Muted,UDim2.new(1,-30,0.5
+,0))local root=c('Frame',{Name='Menu_'..menuName,Size=UDim2.fromOffset(width,400
+),BackgroundTransparency=1,Visible=false,Parent=win.Gui})local scale=c('UIScale'
+,{Scale=win.Scale.Scale,Parent=root})local shadow=c('ImageLabel',{Position=UDim2
+.fromOffset(-25,-25),Size=UDim2.new(1,50,1,50),BackgroundTransparency=1,Image=v.
+Shadow,ImageColor3=Color3.new(0,0,0),ImageTransparency=1,ScaleType=Enum.
+ScaleType.Slice,SliceCenter=v.ShadowSlice,Parent=root})local body=c(
+'CanvasGroup',{Name='Body',Size=UDim2.fromScale(1,1),BackgroundColor3=a.
+Background,BorderSizePixel=0,GroupTransparency=1,Parent=root})g(body,UDim.new(0,
+14))local bodyStroke=i(body,a.Stroke)T(body)local base=c('Frame',{Name='Base',
+Size=UDim2.fromScale(1,1),BackgroundColor3=a.Background,BorderSizePixel=0,ZIndex
+=-1,Parent=body})c('UIGradient',{Rotation=90,Color=shadeSeq(150),Parent=base})c(
+'ImageLabel',{Name='Glow',AnchorPoint=Vector2.new(0.5,0.5),Position=UDim2.new(1,
+-30,0,10),Size=UDim2.fromScale(1.6,0.9),BackgroundTransparency=1,Image=v.Glow,
+ImageColor3=a.Accent,ImageTransparency=0.85,ZIndex=0,Parent=body})dither(body,
+nil,0)local header=c('Frame',{Name='Header',Size=UDim2.new(1,0,0,58),
+BackgroundTransparency=1,Parent=body})local textX=18 if opts.Icon then local
+hIcon=c('ImageLabel',{AnchorPoint=Vector2.new(0,0.5),Position=UDim2.new(0,18,0.5
+,0),Size=UDim2.fromOffset(18,18),BackgroundTransparency=1,ImageColor3=a.Accent,
+ScaleType=Enum.ScaleType.Fit,Parent=header})u(hIcon,opts.Icon)textX=46 end local
+titleLabel=f({Position=UDim2.fromOffset(textX,opts.Desc and 12 or 0),Size=UDim2.
+new(1,-(textX+50),0,opts.Desc and 20 or 58),Text=menuName,TextSize=17,Parent=
+header})if opts.Desc then f({Position=UDim2.fromOffset(textX,32),Size=UDim2.new(
+1,-(textX+50),0,15),Text=opts.Desc,TextSize=12,FontFace=j.Regular,TextColor3=a.
+Muted,Parent=header})end local closeBtn=c('TextButton',{AnchorPoint=Vector2.new(
+1,0.5),Position=UDim2.new(1,-14,0.5,0),Size=UDim2.fromOffset(28,28),
+BackgroundColor3=a.Surface3,BackgroundTransparency=1,Text='',AutoButtonColor=
+false,Parent=header})g(closeBtn,UDim.new(0,7))local closeIcon=c('ImageLabel',{
+AnchorPoint=Vector2.new(0.5,0.5),Position=UDim2.fromScale(0.5,0.5),Size=UDim2.
+fromOffset(14,14),BackgroundTransparency=1,ImageColor3=a.Muted,ScaleType=Enum.
+ScaleType.Fit,Parent=closeBtn})u(closeIcon,'x')closeBtn.MouseEnter:Connect(
+function()b(closeBtn,{BackgroundTransparency=0.4},0.12)b(closeIcon,{ImageColor3=
+a.Text},0.12)end)closeBtn.MouseLeave:Connect(function()b(closeBtn,{
+BackgroundTransparency=1},0.2)b(closeIcon,{ImageColor3=a.Muted},0.2)end)c(
+'Frame',{Position=UDim2.new(0,18,1,-1),Size=UDim2.new(1,-36,0,1),
+BackgroundColor3=a.Stroke,BorderSizePixel=0,Parent=header})local tabBar=c(
+'ScrollingFrame',{Name='TabBar',Position=UDim2.fromOffset(18,68),Size=UDim2.new(
+1,-36,0,30),BackgroundTransparency=1,BorderSizePixel=0,ScrollBarThickness=0,
+ScrollingDirection=Enum.ScrollingDirection.X,AutomaticCanvasSize=Enum.
+AutomaticSize.X,CanvasSize=UDim2.new(),Visible=false,Parent=body})c(
+'UIListLayout',{FillDirection=Enum.FillDirection.Horizontal,SortOrder=Enum.
+SortOrder.LayoutOrder,Padding=UDim.new(0,6),Parent=tabBar})local menu={Name=
+menuName,Window=win,Tabs={},CurrentTab=nil,IsOpen=false,Side=nil}local api={}
+local prog=c('NumberValue',{Value=0})local pageTop=58 local function layoutPages
+()local multi=#menu.Tabs>1 tabBar.Visible=multi pageTop=multi and 106 or 58 for
+_,t in ipairs(menu.Tabs)do t._page.Position=UDim2.fromOffset(0,pageTop)t._page.
+Size=UDim2.new(1,0,1,-pageTop)end end local function selectTab(t)if menu.
+CurrentTab==t then return end menu.CurrentTab=t for _,other in ipairs(menu.Tabs)
+do local cur=other==t other._page.Visible=cur b(other._btn,{
+BackgroundTransparency=cur and 0 or 1},0.15)b(other._stroke,{Transparency=cur
+and 0 or 1},0.15)b(other._label,{TextColor3=cur and a.Text or a.Muted},0.15)if
+other._icon then b(other._icon,{ImageColor3=cur and a.Accent or a.Muted},0.15)
+end end l(opts.OnTabChanged,t.Name)end function api:Tab(tOpts,tIcon)tOpts=n(
+tOpts,{Title='Name'})if tIcon~=nil and tOpts.Icon==nil then tOpts.Icon=tIcon end
+local tName=tOpts.Name or('Tab '..(#menu.Tabs+1))local page=c('ScrollingFrame',{
+Name='MenuPage_'..tName,BackgroundTransparency=1,BorderSizePixel=0,
+ScrollBarThickness=2,ScrollBarImageColor3=a.Accent,ScrollBarImageTransparency=
+0.5,AutomaticCanvasSize=Enum.AutomaticSize.Y,CanvasSize=UDim2.new(),Visible=
+false,Parent=body})o(page,18,18,10,18)page:SetAttribute('NoDrag',true)c(
+'UIListLayout',{SortOrder=Enum.SortOrder.LayoutOrder,Padding=UDim.new(0,8),
+Parent=page})local btn=c('TextButton',{Size=UDim2.fromOffset(0,30),AutomaticSize
+=Enum.AutomaticSize.X,BackgroundColor3=a.Surface2,BackgroundTransparency=1,Text=
+'',AutoButtonColor=false,LayoutOrder=#menu.Tabs+1,Parent=tabBar})g(btn,UDim.new(
+0,7))local stroke=i(btn,a.Stroke,1)o(btn,12,12)local icon if tOpts.Icon then
+icon=c('ImageLabel',{AnchorPoint=Vector2.new(0,0.5),Position=UDim2.new(0,0,0.5,0
+),Size=UDim2.fromOffset(14,14),BackgroundTransparency=1,ImageColor3=a.Muted,
+ScaleType=Enum.ScaleType.Fit,Parent=btn})u(icon,tOpts.Icon)end local label=f({
+Position=UDim2.fromOffset(icon and 20 or 0,0),Size=UDim2.new(0,0,1,0),
+AutomaticSize=Enum.AutomaticSize.X,Text=tName,TextSize=13,TextColor3=a.Muted,
+TextTruncate=Enum.TextTruncate.None,Parent=btn})local t=setmetatable({Name=tName
+,List=page,Window=win,Menu=api,_order=0,_page=page,_btn=btn,_stroke=stroke,
+_label=label,_icon=icon},k)function t:Select()selectTab(t)end btn.
+MouseButton1Click:Connect(function()selectTab(t)end)btn.MouseEnter:Connect(
+function()if menu.CurrentTab~=t then b(btn,{BackgroundTransparency=0.5},0.12)b(
+stroke,{Transparency=0.5},0.12)b(label,{TextColor3=a.Text},0.12)end end)btn.
+MouseLeave:Connect(function()if menu.CurrentTab~=t then b(btn,{
+BackgroundTransparency=1},0.2)b(stroke,{Transparency=1},0.2)b(label,{TextColor3=
+a.Muted},0.2)end end)stroke.Transparency=1 table.insert(menu.Tabs,t)layoutPages(
+)if#menu.Tabs==1 then selectTab(t)end return t end api.CreateTab=api.Tab
+local function defaultTab()return menu.Tabs[1]or api:Tab({Name='Main'})end
+local function place()local mainRoot=win.Root local s=win.Scale.Scale scale.
+Scale=s local guiPos,guiSize=win.Gui.AbsolutePosition,win.Gui.AbsoluteSize local
+mPos=mainRoot.AbsolutePosition-guiPos local mSize=mainRoot.AbsoluteSize local w=
+width*s local g2=gap*s local rightRoom=guiSize.X-(mPos.X+mSize.X)-g2 local
+leftRoom=mPos.X-g2 local side=menu.Side local fitsRight,fitsLeft=rightRoom>=w,
+leftRoom>=w if side=='Right'and not fitsRight or side=='Left'and not fitsLeft or
+side==nil then if opts.Side=='Left'and fitsLeft or not fitsRight and fitsLeft
+then side='Left'elseif fitsRight then side='Right'else side=rightRoom>=leftRoom
+and'Right'or'Left'end end if side~=menu.Side then menu.Side=side l(opts.
+OnSideChanged,side)end local slide=(1-prog.Value)*14*s local x if side=='Right'
+then x=mPos.X+mSize.X+g2-slide else x=mPos.X-g2-w+slide end x=math.clamp(x,0,
+math.max(guiSize.X-w,0))root.Size=UDim2.fromOffset(width,mSize.Y/s)root.Position
+=UDim2.fromOffset(x,mPos.Y)end local shown=false local function animate(on)b(
+prog,{Value=on and 1 or 0},on and 0.35 or 0.18,on and Enum.EasingStyle.Quint or
+Enum.EasingStyle.Quad)b(body,{GroupTransparency=on and 0 or 1},on and 0.25 or
+0.15)b(bodyStroke,{Transparency=on and 0 or 1},on and 0.25 or 0.12)b(shadow,{
+ImageTransparency=on and 0.6 or 1},on and 0.3 or 0.15)end local function render(
+)local want=menu.IsOpen and win.Open and win.Root.Visible if want~=shown then
+shown=want if want then menu.Side=nil end animate(want)end root.Visible=want or
+prog.Value>0.01 if root.Visible then place()end end table.insert(win._frameSteps
+,render)local function markRow(on)b(arrow,{ImageColor3=on and a.Accent or a.
+Muted},0.15)b(rowStroke,{Color=on and a.Accent or a.Stroke},0.15)end function
+api:Open()if menu.IsOpen then return end if win._openMenu and win._openMenu~=api
+then win._openMenu:Close()end win._openMenu=api defaultTab()menu.IsOpen=true api
+.IsOpen=true markRow(true)l(opts.Callback,true)end function api:Close()if not
+menu.IsOpen then return end menu.IsOpen=false api.IsOpen=false if win._openMenu
+==api then win._openMenu=nil end markRow(false)l(opts.Callback,false)end
+function api:Toggle(state)if state==nil then state=not menu.IsOpen end if state
+then api:Open()else api:Close()end end function api:SelectTab(name)for _,t in
+ipairs(menu.Tabs)do if t==name or t.Name==name then selectTab(t)return t end end
+end function api:SetTitle(text)menuName=tostring(text)rowTitle.Text=menuName
+titleLabel.Text=menuName end function api:GetSide()return menu.Side end api.
+IsOpen=false api.Tabs=menu.Tabs row.MouseButton1Click:Connect(function()at(row,a
+.Accent)api:Toggle()end)closeBtn.MouseButton1Click:Connect(function()api:Close()
+end)local result=q(self,opts,api,row,'Menu')local rowDestroy=result.Destroy
+function result:Destroy()if menu.IsOpen then api:Close()end local idx=table.
+find(win._frameSteps,render)if idx then table.remove(win._frameSteps,idx)end
+root:Destroy()prog:Destroy()rowDestroy(result)end return setmetatable(result,{
+__index=function(_,key)local fn=k[key]if type(fn)=='function'and key~='Select'
+and key:sub(1,1)~='_'then return function(_,...)local t=defaultTab()return fn(t,
+...)end end end})end local aw={Select=true}function k:Select()self.Window:
+SelectTab(self)end for a,b in pairs(table.clone(k))do if type(b)=='function'and
+a:sub(1,1)~='_'and a:sub(1,6)~='Create'and not aw[a]then k['Create'..a]=b end
+end local function ax()local a pcall(function()if typeof(identifyexecutor)==
+'function'then a=(identifyexecutor())elseif typeof(getexecutorname)=='function'
+then a=getexecutorname()end end)if type(a)=='string'and#a>0 then return a end
+return ab:IsStudio()and'Studio'or'Unknown'end local function ay()local b,a=
+pcall(function()return game:GetService('MarketplaceService'):GetProductInfo(game
+.PlaceId)end)if b and type(a)=='table'and a.Name then return a.Name end return
+'Unknown game'end local aB={Info=O,Success='Success',Warning='Warning',Error=
+'Error'}local h={}h.__index=h function e.Window(ac,k)local H,q,I,M,J,B=
+'OblivionUI','Frame','CanvasGroup','UIListLayout','AbsoluteSize','table'k=n(k,{
+Name='Title',LoadingSubtitle='Subtitle',ToggleUIKeybind='Keybind'})if k.Theme~=
+nil then e:SetTheme(k.Theme)end local V=k.Size or UDim2.fromOffset(640,480)local
+N=F(k.Keybind)or Enum.KeyCode.RightControl local d=setmetatable({Tabs={},Flags={
+},CurrentTab=nil,Open=true,Keybind=N,_connections={},_controls={},
+_inputListeners={Began={},Changed={},Ended={},Render={}},_frameSteps={},
+_destroyed=false},h)local function C(a)return function(...)for b,a in ipairs(d.
+_inputListeners[a])do a(...)end end end local X=C('Render')table.insert(d.
+_connections,ab.RenderStepped:Connect(function(a)X(a)for c,b in ipairs(d.
+_frameSteps)do b(a)end end))table.insert(d._connections,p.InputBegan:Connect(C(
+'Began')))table.insert(d._connections,p.InputChanged:Connect(C('Changed')))table
+.insert(d._connections,p.InputEnded:Connect(C('Ended')))local s=c('ScreenGui',{
+Name=k.Name or H,IgnoreGuiInset=true,ResetOnSpawn=false,DisplayOrder=999,
+ZIndexBehavior=Enum.ZIndexBehavior.Sibling})d.Gui=s local y=c(q,{Name='Window',
+AnchorPoint=Vector2.new(0.5,0.5),Position=UDim2.fromScale(0.5,0.5),Size=V,
+BackgroundTransparency=1,Parent=s})d.Root=y local O=c('UIScale',{Parent=y})d.
+Scale=O local P=c('ImageLabel',{Position=UDim2.fromOffset(-25,-25),Size=UDim2.
+new(1,50,1,50),BackgroundTransparency=1,Image=v.Shadow,ImageColor3=Color3.new(0,
+0,0),ImageTransparency=0.6,ScaleType=Enum.ScaleType.Slice,SliceCenter=v.
+ShadowSlice,Parent=y})d.Shadow=P local l=c(I,{Name='Body',Size=UDim2.fromScale(1
+,1),BackgroundColor3=a.Background,BorderSizePixel=0,Parent=y})d.Body=l g(l,UDim.
+new(0,14))d.BodyStroke=i(l,a.Stroke)T(l)local D=c(q,{Name='Sidebar',Size=UDim2.
+new(0,170,1,0),BackgroundTransparency=1,Parent=l})local sp=c(q,{Name='Panel',
+Position=UDim2.fromOffset(8,8),Size=UDim2.new(1,-12,1,-16),BackgroundColor3=a.
+Surface,BorderSizePixel=0,ZIndex=0,Parent=D})g(sp,UDim.new(0,8))i(sp,a.Stroke)
+local base=c(q,{Name='Base',Size=UDim2.fromScale(1,1),BackgroundColor3=a.
+Background,BorderSizePixel=0,ZIndex=-1,Parent=l})c('UIGradient',{Rotation=90,
+Color=shadeSeq(150),Parent=base})for _,g2 in ipairs({{UDim2.new(1,-40,0,20),
+UDim2.fromScale(1.3,1.5),0.82},{UDim2.new(0,60,1,0),UDim2.fromScale(0.9,0.9),
+0.93}})do c('ImageLabel',{Name='Glow',AnchorPoint=Vector2.new(0.5,0.5),Position=
+g2[1],Size=g2[2],BackgroundTransparency=1,Image=v.Glow,ImageColor3=a.Accent,
+ImageTransparency=g2[3],ZIndex=0,Parent=l})end sp.BackgroundTransparency=0.25 c(
+'UIGradient',{Rotation=90,Color=shadeSeq(120),Transparency=NumberSequence.new(0,
+0.3),Parent=sp})dither(sp)dither(l,nil,0)local K=c(q,{Name='Header',Size=UDim2.
+new(1,0,0,72),BackgroundTransparency=1,Parent=D})local Q=c('ImageLabel',{
+Position=UDim2.fromOffset(22,27),Size=UDim2.fromOffset(30,28),
+BackgroundTransparency=1,Image='',ImageColor3=a.Text,ScaleType=Enum.ScaleType.
+Fit,Parent=K})u(Q,k.Icon or v.Logo)d._logo=Q d._titleLabel=f({Position=UDim2.
+fromOffset(60,25),Size=UDim2.new(1,-70,0,20),Text=k.Name or'Oblivion',TextSize=
+20,TextTruncate=Enum.TextTruncate.AtEnd,Parent=K})d._subtitleLabel=f({Position=
+UDim2.fromOffset(60,45),Size=UDim2.new(1,-70,0,14),Text=k.Subtitle or'',TextSize
+=13,FontFace=j.Regular,TextColor3=a.Muted,Parent=K})local t=c('ScrollingFrame',{
+Name='Tabs',Position=UDim2.fromOffset(0,80),Size=UDim2.new(1,0,1,-116),
+BackgroundTransparency=1,BorderSizePixel=0,ScrollBarThickness=0,
 AutomaticCanvasSize=Enum.AutomaticSize.Y,CanvasSize=UDim2.new(),Parent=D})d.
 TabList=t if m then t:SetAttribute('NoDrag',true)end o(t,16,16,4,4)c(M,{
 SortOrder=Enum.SortOrder.LayoutOrder,Padding=UDim.new(0,4),Parent=t})local E=c(q
@@ -960,9 +1093,9 @@ GetPropertyChangedSignal(J):Connect(function()d:_fitToScreen()d:_clampToScreen()
 end))if k.OpenButton~=false then d:_createOpenButton(type(k.OpenButton)==B and k
 .OpenButton or{})end d._introDone=false table.insert(e.Windows,d)if k.Home then
 d:_buildHome(type(k.Home)==B and k.Home or{})end for _,name in ipairs({'Server',
-'Esp','Settings'})do local opt=k[name]if opt~=false then d['_build'..name](d,
-type(opt)==B and opt or{})end end local r=k.Loading if type(r)==B then k.
-LoadingDuration=r.Duration or k.LoadingDuration k.LoadingText=r.Text or r.
+'Esp','Music','Settings'})do local opt=k[name]if opt~=false then d['_build'..
+name](d,type(opt)==B and opt or{})end end local r=k.Loading if type(r)==B then k
+.LoadingDuration=r.Duration or k.LoadingDuration k.LoadingText=r.Text or r.
 Subtitle or k.LoadingText k.LoadingSteps=r.Steps or k.LoadingSteps k.
 LoadingTitle=r.Title or k.LoadingTitle r=r.Enabled~=false end if r==false then
 task.defer(function()d:_playIntro()end)else d:_showLoader(k)end return d end e.
@@ -979,15 +1112,16 @@ ColorSequence.new(c)end end local function aD(a,b)if a:GetAttribute(
 end if a:IsA('UIStroke')then C(a,'Color',b)elseif a:IsA('UIGradient')then aC(a,b
 )end end local function aj(a)for c,b in ipairs(e.Windows)do if b.Gui and b.Gui.
 Parent then for c,b in ipairs(b.Gui:GetDescendants())do aD(b,a)end end end end
-local function ak(a)if type(a)=='string'then local b=e.Themes[a]if not b then
-warn('[Oblivion] unknown theme: '..a)return nil end return table.clone(b),a
-elseif type(a)=='table'then local c=e.Themes[a.Base or'Default']or e.Themes.
-Default local b=table.clone(c)for d,c in ipairs(K)do if typeof(a[c])=='Color3'
-then b[c]=a[c]end end return b,a.Name or'Custom'end warn(
+local function ak(a)if a=='Default'then a='Mono'end if type(a)=='string'then
+local b=e.Themes[a]if not b then warn('[Oblivion] unknown theme: '..a)return nil
+end return table.clone(b),a elseif type(a)=='table'then local c=e.Themes[a.Base
+=='Default'and'Mono'or a.Base or'Mono']or e.Themes.Mono local b=table.clone(c)
+for d,c in ipairs(K)do if typeof(a[c])=='Color3'then b[c]=a[c]end end return b,a
+.Name or'Custom'end warn(
 [[[Oblivion] SetTheme expects a theme name or a table of colours]])return nil
-end function e:GetThemes()local a={}for b in pairs(e.Themes)do if b~='Default'
-then table.insert(a,b)end end table.sort(a)table.insert(a,1,'Default')return a
-end function e:AddTheme(a,c)assert(type(a)=='string'and a~='',
+end function e:GetThemes()local a={}for b in pairs(e.Themes)do if b~='Mono'then
+table.insert(a,b)end end table.sort(a)table.insert(a,1,'Mono')return a end
+function e:AddTheme(a,c)assert(type(a)=='string'and a~='',
 'AddTheme needs a name')local b=ak(c)if b then e.Themes[a]=b end return b~=nil
 end local X=0 function e:SetTheme(g)local b,h=ak(g)if not b then return false
 end local c,d={},{}for c,a in ipairs(K)do d[b[a]:ToHex()]=true end for h,d in
@@ -1594,9 +1728,353 @@ Callback=function(v)S.Outline=v end})tab:Section('Style')tab:ColorPicker({Name=
 'Colour',Flag='OblivionEspColor',Default=S.Color,Callback=function(v)S.Color=v
 end})tab:Slider({Name='Max distance',Flag='OblivionEspRange',Min=100,Max=5000,
 Step=50,Default=S.MaxDistance,Suffix=' studs',Callback=function(v)S.MaxDistance=
-v end})self.EspTab=tab return tab end function h:_buildSettings(d)local tab=self
-:_pinTab(self:Tab({Name=d.Name or'Settings',Desc=d.Desc,Icon=d.Icon or'settings'
-}),9003)local window=self tab:Section('Interface')tab:ThemePicker({Flag=
+v end})self.EspTab=tab return tab end function h:_buildMusic(d)local window=self
+local tab=self:_pinTab(self:Tab({Name=d.Name or'Music',Desc=d.Desc,Icon=d.Icon
+or'music'}),9003)local folder=d.Folder or'OblivionUI/Music'local cacheDir=folder
+..'/cache'local LRCLIB='https://lrclib.net/api'local sound=c('Sound',{Name=
+'OblivionMusic',Volume=(d.Volume or 50)/100,Parent=game:GetService(
+'SoundService')})local S={Sound=sound,Queue={},Index=0,Shuffle=false,Repeat=
+'Off',Lyrics=nil,Synced=false,Token=0}self.Music=S tab.List.Destroying:Connect(
+function()sound:Destroy()end)local canFiles=type(writefile)=='function'and type(
+getcustomasset)=='function'and type(isfile)=='function'local function http(url,
+headers)local req=request or http_request or(syn and syn.request)if req then
+local ok,res=pcall(req,{Url=url,Method='GET',Headers=headers})if ok and type(res
+)=='table'and res.StatusCode==200 then return res.Body end end local ok,body=
+pcall(game.HttpGet,game,url)return ok and body or nil end local function json(
+url)local body=http(url)if not body then return nil end local ok,data=pcall(H.
+JSONDecode,H,body)return ok and data or nil end local function ensure(path)if
+type(isfolder)=='function'and type(makefolder)=='function'and not isfolder(path)
+then pcall(makefolder,path)end end local function safeName(text)return(tostring(
+text):gsub('[^%w%-]','_'))end local function asset(path)local ok,id=pcall(
+getcustomasset,path)return ok and type(id)=='string'and id~=''and id or nil end
+local function cached(name,url)if not canFiles or not url then return nil end
+ensure('OblivionUI')ensure(folder)ensure(cacheDir)local path=cacheDir..'/'..name
+if not isfile(path)then local body=http(url)if not body or#body<64 or not pcall(
+writefile,path,body)then return nil end end return asset(path)end local function
+clock(t)t=math.max(0,math.floor(t or 0))return('%d:%02d'):format(t//60,t%60)end
+local aacLib,aacTried=nil,-math.huge local function getAAC()if not aacLib and os
+.clock()-aacTried>30 then aacTried=os.clock()local lib=d.AAC or(getgenv and
+getgenv().OblivionAAC)if type(lib)~='table'then local src=http(d.AACUrl or
+[[https://raw.githubusercontent.com/OSSDiablo/OblivionHub-UI/main/aac/AAC.luau]]
+)local fn=src and loadstring and loadstring(src)local ok,res=false,nil if fn
+then ok,res=pcall(fn)end lib=ok and res or nil end if type(lib)=='table'and
+type(lib.decode)=='function'then aacLib=lib end end return aacLib end local
+SC_HEADERS={['User-Agent']='Mozilla/5.0',Referer='https://soundcloud.com/'}local
+scId local function scClient(fresh)if scId and not fresh then return scId end
+local idPath=cacheDir..'/soundcloud.txt'if not fresh and canFiles and isfile(
+idPath)then local ok,saved=pcall(readfile,idPath)if ok and saved:match('^%w+$')
+then scId=saved return scId end end local page=http('https://soundcloud.com/',
+SC_HEADERS)local scripts={}for src in(page or''):gmatch(
+'src="(https://a%-v2%.sndcdn%.com/assets/[^"]+%.js)"')do table.insert(scripts,1,
+src)end for _,src in ipairs(scripts)do local id=(http(src,SC_HEADERS)or''):
+match('client_id:"(%w+)"')if id then scId=id if canFiles then ensure(
+'OblivionUI')ensure(folder)ensure(cacheDir)pcall(writefile,idPath,id)end return
+id end end return nil end local function scJson(url)for attempt=1,2 do local id=
+scClient(attempt==2)if not id then return nil end local body=http(url..(url:
+find('?',1,true)and'&'or'?')..'client_id='..id,SC_HEADERS)local ok,data=pcall(H.
+JSONDecode,H,body or'')if ok and type(data)=='table'then return data end end
+return nil end local function fromSoundCloud(t)if type(t)~='table'or t.policy==
+'BLOCK'or type(t.media)~='table'then return nil end local hls,mp3 for _,tc in
+ipairs(type(t.media.transcodings)=='table'and t.media.transcodings or{})do local
+fmt=type(tc)=='table'and type(tc.format)=='table'and tc.format or{}local mime=
+tostring(fmt.mime_type)if fmt.protocol=='progressive'and mime:find('mpeg',1,true
+)then mp3=mp3 or tc.url elseif fmt.protocol=='hls'and mime:find('mp4a',1,true)
+then hls=hls or tc.url end end if not mp3 and not(hls and getAAC())then return
+nil end local name,song=tostring(t.title or'Unknown'),nil local meta=type(t.
+publisher_metadata)=='table'and t.publisher_metadata or{}local by=meta.artist if
+not by then by,song=name:match('^(.-)%s+[%-\u{2013}]%s+(.+)$')end song=song or
+name if by and by~=''then local e=by:gsub('%p','%%%0')song=song:gsub('\u{2013}',
+'-')song=song:gsub('^'..e..'%s*[%-|:]%s*',''):gsub('%s*[%-|]%s*'..e..'$','')end
+return{Key='sc'..tostring(t.id),Title=song,Artist=by or(type(t.user)=='table'and
+t.user.username)or'',Duration=(tonumber(t.full_duration)or tonumber(t.duration)
+or 0)/1000,Cover=type(t.artwork_url)=='string'and t.artwork_url:gsub('%-large',
+'-t300x300')or nil,CoverKey='scc'..tostring(t.id),Stream=mp3 or hls,Kind=mp3 and
+'scmp3'or'hls',Auth=t.track_authorization,Preview=t.policy=='SNIP'}end
+local function fromITunes(r)return{Key='it'..tostring(r.trackId),Title=r.
+trackName or'Unknown',Artist=r.artistName or'',Duration=30,Audio=r.previewUrl,
+Kind='m4a',Cover=type(r.artworkUrl100)=='string'and r.artworkUrl100:gsub(
+'100x100bb','300x300bb')or nil,CoverKey='itc'..tostring(r.collectionId or r.
+trackId),Preview=true}end local function fromDeezer(r)return{Key='dz'..tostring(
+r.id),Title=r.title_short or r.title or'Unknown',Artist=type(r.artist)=='table'
+and r.artist.name or'',Duration=tonumber(r.duration),Audio=r.preview,Cover=type(
+r.album)=='table'and(r.album.cover_medium or r.album.cover)or nil,CoverKey=type(
+r.album)=='table'and('dzc'..tostring(r.album.id))or nil,Preview=true}end
+local function searchSongs(term)local q=H:UrlEncode(term)local out={}local sc=
+scJson('https://api-v2.soundcloud.com/search/tracks?limit=20&q='..q)for _,t in
+ipairs(type(sc)=='table'and type(sc.collection)=='table'and sc.collection or{})
+do local track=fromSoundCloud(t)if track and not track.Preview then table.
+insert(out,track)end end if#out>0 then return out end local data=json(
+'https://api.deezer.com/search?limit=25&q='..q)for _,r in ipairs(type(data)==
+'table'and type(data.data)=='table'and data.data or{})do if type(r)=='table'and
+type(r.preview)=='string'and r.preview~=''then table.insert(out,fromDeezer(r))
+end end if#out==0 and getAAC()then local it=json(
+[[https://itunes.apple.com/search?media=music&entity=song&limit=25&term=]]..q)
+for _,r in ipairs(type(it)=='table'and type(it.results)=='table'and it.results
+or{})do if type(r)=='table'and type(r.previewUrl)=='string'then table.insert(out
+,fromITunes(r))end end end return out end local function coverFor(track)if track
+.CoverAsset then return track.CoverAsset end if not track.Cover and track.Local
+then local data=json(
+[[https://itunes.apple.com/search?media=music&entity=song&limit=5&term=]]..H:
+UrlEncode(((track.Artist or'')..' '..track.Title)))local hit=type(data)=='table'
+and type(data.results)=='table'and data.results[1]if type(hit)=='table'and type(
+hit.artworkUrl100)=='string'then track.Cover=hit.artworkUrl100:gsub('100x100bb',
+'300x300bb')track.CoverKey='it'..tostring(hit.trackId)track.Duration=track.
+Duration or(tonumber(hit.trackTimeMillis)or 0)/1000 end end if track.Cover then
+track.CoverAsset=cached(safeName(track.CoverKey or track.Key)..'.jpg',track.
+Cover)end return track.CoverAsset end local function parseLrc(text)local out={}
+for line in text:gmatch('[^\r\n]+')do local m,s,rest=line:match(
+'^%[(%d+):(%d+%.?%d*)%]%s*(.*)$')if m then table.insert(out,{Time=tonumber(m)*60
++tonumber(s),Text=rest})end end return out end local function lyricsFor(track)
+local q='artist_name='..H:UrlEncode(track.Artist or'')..'&track_name='..H:
+UrlEncode(track.Title)local rec if track.Artist and track.Artist~=''and track.
+Duration then rec=json(LRCLIB..'/get?'..q..'&duration='..math.floor(track.
+Duration+0.5))end if type(rec)~='table'or not(rec.syncedLyrics or rec.
+plainLyrics)then local list=json(LRCLIB..'/search?'..((track.Artist and track.
+Artist~='')and q or('q='..H:UrlEncode(track.Title))))rec=nil for _,r in ipairs(
+type(list)=='table'and list or{})do if type(r)=='table'and type(r.syncedLyrics)
+=='string'and r.syncedLyrics~=''then rec=r break end rec=rec or r end end if
+type(rec)~='table'then return nil end if type(rec.syncedLyrics)=='string'and rec
+.syncedLyrics~=''then return parseLrc(rec.syncedLyrics),true end if type(rec.
+plainLyrics)=='string'and rec.plainLyrics~=''then local out={}for line in rec.
+plainLyrics:gmatch('[^\r\n]*')do table.insert(out,{Text=line})end return out,
+false end return nil end local function iconButton(parent,icon,props)local btn=
+self:_pill(parent,nil,'',props)btn:SetAttribute('NoDrag',true)local img=c(
+'ImageLabel',{AnchorPoint=Vector2.new(0.5,0.5),Position=UDim2.fromScale(0.5,0.5)
+,Size=UDim2.fromOffset(14,14),BackgroundTransparency=1,ImageColor3=a.Text,
+ScaleType=Enum.ScaleType.Fit,Parent=btn})u(img,icon)return btn,img end
+local function clear(list)for _,child in ipairs(list:GetChildren())do if child:
+IsA('GuiObject')then child:Destroy()end end end local function listFrame(parent,
+order)local list=c('Frame',{Size=UDim2.new(1,0,0,0),AutomaticSize=Enum.
+AutomaticSize.Y,BackgroundTransparency=1,LayoutOrder=order or 0,Parent=parent})
+c('UIListLayout',{SortOrder=Enum.SortOrder.LayoutOrder,Padding=UDim.new(0,6),
+Parent=list})return list end local now=self:_card(tab,112)local art=c(
+'ImageLabel',{Position=UDim2.fromOffset(14,14),Size=UDim2.fromOffset(84,84),
+BackgroundColor3=a.Surface3,BorderSizePixel=0,ScaleType=Enum.ScaleType.Crop,
+Parent=now})g(art,UDim.new(0,8))local artIcon=c('ImageLabel',{AnchorPoint=
+Vector2.new(0.5,0.5),Position=UDim2.fromScale(0.5,0.5),Size=UDim2.fromOffset(26,
+26),BackgroundTransparency=1,ImageColor3=a.Muted,ScaleType=Enum.ScaleType.Fit,
+Parent=art})u(artIcon,'music')local title=f({Position=UDim2.fromOffset(112,14),
+Size=UDim2.new(1,-210,0,18),Text='Nothing playing',TextSize=15,Parent=now})local
+artist=f({Position=UDim2.fromOffset(112,34),Size=UDim2.new(1,-210,0,16),Text=
+'Search a song or drop mp3s in your Music folder',TextSize=13,FontFace=j.Regular
+,TextColor3=a.Muted,Parent=now})local times=f({AnchorPoint=Vector2.new(1,0),
+Position=UDim2.new(1,-14,0,14),Size=UDim2.fromOffset(90,18),Text='0:00 / 0:00',
+TextSize=12,FontFace=j.Regular,TextColor3=a.Muted,TextXAlignment=Enum.
+TextXAlignment.Right,Parent=now})local controls=c('Frame',{Position=UDim2.
+fromOffset(112,56),Size=UDim2.new(1,-126,0,30),BackgroundTransparency=1,Parent=
+now})c('UIListLayout',{FillDirection=Enum.FillDirection.Horizontal,Padding=UDim.
+new(0,6),SortOrder=Enum.SortOrder.LayoutOrder,Parent=controls})local function
+control(order,icon)return iconButton(controls,icon,{Size=UDim2.fromOffset(30,30)
+,LayoutOrder=order,BackgroundColor3=a.Surface3})end local shuffleBtn,shuffleImg=
+control(1,'shuffle')local prevBtn=control(2,'skip-back')local playBtn,playImg=
+control(3,'play')local nextBtn=control(4,'skip-forward')local repeatBtn,
+repeatImg=control(5,'repeat')local lyricsBtn,lyricsImg=control(6,'mic-vocal')
+lyricsImg.ImageColor3=a.Muted shuffleImg.ImageColor3=a.Muted repeatImg.
+ImageColor3=a.Muted local bar=c('TextButton',{Position=UDim2.fromOffset(112,96),
+Size=UDim2.new(1,-126,0,4),BackgroundColor3=a.Surface3,BorderSizePixel=0,
+AutoButtonColor=false,Text='',Parent=now})bar:SetAttribute('NoDrag',true)g(bar,
+UDim.new(1,0))local fill=c('Frame',{Size=UDim2.fromScale(0,1),BackgroundColor3=a
+.Accent,BorderSizePixel=0,Parent=bar})g(fill,UDim.new(1,0))bar.InputBegan:
+Connect(function(input)if input.UserInputType~=Enum.UserInputType.MouseButton1
+and input.UserInputType~=Enum.UserInputType.Touch then return end if sound.
+TimeLength>0 then local x=math.clamp((input.Position.X-bar.AbsolutePosition.X)/
+math.max(bar.AbsoluteSize.X,1),0,1)sound.TimePosition=x*sound.TimeLength end end
+)tab:Slider({Name='Volume',Min=0,Max=100,Default=d.Volume or 50,Suffix='%',Flag=
+'OblivionMusicVolume',Callback=function(value)sound.Volume=value/100 end})local
+segBar=c('Frame',{Size=UDim2.new(1,0,0,32),BackgroundTransparency=1,LayoutOrder=
+tab:_nextOrder(),Parent=tab.List})c('UIListLayout',{FillDirection=Enum.
+FillDirection.Horizontal,Padding=UDim.new(0,6),SortOrder=Enum.SortOrder.
+LayoutOrder,Parent=segBar})local pages,segs={},{}local function showPage(name)S.
+Page=name for key,page in pairs(pages)do page.Visible=key==name local on=key==
+name b(segs[key][1],{BackgroundColor3=on and a.Surface2 or a.Surface},0.15)b(
+segs[key][2],{TextColor3=on and a.Text or a.Muted},0.15)end end for n_,info in
+ipairs({{'Search','search'},{'Library','folder'},{'Queue','list-music'}})do
+local btn,label=self:_pill(segBar,info[2],info[1],{Size=UDim2.fromOffset(100,32)
+,LayoutOrder=n_})btn:SetAttribute('NoDrag',true)segs[info[1] ]={btn,label}pages[
+info[1] ]=listFrame(tab.List,tab:_nextOrder())btn.MouseButton1Click:Connect(
+function()showPage(info[1])end)end local refreshQueue local playIndex local
+loadAudio local function enqueue(track)for idx,t in ipairs(S.Queue)do if t.Key==
+track.Key then return idx end end table.insert(S.Queue,track)if refreshQueue
+then refreshQueue()end return#S.Queue end local function trackRow(list,order,
+track,buttons)local r=c('TextButton',{Size=UDim2.new(1,0,0,52),BackgroundColor3=
+a.Surface2,BorderSizePixel=0,AutoButtonColor=false,Text='',LayoutOrder=order,
+Parent=list})r:SetAttribute('NoDrag',true)g(r)local stroke=i(r)local thumb=c(
+'ImageLabel',{Position=UDim2.fromOffset(8,8),Size=UDim2.fromOffset(36,36),
+BackgroundColor3=a.Surface3,BorderSizePixel=0,ScaleType=Enum.ScaleType.Crop,
+Parent=r})g(thumb,UDim.new(0,6))local thumbIcon=c('ImageLabel',{AnchorPoint=
+Vector2.new(0.5,0.5),Position=UDim2.fromScale(0.5,0.5),Size=UDim2.fromOffset(14,
+14),BackgroundTransparency=1,ImageColor3=a.Muted,ScaleType=Enum.ScaleType.Fit,
+Parent=thumb})u(thumbIcon,'music')if track.CoverAsset or track.Cover then task.
+spawn(function()local id=coverFor(track)if id and thumb.Parent then thumb.Image=
+id thumbIcon.Visible=false end end)end local right=#buttons*36+70 local name=f({
+Position=UDim2.fromOffset(54,9),Size=UDim2.new(1,-54-right,0,18),Text=track.
+Title,TextSize=14,Parent=r})f({Position=UDim2.fromOffset(54,28),Size=UDim2.new(1
+,-54-right,0,16),Text=track.Artist~=''and track.Artist or(track.Local and
+'Local file'or''),TextSize=12,FontFace=j.Regular,TextColor3=a.Muted,Parent=r})f(
+{AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,-(#buttons*36+10),0.5,0),
+Size=UDim2.fromOffset(56,16),Text=track.Preview and'0:30'or(track.Duration and
+clock(track.Duration)or''),TextSize=12,FontFace=j.Regular,TextColor3=a.Muted,
+TextXAlignment=Enum.TextXAlignment.Right,Parent=r})for n_,spec in ipairs(buttons
+)do local btn=iconButton(r,spec[1],{AnchorPoint=Vector2.new(1,0.5),Position=
+UDim2.new(1,-8-(n_-1)*36,0.5,0),Size=UDim2.fromOffset(30,30),BackgroundColor3=a.
+Surface3})btn.MouseButton1Click:Connect(spec[2])end r.MouseEnter:Connect(
+function()b(stroke,{Color=a.StrokeHover},0.12)end)r.MouseLeave:Connect(function(
+)b(stroke,{Color=a.Stroke},0.2)end)r.MouseButton1Click:Connect(function()at(r,a.
+Accent)playIndex(enqueue(track))end)return r,name end local function addButton(
+track)return{'plus',function()enqueue(track)window:Notify({Title='Queued',
+Content=track.Title,Duration=2})end}end local searchPage=pages.Search local
+searchCard=c('Frame',{Size=UDim2.new(1,0,0,40),BackgroundColor3=a.Surface2,
+BorderSizePixel=0,LayoutOrder=1,Parent=searchPage})searchCard:SetAttribute(
+'NoDrag',true)g(searchCard)i(searchCard)local searchIcon=c('ImageLabel',{
+AnchorPoint=Vector2.new(0,0.5),Position=UDim2.new(0,12,0.5,0),Size=UDim2.
+fromOffset(14,14),BackgroundTransparency=1,ImageColor3=a.Muted,ScaleType=Enum.
+ScaleType.Fit,Parent=searchCard})u(searchIcon,'search')local box=c('TextBox',{
+Position=UDim2.fromOffset(34,0),Size=UDim2.new(1,-46,1,0),BackgroundTransparency
+=1,Text='',PlaceholderText='Search songs and artists',PlaceholderColor3=a.Muted,
+TextColor3=a.Text,FontFace=j.Regular,TextSize=14,TextXAlignment=Enum.
+TextXAlignment.Left,ClearTextOnFocus=false,Parent=searchCard})local searchStatus
+=f({Size=UDim2.new(1,0,0,16),Text=
+'Full songs from SoundCloud. Your own files go in workspace/'..folder,TextSize=
+12,FontFace=j.Regular,TextColor3=a.Muted,LayoutOrder=2,Parent=searchPage})
+searchStatus.TextWrapped=true searchStatus.AutomaticSize=Enum.AutomaticSize.Y
+local results=listFrame(searchPage,3)local searching=0 box.FocusLost:Connect(
+function(enter)local term=box.Text:gsub('^%s+',''):gsub('%s+$','')if not enter
+or term==''then return end searching+=1 local ticket=searching searchStatus.Text
+='Searching'clear(results)task.spawn(function()local found=searchSongs(term)if
+ticket~=searching then return end for n_,track in ipairs(found)do trackRow(
+results,n_,track,{addButton(track)})end local full=found[1]and not found[1].
+Preview searchStatus.Text=#found==0 and'No results'or(#found..(#found==1 and
+' result'or' results')..(full and''or'  \u{b7}  30 second previews'))end)end)
+local libPage=pages.Library local libHead=c('Frame',{Size=UDim2.new(1,0,0,32),
+BackgroundTransparency=1,LayoutOrder=1,Parent=libPage})local libStatus=f({Size=
+UDim2.new(1,-44,1,0),Position=UDim2.fromOffset(2,0),Text='',TextSize=12,FontFace
+=j.Regular,TextColor3=a.Muted,Parent=libHead})libStatus.TextWrapped=true local
+libRefresh=iconButton(libHead,'refresh-cw',{AnchorPoint=Vector2.new(1,0),
+Position=UDim2.new(1,0,0,0),Size=UDim2.fromOffset(32,32),BackgroundColor3=a.
+Surface2})local libList=listFrame(libPage,2)local function loadLibrary()clear(
+libList)if not canFiles or type(listfiles)~='function'then libStatus.Text=
+"Your executor can't play local files"return end ensure('OblivionUI')ensure(
+folder)local okList,files=pcall(listfiles,folder)local count=0 for _,path in
+ipairs(okList and files or{})do local file=path:match('([^/\\]+)$')or path local
+base,ext=file:match('^(.+)%.(%w+)$')ext=ext and ext:lower()if base and(ext==
+'mp3'or ext=='ogg')then count+=1 local who,what=base:match('^(.-)%s+%-%s+(.+)$')
+local track={Key='local_'..safeName(base),Title=what or base,Artist=who or'',
+Path=path,Local=true}trackRow(libList,count,track,{addButton(track)})end end
+libStatus.Text=count==0 and('Drop mp3 or ogg files in workspace/'..folder..
+'. Name them Artist - Title for covers and lyrics.')or(count..(count==1 and
+' song'or' songs')..' in workspace/'..folder)end libRefresh.MouseButton1Click:
+Connect(loadLibrary)local queuePage=pages.Queue local queueHead=c('Frame',{Size=
+UDim2.new(1,0,0,32),BackgroundTransparency=1,LayoutOrder=1,Parent=queuePage})
+local queueStatus=f({Size=UDim2.new(1,-110,1,0),Position=UDim2.fromOffset(2,0),
+Text='Queue is empty',TextSize=12,FontFace=j.Regular,TextColor3=a.Muted,Parent=
+queueHead})local queueClear=self:_pill(queueHead,'trash-2','Clear',{AnchorPoint=
+Vector2.new(1,0),Position=UDim2.new(1,0,0,0),Size=UDim2.fromOffset(90,32),
+BackgroundColor3=a.Surface2})queueClear:SetAttribute('NoDrag',true)local
+queueList=listFrame(queuePage,2)refreshQueue=function()clear(queueList)for idx,
+track in ipairs(S.Queue)do local _,name=trackRow(queueList,idx,track,{{'x',
+function()table.remove(S.Queue,idx)if idx<S.Index then S.Index-=1 elseif idx==S.
+Index then S.Index=0 end refreshQueue()end}})if idx==S.Index then name.
+TextColor3=a.Accent end end queueStatus.Text=#S.Queue==0 and'Queue is empty'or(#
+S.Queue..(#S.Queue==1 and' song'or' songs'))end queueClear.MouseButton1Click:
+Connect(function()S.Queue={}S.Index=0 refreshQueue()end)local lyricsMenu=tab:
+Menu({Name='Lyrics',Icon='mic-vocal',Width=d.LyricsWidth or 320,Row=false,
+Callback=function(open)b(lyricsImg,{ImageColor3=open and a.Accent or a.Muted},
+0.15)end})local lyricsCard=lyricsMenu:Tab({Name='Lyrics'}).List lyricsCard:
+FindFirstChildOfClass('UIListLayout').Padding=UDim.new(0,10)lyricsBtn.
+MouseButton1Click:Connect(function()lyricsMenu:Toggle()end)local lyricLabels={}
+local activeLine=0 local function setLyrics(lines,synced,note)clear(lyricsCard)
+lyricLabels={}activeLine=0 S.Lyrics,S.Synced=lines,synced if not lines then
+local msg=f({Size=UDim2.new(1,0,0,18),Text=note or'No lyrics found',TextSize=13,
+FontFace=j.Regular,TextColor3=a.Muted,Parent=lyricsCard})msg.TextWrapped=true
+return end for n_,line in ipairs(lines)do local lbl=f({Size=UDim2.new(1,0,0,0),
+AutomaticSize=Enum.AutomaticSize.Y,Text=line.Text~=''and line.Text or' ',
+TextSize=synced and 18 or 14,FontFace=synced and j.Bold or j.Regular,TextColor3=
+synced and a.Muted or a.Text,LayoutOrder=n_,Parent=lyricsCard})lbl.TextWrapped=
+true lbl.TextTruncate=Enum.TextTruncate.None lyricLabels[n_]=lbl end end
+setLyrics(nil,false,'Play something to see its lyrics')local function setPlaying
+(on)u(playImg,on and'pause'or'play')end local function showTrack(track,status)
+title.Text=track.Title artist.Text=status or(track.Artist~=''and track.Artist or
+(track.Local and'Local file'or''))art.Image=''artIcon.Visible=true end local
+keepWavs=d.CacheSongs or 4 local function remember(path)local listPath=cacheDir
+..'/decoded.json'local ok,list=pcall(function()return H:JSONDecode(readfile(
+listPath))end)list=ok and type(list)=='table'and list or{}for i=#list,1,-1 do if
+list[i]==path then table.remove(list,i)end end table.insert(list,path)while#list
+>keepWavs do local old=table.remove(list,1)if type(delfile)=='function'and
+isfile(old)then pcall(delfile,old)end end pcall(writefile,listPath,H:JSONEncode(
+list))end local function decodeTo(path,data,report)local lib=getAAC()if not lib
+then return nil end report('Decoding')local wav=lib.decode(data,{Mono=d.Mono,
+Yield=function(p)report(('Decoding %d%%'):format(math.floor(p*100)))task.wait()
+end})if not pcall(writefile,path,buffer.tostring(wav))then return nil end
+remember(path)return asset(path)end local function fetchHls(m3u8,report)local
+playlist=http(m3u8)if not playlist then return nil end local urls={}local init=
+playlist:match('#EXT%-X%-MAP:URI="([^"]+)"')if init then table.insert(urls,init)
+end for line in playlist:gmatch('[^\r\n]+')do if line:sub(1,1)~='#'then table.
+insert(urls,line)end end local parts,done,failed,nextIdx={},0,false,0 local
+workers=math.min(6,#urls)local alive=workers for _=1,workers do task.spawn(
+function()while not failed do nextIdx+=1 local idx=nextIdx if idx>#urls then
+break end local body=http(urls[idx])if not body then failed=true break end parts
+[idx]=body done+=1 end alive-=1 end)end while alive>0 do if not pcall(report,(
+'Downloading %d%%'):format(math.floor(done/#urls*100)))then failed=true error(
+'skipped',0)end task.wait(0.1)end return not failed and#parts==#urls and table.
+concat(parts)or nil end loadAudio=function(track,report)if track.Local then
+return asset(track.Path)end if not canFiles then return nil end ensure(
+'OblivionUI')ensure(folder)ensure(cacheDir)local base=cacheDir..'/'..safeName(
+track.Key)if track.Kind=='m4a'or track.Kind=='hls'then if isfile(base..'.wav')
+then remember(base..'.wav')return asset(base..'.wav')end local data if track.
+Kind=='m4a'then report('Downloading')data=http(track.Audio)else local info=
+scJson(track.Stream..(track.Auth and('?track_authorization='..track.Auth)or''))
+data=type(info)=='table'and type(info.url)=='string'and fetchHls(info.url,report
+)end return data and decodeTo(base..'.wav',data,report)end if track.Kind==
+'scmp3'and not isfile(base..'.mp3')then local info=scJson(track.Stream..(track.
+Auth and('?track_authorization='..track.Auth)or''))track.Audio=type(info)==
+'table'and info.url or nil end report('Downloading')return cached(safeName(track
+.Key)..'.mp3',track.Audio)end playIndex=function(idx)local track=S.Queue[idx]if
+not track then return end S.Index=idx S.Track=track S.Token+=1 local token=S.
+Token sound:Stop()setPlaying(false)showTrack(track,'Loading')setLyrics(nil,false
+,'Looking for lyrics')refreshQueue()task.spawn(function()local ok,id=pcall(
+loadAudio,track,function(text)if token~=S.Token then error('skipped',0)end
+showTrack(track,text)end)if token~=S.Token then return end id=ok and id or nil
+if not id then showTrack(track,"Couldn't load this song")return end sound.
+SoundId=id sound.TimePosition=0 sound:Play()setPlaying(true)showTrack(track)task
+.spawn(function()local cover=coverFor(track)if cover and token==S.Token then art
+.Image=cover artIcon.Visible=false end end)local lines,synced=lyricsFor(track)if
+token==S.Token then setLyrics(lines,synced and not track.Preview)end end)end
+local function step(dir,auto)local count=#S.Queue if count==0 then return end if
+auto and S.Repeat=='One'then return playIndex(S.Index)end local idx if S.Shuffle
+and count>1 then repeat idx=math.random(count)until idx~=S.Index else idx=S.
+Index+dir if idx>count then if auto and S.Repeat=='Off'then setPlaying(false)
+return end idx=1 elseif idx<1 then idx=count end end playIndex(idx)end sound.
+Ended:Connect(function()step(1,true)end)playBtn.MouseButton1Click:Connect(
+function()if sound.IsPlaying then sound:Pause()setPlaying(false)elseif sound.
+SoundId~=''then sound:Resume()setPlaying(true)elseif#S.Queue>0 then playIndex(
+math.max(S.Index,1))end end)nextBtn.MouseButton1Click:Connect(function()step(1)
+end)prevBtn.MouseButton1Click:Connect(function()if sound.TimePosition>3 then
+sound.TimePosition=0 else step(-1)end end)shuffleBtn.MouseButton1Click:Connect(
+function()S.Shuffle=not S.Shuffle b(shuffleImg,{ImageColor3=S.Shuffle and a.
+Accent or a.Muted},0.15)end)repeatBtn.MouseButton1Click:Connect(function()S.
+Repeat=S.Repeat=='Off'and'All'or S.Repeat=='All'and'One'or'Off'u(repeatImg,S.
+Repeat=='One'and'repeat-1'or'repeat')b(repeatImg,{ImageColor3=S.Repeat=='Off'and
+a.Muted or a.Accent},0.15)end)function S:Play(track)playIndex(enqueue(track))end
+function S:Add(track)return enqueue(track)end function S:Search(term)return
+searchSongs(term)end function S:Pause()sound:Pause()setPlaying(false)end
+function S:Resume()sound:Resume()setPlaying(true)end S.LyricsWindow=lyricsMenu
+function S:Next()step(1)end function S:Previous()step(-1)end showPage('Search')
+local libraryLoaded=false task.spawn(function()while not self._destroyed and tab
+.List.Parent do if self.Open then if not libraryLoaded and self.CurrentTab==tab
+then libraryLoaded=true loadLibrary()end local length,pos=sound.TimeLength,sound
+.TimePosition fill.Size=UDim2.fromScale(length>0 and math.clamp(pos/length,0,1)
+or 0,1)times.Text=clock(pos)..' / '..clock(length)if S.Synced and S.Lyrics then
+local cur=0 for n_,line in ipairs(S.Lyrics)do if line.Time and line.Time<=pos+
+0.2 then cur=n_ else break end end if cur~=activeLine then if lyricLabels[
+activeLine]then b(lyricLabels[activeLine],{TextColor3=a.Muted},0.2)end
+activeLine=cur local lbl=lyricLabels[cur]if lbl then b(lbl,{TextColor3=a.Text},
+0.2)if lyricsMenu.IsOpen then local list=lyricsCard local sc=self.Scale and self
+.Scale.Scale or 1 local target=list.CanvasPosition.Y+(lbl.AbsolutePosition.Y-
+list.AbsolutePosition.Y)/sc-list.AbsoluteSize.Y/sc/2 b(list,{CanvasPosition=
+Vector2.new(0,math.max(0,target))},0.3)end end end end end task.wait(0.1)end end
+)self.MusicTab=tab return tab end function h:_buildSettings(d)local tab=self:
+_pinTab(self:Tab({Name=d.Name or'Settings',Desc=d.Desc,Icon=d.Icon or'settings'}
+),9004)local window=self tab:Section('Interface')tab:ThemePicker({Flag=
 'OblivionTheme'})tab:Keybind({Name='Toggle UI',CurrentKeybind=self.Keybind and
 self.Keybind.Name or'RightControl',OnChanged=function(key)window:SetKeybind(key)
 end})tab:ConfigManager({Name='Configs'})tab:Section('Session')tab:Button({Name=
