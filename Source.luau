@@ -359,9 +359,9 @@ AccentDark or a.Accent,UDim2.new(0,14,0.5,0))g=26 end local m=M(c,d.Name or
 'Button',d.Desc,30)if g>0 then for b,a in ipairs(c:GetChildren())do if a:IsA(
 'TextLabel')then a.Position+=UDim2.fromOffset(g,0)a.Size-=UDim2.fromOffset(g,0)
 end end end if e then for b,a in ipairs(c:GetChildren())do if a:IsA('TextLabel')
-then a.TextColor3=k end end end A(c,'chevron-right',e and a.AccentDark or a.
-Muted,UDim2.new(1,-30,0.5,0))c.MouseButton1Click:Connect(function()at(c,e and a.
-AccentDark or a.Accent)l(d.Callback)end)local h={}function h:SetText(a)m.Text=
+then a.TextColor3=k end end end A(c,'mouse-pointer-click',e and a.AccentDark or
+a.Muted,UDim2.new(1,-30,0.5,0))c.MouseButton1Click:Connect(function()at(c,e and
+a.AccentDark or a.Accent)l(d.Callback)end)local h={}function h:SetText(a)m.Text=
 tostring(a)end h.SetTitle=h.SetText return q(self,d,h,c,'Button')end function k:
 Toggle(e)local j,n e,j,n=B(self,e,{Title='Name',Description='Desc',CurrentValue=
 'Default',Value='Default'},'TextButton',56,'Toggle')local f=c('Frame',{

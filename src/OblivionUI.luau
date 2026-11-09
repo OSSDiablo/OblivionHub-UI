@@ -1441,7 +1441,7 @@ function k:Button(d)
 			end
 		end
 	end
-	A(c, "chevron-right", e and a.AccentDark or a.Muted, UDim2.new(1, -30, 0.5, 0))
+	A(c, "mouse-pointer-click", e and a.AccentDark or a.Muted, UDim2.new(1, -30, 0.5, 0))
 	c.MouseButton1Click:Connect(function()
 		at(c, e and a.AccentDark or a.Accent)
 		l(d.Callback)
