@@ -735,283 +735,312 @@ fromRGB(244,114,182)}local function tintOf(t)if typeof(t)=='Color3'then return t
 end if type(t)=='string'then return tileTints[t:lower()]or a[t]or a.Accent end
 return a.Accent end function k:PlayerList(opts)opts=n(opts,{Title='Name',
 MultiSelect='Multi',Multiple='Multi'})local multi=opts.Multi==true local listH=
-math.max(tonumber(opts.Height)or 196,80)local rowH=m and 44 or 38 local frame,
-stroke=G(self,'Frame',46+listH+8,opts)L(frame,stroke)f({Name='Title',Position=
-UDim2.fromOffset(14,0),Size=UDim2.new(1,-184,0,44),Text=opts.Name or'Players',
-Parent=frame})local searchBg=c('Frame',{AnchorPoint=Vector2.new(1,0),Position=
-UDim2.new(1,-9,0,9),Size=UDim2.fromOffset(156,28),BackgroundColor3=a.Surface3,
-BorderSizePixel=0,Parent=frame})g(searchBg,UDim.new(0,7))local searchStroke=i(
-searchBg,a.Stroke)local sIcon=A(searchBg,'search',a.Muted,UDim2.new(0,9,0.5,0))
-sIcon.Size=UDim2.fromOffset(14,14)local box=c('TextBox',{Position=UDim2.
-fromOffset(30,0),Size=UDim2.new(1,-38,1,0),BackgroundTransparency=1,Text='',
-PlaceholderText=opts.PlaceholderText or'Search',PlaceholderColor3=a.Muted,
-TextColor3=a.Text,TextSize=13,FontFace=j.Regular,TextXAlignment=Enum.
-TextXAlignment.Left,ClearTextOnFocus=false,Parent=searchBg})box.Focused:Connect(
-function()b(searchStroke,{Color=a.Accent,Transparency=0.3},0.15)end)box.
-FocusLost:Connect(function()b(searchStroke,{Color=a.Stroke,Transparency=0},0.25)
-end)local scroll=c('ScrollingFrame',{Position=UDim2.fromOffset(6,46),Size=UDim2.
-new(1,-12,0,listH),BackgroundTransparency=1,BorderSizePixel=0,ScrollBarThickness
-=2,ScrollBarImageColor3=a.Muted,CanvasSize=UDim2.new(),AutomaticCanvasSize=Enum.
-AutomaticSize.Y,ScrollingDirection=Enum.ScrollingDirection.Y,Parent=frame})c(
-'UIListLayout',{SortOrder=Enum.SortOrder.LayoutOrder,Padding=UDim.new(0,2),
-Parent=scroll})local empty=f({Position=UDim2.fromOffset(0,46),Size=UDim2.new(1,0
-,0,listH),Text=opts.EmptyText or'No players here',TextSize=13,FontFace=j.Regular
-,TextColor3=a.Muted,TextXAlignment=Enum.TextXAlignment.Center,Visible=false,
-Parent=frame})local api={_listeners={}}local rows,selected={},{}local function
-paint(r,instant)local on=selected[r.player]==true local t=instant and 0 or 0.18
-b(r.btn,{BackgroundTransparency=on and 0 or(r.hover and 0.5 or 1)},t)b(r.check,{
+math.max(tonumber(opts.Height)or 196,80)local rowH=m and 44 or 38 local
+collapsible=opts.Collapsed~=false local open=not collapsible local headH=46
+local topH=collapsible and headH+36 or headH local fullH=topH+listH+8 local
+frame,stroke=G(self,'Frame',open and fullH or headH,opts)frame.ClipsDescendants=
+true L(frame,stroke)f({Name='Title',Position=UDim2.fromOffset(14,0),Size=UDim2.
+new(1,-184,0,44),Text=opts.Name or'Players',Parent=frame})local searchBg=c(
+'Frame',{AnchorPoint=collapsible and Vector2.new(0,0)or Vector2.new(1,0),
+Position=collapsible and UDim2.fromOffset(9,headH)or UDim2.new(1,-9,0,9),Size=
+collapsible and UDim2.new(1,-18,0,28)or UDim2.fromOffset(156,28),
+BackgroundColor3=a.Surface3,BorderSizePixel=0,Parent=frame})g(searchBg,UDim.new(
+0,7))local searchStroke=i(searchBg,a.Stroke)local sIcon=A(searchBg,'search',a.
+Muted,UDim2.new(0,9,0.5,0))sIcon.Size=UDim2.fromOffset(14,14)local box=c(
+'TextBox',{Position=UDim2.fromOffset(30,0),Size=UDim2.new(1,-38,1,0),
+BackgroundTransparency=1,Text='',PlaceholderText=opts.PlaceholderText or'Search'
+,PlaceholderColor3=a.Muted,TextColor3=a.Text,TextSize=13,FontFace=j.Regular,
+TextXAlignment=Enum.TextXAlignment.Left,ClearTextOnFocus=false,Parent=searchBg})
+box.Focused:Connect(function()b(searchStroke,{Color=a.Accent,Transparency=0.3},
+0.15)end)box.FocusLost:Connect(function()b(searchStroke,{Color=a.Stroke,
+Transparency=0},0.25)end)local scroll=c('ScrollingFrame',{Position=UDim2.
+fromOffset(6,topH),Size=UDim2.new(1,-12,0,listH),BackgroundTransparency=1,
+BorderSizePixel=0,ScrollBarThickness=2,ScrollBarImageColor3=a.Muted,CanvasSize=
+UDim2.new(),AutomaticCanvasSize=Enum.AutomaticSize.Y,ScrollingDirection=Enum.
+ScrollingDirection.Y,Parent=frame})c('UIListLayout',{SortOrder=Enum.SortOrder.
+LayoutOrder,Padding=UDim.new(0,2),Parent=scroll})local empty=f({Position=UDim2.
+fromOffset(0,topH),Size=UDim2.new(1,0,0,listH),Text=opts.EmptyText or
+'No players here',TextSize=13,FontFace=j.Regular,TextColor3=a.Muted,
+TextXAlignment=Enum.TextXAlignment.Center,Visible=false,Parent=frame})local api=
+{_listeners={}}local rows,selected={},{}local function paint(r,instant)local on=
+selected[r.player]==true local t=instant and 0 or 0.18 b(r.btn,{
+BackgroundTransparency=on and 0 or(r.hover and 0.5 or 1)},t)b(r.check,{
 ImageTransparency=on and 0 or 1},t)b(r.stroke,{Transparency=on and 0.5 or 1},t)
 end local function value()if multi then local out={}for _,r in ipairs(rows)do if
 selected[r.player]then table.insert(out,r.player)end end return out end for p in
-pairs(selected)do return p end return nil end local function fire()l(opts.
-Callback,value())end local function filter()local q0=box.Text:lower()local shown
-=0 for _,r in ipairs(rows)do local hit=q0==''or r.player.Name:lower():find(q0,1,
-true)~=nil or r.player.DisplayName:lower():find(q0,1,true)~=nil r.btn.Visible=
-hit if hit then shown+=1 end end empty.Visible=shown==0 empty.Text=#rows==0 and(
-opts.EmptyText or'No players here')or'No match'end local function sortRows()
-table.sort(rows,function(x,y2)return x.player.DisplayName:lower()<y2.player.
-DisplayName:lower()end)for idx,r in ipairs(rows)do r.btn.LayoutOrder=idx end end
-local function pick(p)if multi then selected[p]=not selected[p]or nil else local
-was=selected[p]table.clear(selected)if not was then selected[p]=true end end for
-_,r in ipairs(rows)do paint(r)end fire()end local function addRow(p)if p==J and
-not opts.IncludeSelf then return end for _,r in ipairs(rows)do if r.player==p
-then return end end local btn=c('TextButton',{Size=UDim2.new(1,0,0,rowH),
-BackgroundColor3=a.Surface3,BackgroundTransparency=1,AutoButtonColor=false,Text=
-'',BorderSizePixel=0,Parent=scroll})g(btn,UDim.new(0,8))local rs=i(btn,a.Stroke,
-1)local av=c('ImageLabel',{AnchorPoint=Vector2.new(0,0.5),Position=UDim2.new(0,6
-,0.5,0),Size=UDim2.fromOffset(rowH-12,rowH-12),BackgroundColor3=a.Surface3,
-BorderSizePixel=0,Image=headshot(p.UserId),Parent=btn})g(av,UDim.new(1,0))local
-x0=rowH+2 f({Name='Display',Position=UDim2.fromOffset(x0,rowH/2-15),Size=UDim2.
-new(1,-(x0+34),0,16),Text=p.DisplayName,TextSize=13,Parent=btn})f({Name='User',
-Position=UDim2.fromOffset(x0,rowH/2+1),Size=UDim2.new(1,-(x0+34),0,14),Text='@'
-..p.Name,TextSize=12,FontFace=j.Regular,TextColor3=a.Muted,Parent=btn})local _,
-chk=A(btn,'check',a.Accent,UDim2.new(1,-26,0.5,0))local r={player=p,btn=btn,
-check=chk,stroke=rs}btn.MouseEnter:Connect(function()r.hover=true paint(r)end)
-btn.MouseLeave:Connect(function()r.hover=false paint(r)end)btn.MouseButton1Click
-:Connect(function()pick(p)end)table.insert(rows,r)paint(r,true)end
-local function removeRow(p)for idx,r in ipairs(rows)do if r.player==p then r.btn
-:Destroy()table.remove(rows,idx)break end end if selected[p]then selected[p]=nil
-fire()end filter()end function api:Refresh()for _,p in ipairs(I:GetPlayers())do
-addRow(p)end for idx=#rows,1,-1 do if not rows[idx].player.Parent then
-removeRow(rows[idx].player)end end sortRows()filter()end function api:Get()
-return value()end function api:GetNames()local v=value()if not multi then return
-v and v.Name or nil end local out={}for _,p in ipairs(v)do table.insert(out,p.
-Name)end return out end function api:Set(v,silent)table.clear(selected)local
-list=type(v)=='table'and v or{v}for _,item in ipairs(list)do local p=
-resolvePlayer(item)if p then selected[p]=true if not multi then break end end
-end for _,r in ipairs(rows)do paint(r)end if not silent then fire()end end
-function api:Clear(silent)api:Set({},silent)end box:GetPropertyChangedSignal(
-'Text'):Connect(filter)local c1=I.PlayerAdded:Connect(function(p)addRow(p)
-sortRows()filter()end)local c2=I.PlayerRemoving:Connect(removeRow)table.insert(
-api._listeners,function()c1:Disconnect()c2:Disconnect()end)api:Refresh()if opts.
-Default~=nil then api:Set(opts.Default,true)end return q(self,opts,api,frame,
-'PlayerList')end function k:FeatureTile(opts)opts=n(opts,{Title='Name',
-Description='Desc',CurrentValue='Default',Value='Default'})local tint=tintOf(
-opts.Tint or opts.Color)local h=m and 92 or 84 local frame,stroke=G(self,
-'TextButton',h,opts)frame.ClipsDescendants=true local iconBg=c('Frame',{
-AnchorPoint=Vector2.new(0,0.5),Position=UDim2.new(0,14,0.5,0),Size=UDim2.
-fromOffset(48,48),BackgroundColor3=tint,BackgroundTransparency=0.88,
-BorderSizePixel=0,Parent=frame})g(iconBg,UDim.new(0,12))local iconStroke=i(
-iconBg,tint,0.7)local ic,icImg=A(iconBg,opts.Icon or'zap',tint,UDim2.new(0.5,-11
-,0.5,0))ic.Size=UDim2.fromOffset(22,22)local title=f({Name='Title',Position=
-UDim2.fromOffset(76,h/2-19),Size=UDim2.new(1,-150,0,20),Text=opts.Name or
-'Feature',TextSize=15,FontFace=j.Bold,Parent=frame})local status=f({Name='Desc',
-Position=UDim2.fromOffset(76,h/2+2),Size=UDim2.new(1,-150,0,17),Text='',TextSize
-=13,FontFace=j.Regular,TextColor3=a.Muted,Parent=frame})local pill=c('Frame',{
-AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,-14,0.5,0),Size=UDim2.
-fromOffset(46,24),BackgroundColor3=a.Surface3,BorderSizePixel=0,Parent=frame})g(
-pill,UDim.new(1,0))local pillStroke=i(pill,a.Stroke)local pillText=f({Size=UDim2
-.fromScale(1,1),Text='OFF',TextSize=11,FontFace=j.Bold,TextColor3=a.Muted,
-TextXAlignment=Enum.TextXAlignment.Center,Parent=pill})local api={Value=opts.
-Default==true}local custom local function paint(t)local on=api.Value b(iconBg,{
-BackgroundTransparency=on and 0.72 or 0.88},t)b(iconStroke,{Transparency=on and
-0.3 or 0.7},t)b(stroke,{Color=on and tint or a.Stroke,Transparency=on and 0.45
-or 0},t)b(pill,{BackgroundColor3=on and tint or a.Surface3},t)b(pillStroke,{
-Transparency=on and 1 or 0},t)pillText.Text=on and'ON'or'OFF'b(pillText,{
-TextColor3=on and a.Background or a.Muted},t)status.Text=custom or(on and(opts.
-OnText or'On')or(opts.OffText or opts.Desc or'Off'))end frame.MouseEnter:
-Connect(function()if not api.Value then b(stroke,{Color=a.StrokeHover},0.12)end
-end)frame.MouseLeave:Connect(function()if not api.Value then b(stroke,{Color=a.
-Stroke},0.25)end end)function api:Set(v,silent)v=v==true if v==api.Value then
-return end api.Value=v custom=nil paint(0.22)if not silent then l(opts.Callback,
-v)end end function api:Get()return api.Value end function api:SetStatus(text)
-custom=text and tostring(text)or nil paint(0)end function api:SetTitle(text)
-title.Text=tostring(text)end frame.MouseButton1Click:Connect(function()at(frame,
-tint)api:Set(not api.Value)end)paint(0)local out=q(self,opts,api,frame,
-'FeatureTile')if api.Value then l(opts.Callback,true)end return out end function
-k:Radar(opts)opts=n(opts,{Title='Name'})local size=math.clamp(tonumber(opts.Size
-)or 200,100,420)local range=math.max(tonumber(opts.Range)or 200,1)local rotate=
-opts.Rotate~=false local team=opts.TeamColors==true local enabled=opts.Enabled~=
-false local frame,stroke=G(self,'Frame',size+58,opts)L(frame,stroke)f({Name=
-'Title',Position=UDim2.fromOffset(14,0),Size=UDim2.new(1,-130,0,42),Text=opts.
-Name or'Radar',Parent=frame})local rangeText=f({AnchorPoint=Vector2.new(1,0),
-Position=UDim2.new(1,-14,0,0),Size=UDim2.fromOffset(110,42),Text='',TextSize=12,
-FontFace=j.Regular,TextColor3=a.Muted,TextXAlignment=Enum.TextXAlignment.Right,
-Parent=frame})local disc=c('Frame',{AnchorPoint=Vector2.new(0.5,0),Position=
-UDim2.new(0.5,0,0,44),Size=UDim2.fromOffset(size,size),BackgroundColor3=a.
-Background,BorderSizePixel=0,Parent=frame})g(disc,UDim.new(1,0))i(disc,a.Stroke)
-for _,s in ipairs({1/3,2/3})do local ring=c('Frame',{AnchorPoint=Vector2.new(0.5
-,0.5),Position=UDim2.fromScale(0.5,0.5),Size=UDim2.fromScale(s,s),
-BackgroundTransparency=1,Parent=disc})g(ring,UDim.new(1,0))i(ring,a.Stroke,0.35)
-end for _,vert in ipairs({true,false})do c('Frame',{AnchorPoint=Vector2.new(0.5,
-0.5),Position=UDim2.fromScale(0.5,0.5),Size=vert and UDim2.new(0,1,1,-10)or
-UDim2.new(1,-10,0,1),BackgroundColor3=a.Stroke,BackgroundTransparency=0.4,
-BorderSizePixel=0,Parent=disc})end local north=f({AnchorPoint=Vector2.new(0.5,0)
-,Position=UDim2.new(0.5,0,0,4),Size=UDim2.fromOffset(14,14),Text='N',TextSize=10
-,FontFace=j.Bold,TextColor3=a.Muted,TextXAlignment=Enum.TextXAlignment.Center,
-Parent=disc})local arrowHolder=c('Frame',{AnchorPoint=Vector2.new(0.5,0.5),
-Position=UDim2.fromScale(0.5,0.5),Size=UDim2.fromOffset(16,16),
-BackgroundTransparency=1,ZIndex=3,Parent=disc})local arrow=c('ImageLabel',{Size=
-UDim2.fromScale(1,1),BackgroundTransparency=1,ImageColor3=a.Accent,ZIndex=3,
-Parent=arrowHolder})u(arrow,'navigation-2')local dots={}local function dot(idx)
-local d0=dots[idx]if d0 then return d0 end d0=c('Frame',{AnchorPoint=Vector2.
-new(0.5,0.5),Size=UDim2.fromOffset(8,8),BackgroundColor3=a.Accent,
-BorderSizePixel=0,ZIndex=2,Parent=disc})g(d0,UDim.new(1,0))i(d0,a.Background,0,
-1.5)dots[idx]=d0 return d0 end local function defaultSource()local out={}for _,p
-in ipairs(I:GetPlayers())do if p~=J then local ch=p.Character local root=ch and(
-ch:FindFirstChild('HumanoidRootPart')or ch.PrimaryPart)if root then table.
-insert(out,{Position=root.Position,Color=team and p.Team and p.TeamColor.Color
-or nil,Name=p.DisplayName})end end end return out end local function paintRange(
-)rangeText.Text=tostring(math.floor(range+0.5))..' studs'end paintRange()local
-api={_listeners={}}local acc=0 local conn=ab.Heartbeat:Connect(function(dt)acc+=
-dt if acc<1/30 then return end acc=0 if not enabled or not frame.Parent or not
-visibleInTree(disc)then return end local cam=workspace.CurrentCamera if not cam
-then return end local ch=J.Character local me=ch and(ch:FindFirstChild(
-'HumanoidRootPart')or ch.PrimaryPart)local origin=me and me.Position or cam.
-Focus.Position local look=cam.CFrame.LookVector local fwd=Vector3.new(look.X,0,
-look.Z)fwd=fwd.Magnitude>1e-3 and fwd.Unit or Vector3.new(0,0,-1)local right=
-Vector3.new(-fwd.Z,0,fwd.X)local yaw=math.deg(math.atan2(fwd.X,-fwd.Z))arrow.
-Rotation=rotate and 0 or yaw north.Visible=not rotate local radius=disc.
-AbsoluteSize.X/2-6 local ok,points=pcall(opts.Source or defaultSource)points=ok
-and type(points)=='table'and points or{}local used=0 for _,pt in ipairs(points)
-do local pos=pt.Position if typeof(pos)=='Vector3'then local rel=pos-origin
-local x,y2 if rotate then x,y2=rel:Dot(right),-rel:Dot(fwd)else x,y2=rel.X,rel.Z
-end local px,py=x/range*radius,y2/range*radius local dist=math.sqrt(px*px+py*py)
-local outside=dist>radius if outside and opts.ShowOutside==false then continue
-end if outside then px,py=px/dist*radius,py/dist*radius end used+=1 local d0=
-dot(used)d0.Visible=true d0.Position=UDim2.new(0.5,px,0.5,py)d0.BackgroundColor3
-=typeof(pt.Color)=='Color3'and pt.Color or a.Accent d0.BackgroundTransparency=
-outside and 0.55 or 0 end end for idx=used+1,#dots do dots[idx].Visible=false
-end end)table.insert(api._listeners,function()conn:Disconnect()end)function api:
-SetRange(v)range=math.max(tonumber(v)or range,1)paintRange()end function api:
-SetRotate(v)rotate=v==true end function api:SetTeamColors(v)team=v==true end
-function api:SetEnabled(v)enabled=v~=false if not enabled then for _,d0 in
-ipairs(dots)do d0.Visible=false end end end function api:SetSize(v)size=math.
-clamp(tonumber(v)or size,100,420)disc.Size=UDim2.fromOffset(size,size)frame.Size
-=UDim2.new(1,0,0,size+58)end function api:SetSource(fn)opts.Source=type(fn)==
-'function'and fn or nil end return q(self,opts,api,frame,'Radar')end function k:
-TargetCard(opts)opts=n(opts,{Title='Name'})local h=76 local frame,stroke=G(self,
-'Frame',h,opts)L(frame,stroke)local av=c('ImageLabel',{AnchorPoint=Vector2.new(0
-,0.5),Position=UDim2.new(0,14,0.5,0),Size=UDim2.fromOffset(48,48),
-BackgroundColor3=a.Surface3,BorderSizePixel=0,Image='',Parent=frame})g(av,UDim.
-new(1,0))local avStroke=i(av,a.Stroke)local x0=74 local name=f({Name='Title',
-Position=UDim2.fromOffset(x0,13),Size=UDim2.new(1,-(x0+90),0,18),Text='',Parent=
-frame})local sub=f({Name='Desc',Position=UDim2.fromOffset(x0,32),Size=UDim2.new(
-1,-(x0+90),0,15),Text='',TextSize=12,FontFace=j.Regular,TextColor3=a.Muted,
-Parent=frame})local hpText=f({AnchorPoint=Vector2.new(1,0),Position=UDim2.new(1,
--14,0,13),Size=UDim2.fromOffset(80,18),Text='',TextSize=13,TextXAlignment=Enum.
-TextXAlignment.Right,Parent=frame})local distText=f({AnchorPoint=Vector2.new(1,0
-),Position=UDim2.new(1,-14,0,32),Size=UDim2.fromOffset(80,15),Text='',TextSize=
-12,FontFace=j.Regular,TextColor3=a.Muted,TextXAlignment=Enum.TextXAlignment.
-Right,Parent=frame})local track=c('Frame',{Position=UDim2.new(0,x0,0,55),Size=
-UDim2.new(1,-(x0+14),0,5),BackgroundColor3=a.Surface3,BorderSizePixel=0,Parent=
-frame})g(track,UDim.new(1,0))local fill=c('Frame',{Size=UDim2.fromScale(0,1),
-BackgroundColor3=a.Success,BorderSizePixel=0,Parent=track})g(fill,UDim.new(1,0))
-local api={_listeners={}}local target local lastFrac local function update()if
-not target then return end if not target.Parent then api:SetTarget(nil)return
-end local ch=target.Character local hum=ch and ch:FindFirstChildOfClass(
-'Humanoid')local root=ch and(ch:FindFirstChild('HumanoidRootPart')or ch.
-PrimaryPart)local frac=hum and hum.MaxHealth>0 and math.clamp(hum.Health/hum.
-MaxHealth,0,1)or 0 if frac~=lastFrac then lastFrac=frac b(fill,{Size=UDim2.
-fromScale(frac,1),BackgroundColor3=a.Error:Lerp(a.Success,frac)},0.25)hpText.
-Text=hum and(tostring(math.floor(hum.Health+0.5))..' HP')or'Dead'end local mine=
-J.Character and J.Character:FindFirstChild('HumanoidRootPart')distText.Text=root
-and mine and(tostring(math.floor((root.Position-mine.Position).Magnitude+0.5))..
-' studs')or'far'end function api:SetTarget(v)local p=resolvePlayer(v)target=p
-lastFrac=nil if p then av.Image=headshot(p.UserId)name.Text=p.DisplayName sub.
-Text='@'..p.Name name.TextColor3=a.Text b(avStroke,{Color=a.Accent,Transparency=
-0.4},0.2)update()else av.Image=''name.Text=opts.EmptyText or'No target'name.
-TextColor3=a.Muted sub.Text=opts.EmptyDesc or''hpText.Text=''distText.Text=''b(
-avStroke,{Color=a.Stroke,Transparency=0},0.2)b(fill,{Size=UDim2.fromScale(0,1)},
-0.25)end end function api:Get()return target end local alive=true table.insert(
-api._listeners,function()alive=false end)task.spawn(function()while alive and
-frame.Parent do if target and visibleInTree(frame)then pcall(update)end task.
-wait(0.1)end end)api:SetTarget(opts.Target)return q(self,opts,api,frame,
-'TargetCard')end local statusColors={Active='Success',On='Success',Idle='Muted',
-Off='Muted',Warning='Warning',Error='Error'}function k:Status(opts)opts=n(opts,{
-Title='Name',Description='Desc'})local _,frame=B(self,opts,{},'Frame',150,
-'Status')local label=f({AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,-14,
-0.5,0),Size=UDim2.fromOffset(120,18),Text='',TextSize=13,TextXAlignment=Enum.
-TextXAlignment.Right,Parent=frame})local dotHolder=c('Frame',{AnchorPoint=
-Vector2.new(1,0.5),Position=UDim2.new(1,-14,0.5,0),Size=UDim2.fromOffset(18,18),
-BackgroundTransparency=1,Parent=frame})local ring=c('Frame',{AnchorPoint=Vector2
-.new(0.5,0.5),Position=UDim2.fromScale(0.5,0.5),Size=UDim2.fromOffset(8,8),
-BackgroundColor3=a.Muted,BackgroundTransparency=1,BorderSizePixel=0,Parent=
-dotHolder})g(ring,UDim.new(1,0))local dot0=c('Frame',{AnchorPoint=Vector2.new(
-0.5,0.5),Position=UDim2.fromScale(0.5,0.5),Size=UDim2.fromOffset(8,8),
-BackgroundColor3=a.Muted,BorderSizePixel=0,Parent=dotHolder})g(dot0,UDim.new(1,0
-))local api={_listeners={},State='Idle',Text=''}local function colorOf(s)return
-a[statusColors[s]or s]or a.Muted end local function paint()local col=colorOf(api
-.State)b(dot0,{BackgroundColor3=col},0.2)ring.BackgroundColor3=col label.Text=
-api.Text label.TextColor3=(api.State=='Idle'or api.State=='Off')and a.Muted or a
-.Text local w=math.max(label.TextBounds.X,0)dotHolder.Position=UDim2.new(1,-(20+
-w),0.5,0)end function api:Set(text,state)if type(text)=='boolean'then text,state
-=text and(opts.OnText or'Active')or(opts.OffText or'Idle'),text and'Active'or
-'Idle'end api.Text=text~=nil and tostring(text)or api.Text if state~=nil then
-api.State=state==true and'Active'or state==false and'Idle'or tostring(state)end
-paint()end function api:SetState(state)api:Set(nil,state)end function api:Get()
-return api.Text,api.State end label:GetPropertyChangedSignal('TextBounds'):
-Connect(paint)local alive=true table.insert(api._listeners,function()alive=false
-end)task.spawn(function()while alive and frame.Parent do if(api.State=='Active'
-or api.State=='On')and visibleInTree(frame)then ring.Size=UDim2.fromOffset(8,8)
-ring.BackgroundTransparency=0.45 b(ring,{Size=UDim2.fromOffset(18,18),
-BackgroundTransparency=1},1,Enum.EasingStyle.Quad)task.wait(1.2)else task.wait(
-0.3)end end end)api:Set(opts.Text or(opts.Default and'Active'or'Idle'),opts.
-State or(opts.Default and'Active'or'Idle'))return q(self,opts,api,frame,'Status'
-)end function k:Mic(opts)opts=n(opts,{Title='Name',Description='Desc',
-CurrentValue='Default',Value='Default'})local methods=type(opts.Methods)==
-'table'and#opts.Methods>0 and opts.Methods or nil local top=76 local height=top+
-(methods and 42 or 0)+(opts.Notice and 26 or 0)local card,stroke=G(self,'Frame',
-height,opts)L(card,stroke)local el={Value=opts.Default==true,Method=methods and(
-opts.Method or methods[1])or nil,Level=0,_listeners={}}local btn=c('TextButton',
-{AnchorPoint=Vector2.new(0,0.5),Position=UDim2.fromOffset(14,top/2),Size=UDim2.
-fromOffset(44,44),BackgroundColor3=a.Surface3,AutoButtonColor=false,Text='',
-BorderSizePixel=0,Parent=card})g(btn,UDim.new(1,0))local btnStroke=i(btn,a.
-Stroke)local glow=c('ImageLabel',{AnchorPoint=Vector2.new(0.5,0.5),Position=
-UDim2.fromScale(0.5,0.5),Size=UDim2.new(1,30,1,30),BackgroundTransparency=1,
-Image=v.Glow,ImageColor3=a.Accent,ImageTransparency=1,ZIndex=0,Parent=btn})local
-icon=c('ImageLabel',{AnchorPoint=Vector2.new(0.5,0.5),Position=UDim2.fromScale(
-0.5,0.5),Size=UDim2.fromOffset(20,20),BackgroundTransparency=1,ImageColor3=a.
-Muted,ScaleType=Enum.ScaleType.Fit,Parent=btn})local title=f({Name='Title',
-Position=UDim2.fromOffset(72,top/2-19),Size=UDim2.new(1,-230,0,18),Text=opts.
-Name or'Microphone',Parent=card})local dot=c('Frame',{AnchorPoint=Vector2.new(0,
-0.5),Position=UDim2.fromOffset(72,top/2+11),Size=UDim2.fromOffset(6,6),
-BackgroundColor3=a.Muted,BorderSizePixel=0,Parent=card})g(dot,UDim.new(1,0))
-local status=f({Name='Desc',Position=UDim2.fromOffset(84,top/2+2),Size=UDim2.
-new(1,-242,0,17),TextSize=13,FontFace=j.Regular,TextColor3=a.Muted,Parent=card})
-local swW,knobW=m and 44 or 36,m and 18 or 14 local sw=c('TextButton',{
-AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,-14,0,top/2),Size=UDim2.
-fromOffset(swW,m and 24 or 20),BackgroundColor3=a.Surface3,AutoButtonColor=false
-,Text='',BorderSizePixel=0,Parent=card})g(sw,UDim.new(1,0))i(sw,a.Stroke)local
-knob=c('Frame',{AnchorPoint=Vector2.new(0,0.5),Position=UDim2.new(0,3,0.5,0),
-Size=UDim2.fromOffset(knobW,knobW),BackgroundColor3=a.Muted,BorderSizePixel=0,
-Parent=sw})g(knob,UDim.new(1,0))local bars={}local meter=c('Frame',{AnchorPoint=
-Vector2.new(1,0.5),Position=UDim2.new(1,-14-(m and 44 or 36)-16,0,top/2),Size=
-UDim2.fromOffset(14*5-2,24),BackgroundTransparency=1,Parent=card})for n=1,14 do
-local bar=c('Frame',{AnchorPoint=Vector2.new(0,0.5),Position=UDim2.new(0,(n-1)*5
-,0.5,0),Size=UDim2.fromOffset(3,4),BackgroundColor3=a.Surface3,BorderSizePixel=0
-,Parent=meter})g(bar,UDim.new(1,0))bars[n]=bar end local custom local function
-paint(animate)local on=el.Value local t=animate and 0.25 or 0 b(btn,{
-BackgroundColor3=on and a.Accent or a.Surface3},t)b(btnStroke,{Color=on and a.
-Accent or a.Stroke},t)b(glow,{ImageTransparency=on and 0.7 or 1},t)b(sw,{
-BackgroundColor3=on and a.Accent or a.Surface3},t)b(knob,{Position=on and UDim2.
-new(0,swW-3-knobW,0.5,0)or UDim2.new(0,3,0.5,0)},t,Enum.EasingStyle.Back)b(knob,
-{BackgroundColor3=on and a.AccentDark or a.Muted},t)u(icon,on and'mic'or
-'mic-off')b(icon,{ImageColor3=on and a.AccentDark or a.Muted},t)if not custom
-then status.Text=on and(opts.OnText or'Protected')or(opts.OffText or'Off')b(dot,
-{BackgroundColor3=on and a.Accent or a.Muted},t)b(status,{TextColor3=on and a.
-Text or a.Muted},t)end for _,bar in ipairs(bars)do b(bar,{BackgroundColor3=on
-and a.Accent or a.Surface3},t)end end local seg,pills=nil,{}local pill
+pairs(selected)do return p end return nil end local chip,chipAv,chipText,chev if
+collapsible then local hit=c('TextButton',{Size=UDim2.new(1,0,0,headH),
+BackgroundTransparency=1,AutoButtonColor=false,Text='',ZIndex=2,Parent=frame})
+chip=c('Frame',{AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,-38,0,headH/
+2),Size=UDim2.fromOffset(0,24),AutomaticSize=Enum.AutomaticSize.X,
+BackgroundTransparency=1,Parent=frame})c('UIListLayout',{FillDirection=Enum.
+FillDirection.Horizontal,HorizontalAlignment=Enum.HorizontalAlignment.Right,
+VerticalAlignment=Enum.VerticalAlignment.Center,SortOrder=Enum.SortOrder.
+LayoutOrder,Padding=UDim.new(0,8),Parent=chip})chipAv=c('ImageLabel',{Size=UDim2
+.fromOffset(22,22),BackgroundColor3=a.Surface3,BorderSizePixel=0,LayoutOrder=1,
+Visible=false,Parent=chip})g(chipAv,UDim.new(1,0))chipText=f({Size=UDim2.
+fromOffset(0,22),AutomaticSize=Enum.AutomaticSize.X,Text='',TextSize=13,FontFace
+=j.Medium,TextColor3=a.Muted,LayoutOrder=2,Parent=chip})chev=A(frame,
+'chevron-down',a.Muted,UDim2.new(1,-30,0,headH/2))hit.MouseButton1Click:Connect(
+function()api:SetOpen(not open)end)end local function short(s0)return#s0>18 and(
+s0:sub(1,17)..'..')or s0 end local function updateChip()if not chip then return
+end local v=value()local one=multi and(#v==1 and v[1])or(not multi and v)if one
+then chipAv.Image=headshot(one.UserId)chipAv.Visible=true chipText.Text=short(
+one.DisplayName)chipText.TextColor3=a.Text elseif multi and#v>1 then chipAv.
+Visible=false chipText.Text=#v..' players'chipText.TextColor3=a.Text else chipAv
+.Visible=false chipText.Text=opts.NoneText or'Nobody'chipText.TextColor3=a.Muted
+end end function api:SetOpen(v)if not collapsible then return end open=v==true
+b(frame,{Size=UDim2.new(1,0,0,open and fullH or headH)},0.22)b(chev,{Rotation=
+open and 180 or 0},0.22)if not open and box:IsFocused()then box:ReleaseFocus()
+end end function api:IsOpen()return open end local function fire()updateChip()l(
+opts.Callback,value())end local function filter()local q0=box.Text:lower()local
+shown=0 for _,r in ipairs(rows)do local hit=q0==''or r.player.Name:lower():find(
+q0,1,true)~=nil or r.player.DisplayName:lower():find(q0,1,true)~=nil r.btn.
+Visible=hit if hit then shown+=1 end end empty.Visible=shown==0 empty.Text=#rows
+==0 and(opts.EmptyText or'No players here')or'No match'end local function
+sortRows()table.sort(rows,function(x,y2)return x.player.DisplayName:lower()<y2.
+player.DisplayName:lower()end)for idx,r in ipairs(rows)do r.btn.LayoutOrder=idx
+end end local function pick(p)if multi then selected[p]=not selected[p]or nil
+else local was=selected[p]table.clear(selected)if not was then selected[p]=true
+end end for _,r in ipairs(rows)do paint(r)end fire()if collapsible and not multi
+then api:SetOpen(false)end end local function addRow(p)if p==J and not opts.
+IncludeSelf then return end for _,r in ipairs(rows)do if r.player==p then return
+end end local btn=c('TextButton',{Size=UDim2.new(1,0,0,rowH),BackgroundColor3=a.
+Surface3,BackgroundTransparency=1,AutoButtonColor=false,Text='',BorderSizePixel=
+0,Parent=scroll})g(btn,UDim.new(0,8))local rs=i(btn,a.Stroke,1)local av=c(
+'ImageLabel',{AnchorPoint=Vector2.new(0,0.5),Position=UDim2.new(0,6,0.5,0),Size=
+UDim2.fromOffset(rowH-12,rowH-12),BackgroundColor3=a.Surface3,BorderSizePixel=0,
+Image=headshot(p.UserId),Parent=btn})g(av,UDim.new(1,0))local x0=rowH+2 f({Name=
+'Display',Position=UDim2.fromOffset(x0,rowH/2-15),Size=UDim2.new(1,-(x0+34),0,16
+),Text=p.DisplayName,TextSize=13,Parent=btn})f({Name='User',Position=UDim2.
+fromOffset(x0,rowH/2+1),Size=UDim2.new(1,-(x0+34),0,14),Text='@'..p.Name,
+TextSize=12,FontFace=j.Regular,TextColor3=a.Muted,Parent=btn})local _,chk=A(btn,
+'check',a.Accent,UDim2.new(1,-26,0.5,0))local r={player=p,btn=btn,check=chk,
+stroke=rs}btn.MouseEnter:Connect(function()r.hover=true paint(r)end)btn.
+MouseLeave:Connect(function()r.hover=false paint(r)end)btn.MouseButton1Click:
+Connect(function()pick(p)end)table.insert(rows,r)paint(r,true)end local function
+removeRow(p)for idx,r in ipairs(rows)do if r.player==p then r.btn:Destroy()table
+.remove(rows,idx)break end end if selected[p]then selected[p]=nil fire()end
+filter()end function api:Refresh()for _,p in ipairs(I:GetPlayers())do addRow(p)
+end for idx=#rows,1,-1 do if not rows[idx].player.Parent then removeRow(rows[idx
+].player)end end sortRows()filter()end function api:Get()return value()end
+function api:GetNames()local v=value()if not multi then return v and v.Name or
+nil end local out={}for _,p in ipairs(v)do table.insert(out,p.Name)end return
+out end function api:Set(v,silent)table.clear(selected)local list=type(v)==
+'table'and v or{v}for _,item in ipairs(list)do local p=resolvePlayer(item)if p
+then selected[p]=true if not multi then break end end end for _,r in ipairs(rows
+)do paint(r)end if silent then updateChip()else fire()end end function api:Clear
+(silent)api:Set({},silent)end box:GetPropertyChangedSignal('Text'):Connect(
+filter)local c1=I.PlayerAdded:Connect(function(p)addRow(p)sortRows()filter()end)
+local c2=I.PlayerRemoving:Connect(removeRow)table.insert(api._listeners,function
+()c1:Disconnect()c2:Disconnect()end)api:Refresh()if opts.Default~=nil then api:
+Set(opts.Default,true)end updateChip()return q(self,opts,api,frame,'PlayerList')
+end function k:FeatureTile(opts)opts=n(opts,{Title='Name',Description='Desc',
+CurrentValue='Default',Value='Default'})local tint=tintOf(opts.Tint or opts.
+Color)local h=m and 92 or 84 local frame,stroke=G(self,'TextButton',h,opts)frame
+.ClipsDescendants=true local iconBg=c('Frame',{AnchorPoint=Vector2.new(0,0.5),
+Position=UDim2.new(0,14,0.5,0),Size=UDim2.fromOffset(48,48),BackgroundColor3=
+tint,BackgroundTransparency=0.88,BorderSizePixel=0,Parent=frame})g(iconBg,UDim.
+new(0,12))local iconStroke=i(iconBg,tint,0.7)local ic,icImg=A(iconBg,opts.Icon
+or'zap',tint,UDim2.new(0.5,-11,0.5,0))ic.Size=UDim2.fromOffset(22,22)local title
+=f({Name='Title',Position=UDim2.fromOffset(76,h/2-19),Size=UDim2.new(1,-150,0,20
+),Text=opts.Name or'Feature',TextSize=15,FontFace=j.Bold,Parent=frame})local
+status=f({Name='Desc',Position=UDim2.fromOffset(76,h/2+2),Size=UDim2.new(1,-150,
+0,17),Text='',TextSize=13,FontFace=j.Regular,TextColor3=a.Muted,Parent=frame})
+local pill=c('Frame',{AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,-14,
+0.5,0),Size=UDim2.fromOffset(46,24),BackgroundColor3=a.Surface3,BorderSizePixel=
+0,Parent=frame})g(pill,UDim.new(1,0))local pillStroke=i(pill,a.Stroke)local
+pillText=f({Size=UDim2.fromScale(1,1),Text='OFF',TextSize=11,FontFace=j.Bold,
+TextColor3=a.Muted,TextXAlignment=Enum.TextXAlignment.Center,Parent=pill})local
+api={Value=opts.Default==true}local custom local function paint(t)local on=api.
+Value b(iconBg,{BackgroundTransparency=on and 0.72 or 0.88},t)b(iconStroke,{
+Transparency=on and 0.3 or 0.7},t)b(stroke,{Color=on and tint or a.Stroke,
+Transparency=on and 0.45 or 0},t)b(pill,{BackgroundColor3=on and tint or a.
+Surface3},t)b(pillStroke,{Transparency=on and 1 or 0},t)pillText.Text=on and'ON'
+or'OFF'b(pillText,{TextColor3=on and a.Background or a.Muted},t)status.Text=
+custom or(on and(opts.OnText or'On')or(opts.OffText or opts.Desc or'Off'))end
+frame.MouseEnter:Connect(function()if not api.Value then b(stroke,{Color=a.
+StrokeHover},0.12)end end)frame.MouseLeave:Connect(function()if not api.Value
+then b(stroke,{Color=a.Stroke},0.25)end end)function api:Set(v,silent)v=v==true
+if v==api.Value then return end api.Value=v custom=nil paint(0.22)if not silent
+then l(opts.Callback,v)end end function api:Get()return api.Value end function
+api:SetStatus(text)custom=text and tostring(text)or nil paint(0)end function api
+:SetTitle(text)title.Text=tostring(text)end frame.MouseButton1Click:Connect(
+function()at(frame,tint)api:Set(not api.Value)end)paint(0)local out=q(self,opts,
+api,frame,'FeatureTile')if api.Value then l(opts.Callback,true)end return out
+end function k:Radar(opts)opts=n(opts,{Title='Name'})local size=math.clamp(
+tonumber(opts.Size)or 200,100,420)local range=math.max(tonumber(opts.Range)or
+200,1)local rotate=opts.Rotate~=false local team=opts.TeamColors==true local
+enabled=opts.Enabled~=false local frame,stroke=G(self,'Frame',size+58,opts)L(
+frame,stroke)f({Name='Title',Position=UDim2.fromOffset(14,0),Size=UDim2.new(1,-
+130,0,42),Text=opts.Name or'Radar',Parent=frame})local rangeText=f({AnchorPoint=
+Vector2.new(1,0),Position=UDim2.new(1,-14,0,0),Size=UDim2.fromOffset(110,42),
+Text='',TextSize=12,FontFace=j.Regular,TextColor3=a.Muted,TextXAlignment=Enum.
+TextXAlignment.Right,Parent=frame})local disc=c('Frame',{AnchorPoint=Vector2.
+new(0.5,0),Position=UDim2.new(0.5,0,0,44),Size=UDim2.fromOffset(size,size),
+BackgroundColor3=a.Background,BorderSizePixel=0,Parent=frame})g(disc,UDim.new(1,
+0))i(disc,a.Stroke)for _,s in ipairs({1/3,2/3})do local ring=c('Frame',{
+AnchorPoint=Vector2.new(0.5,0.5),Position=UDim2.fromScale(0.5,0.5),Size=UDim2.
+fromScale(s,s),BackgroundTransparency=1,Parent=disc})g(ring,UDim.new(1,0))i(ring
+,a.Stroke,0.35)end for _,vert in ipairs({true,false})do c('Frame',{AnchorPoint=
+Vector2.new(0.5,0.5),Position=UDim2.fromScale(0.5,0.5),Size=vert and UDim2.new(0
+,1,1,-10)or UDim2.new(1,-10,0,1),BackgroundColor3=a.Stroke,
+BackgroundTransparency=0.4,BorderSizePixel=0,Parent=disc})end local north=f({
+AnchorPoint=Vector2.new(0.5,0),Position=UDim2.new(0.5,0,0,4),Size=UDim2.
+fromOffset(14,14),Text='N',TextSize=10,FontFace=j.Bold,TextColor3=a.Muted,
+TextXAlignment=Enum.TextXAlignment.Center,Parent=disc})local arrowHolder=c(
+'Frame',{AnchorPoint=Vector2.new(0.5,0.5),Position=UDim2.fromScale(0.5,0.5),Size
+=UDim2.fromOffset(16,16),BackgroundTransparency=1,ZIndex=3,Parent=disc})local
+arrow=c('ImageLabel',{Size=UDim2.fromScale(1,1),BackgroundTransparency=1,
+ImageColor3=a.Accent,ZIndex=3,Parent=arrowHolder})u(arrow,'navigation-2')local
+dots={}local function dot(idx)local d0=dots[idx]if d0 then return d0 end d0=c(
+'Frame',{AnchorPoint=Vector2.new(0.5,0.5),Size=UDim2.fromOffset(8,8),
+BackgroundColor3=a.Accent,BorderSizePixel=0,ZIndex=2,Parent=disc})g(d0,UDim.new(
+1,0))i(d0,a.Background,0,1.5)dots[idx]=d0 return d0 end local function
+defaultSource()local out={}for _,p in ipairs(I:GetPlayers())do if p~=J then
+local ch=p.Character local root=ch and(ch:FindFirstChild('HumanoidRootPart')or
+ch.PrimaryPart)if root then table.insert(out,{Position=root.Position,Color=team
+and p.Team and p.TeamColor.Color or nil,Name=p.DisplayName})end end end return
+out end local function paintRange()rangeText.Text=tostring(math.floor(range+0.5)
+)..' studs'end paintRange()local api={_listeners={}}local acc=0 local conn=ab.
+Heartbeat:Connect(function(dt)acc+=dt if acc<1/30 then return end acc=0 if not
+enabled or not frame.Parent or not visibleInTree(disc)then return end local cam=
+workspace.CurrentCamera if not cam then return end local ch=J.Character local me
+=ch and(ch:FindFirstChild('HumanoidRootPart')or ch.PrimaryPart)local origin=me
+and me.Position or cam.Focus.Position local look=cam.CFrame.LookVector local fwd
+=Vector3.new(look.X,0,look.Z)fwd=fwd.Magnitude>1e-3 and fwd.Unit or Vector3.new(
+0,0,-1)local right=Vector3.new(-fwd.Z,0,fwd.X)local yaw=math.deg(math.atan2(fwd.
+X,-fwd.Z))arrow.Rotation=rotate and 0 or yaw north.Visible=not rotate local
+radius=disc.AbsoluteSize.X/2-6 local ok,points=pcall(opts.Source or
+defaultSource)points=ok and type(points)=='table'and points or{}local used=0 for
+_,pt in ipairs(points)do local pos=pt.Position if typeof(pos)=='Vector3'then
+local rel=pos-origin local x,y2 if rotate then x,y2=rel:Dot(right),-rel:Dot(fwd)
+else x,y2=rel.X,rel.Z end local px,py=x/range*radius,y2/range*radius local dist=
+math.sqrt(px*px+py*py)local outside=dist>radius if outside and opts.ShowOutside
+==false then continue end if outside then px,py=px/dist*radius,py/dist*radius
+end used+=1 local d0=dot(used)d0.Visible=true d0.Position=UDim2.new(0.5,px,0.5,
+py)d0.BackgroundColor3=typeof(pt.Color)=='Color3'and pt.Color or a.Accent d0.
+BackgroundTransparency=outside and 0.55 or 0 end end for idx=used+1,#dots do
+dots[idx].Visible=false end end)table.insert(api._listeners,function()conn:
+Disconnect()end)function api:SetRange(v)range=math.max(tonumber(v)or range,1)
+paintRange()end function api:SetRotate(v)rotate=v==true end function api:
+SetTeamColors(v)team=v==true end function api:SetEnabled(v)enabled=v~=false if
+not enabled then for _,d0 in ipairs(dots)do d0.Visible=false end end end
+function api:SetSize(v)size=math.clamp(tonumber(v)or size,100,420)disc.Size=
+UDim2.fromOffset(size,size)frame.Size=UDim2.new(1,0,0,size+58)end function api:
+SetSource(fn)opts.Source=type(fn)=='function'and fn or nil end return q(self,
+opts,api,frame,'Radar')end function k:TargetCard(opts)opts=n(opts,{Title='Name'}
+)local h=76 local frame,stroke=G(self,'Frame',h,opts)L(frame,stroke)local av=c(
+'ImageLabel',{AnchorPoint=Vector2.new(0,0.5),Position=UDim2.new(0,14,0.5,0),Size
+=UDim2.fromOffset(48,48),BackgroundColor3=a.Surface3,BorderSizePixel=0,Image='',
+Parent=frame})g(av,UDim.new(1,0))local avStroke=i(av,a.Stroke)local x0=74 local
+name=f({Name='Title',Position=UDim2.fromOffset(x0,13),Size=UDim2.new(1,-(x0+90),
+0,18),Text='',Parent=frame})local sub=f({Name='Desc',Position=UDim2.fromOffset(
+x0,32),Size=UDim2.new(1,-(x0+90),0,15),Text='',TextSize=12,FontFace=j.Regular,
+TextColor3=a.Muted,Parent=frame})local hpText=f({AnchorPoint=Vector2.new(1,0),
+Position=UDim2.new(1,-14,0,13),Size=UDim2.fromOffset(80,18),Text='',TextSize=13,
+TextXAlignment=Enum.TextXAlignment.Right,Parent=frame})local distText=f({
+AnchorPoint=Vector2.new(1,0),Position=UDim2.new(1,-14,0,32),Size=UDim2.
+fromOffset(80,15),Text='',TextSize=12,FontFace=j.Regular,TextColor3=a.Muted,
+TextXAlignment=Enum.TextXAlignment.Right,Parent=frame})local track=c('Frame',{
+Position=UDim2.new(0,x0,0,55),Size=UDim2.new(1,-(x0+14),0,5),BackgroundColor3=a.
+Surface3,BorderSizePixel=0,Parent=frame})g(track,UDim.new(1,0))local fill=c(
+'Frame',{Size=UDim2.fromScale(0,1),BackgroundColor3=a.Success,BorderSizePixel=0,
+Parent=track})g(fill,UDim.new(1,0))local api={_listeners={}}local target local
+lastFrac local function update()if not target then return end if not target.
+Parent then api:SetTarget(nil)return end local ch=target.Character local hum=ch
+and ch:FindFirstChildOfClass('Humanoid')local root=ch and(ch:FindFirstChild(
+'HumanoidRootPart')or ch.PrimaryPart)local frac=hum and hum.MaxHealth>0 and math
+.clamp(hum.Health/hum.MaxHealth,0,1)or 0 if frac~=lastFrac then lastFrac=frac b(
+fill,{Size=UDim2.fromScale(frac,1),BackgroundColor3=a.Error:Lerp(a.Success,frac)
+},0.25)hpText.Text=hum and(tostring(math.floor(hum.Health+0.5))..' HP')or'Dead'
+end local mine=J.Character and J.Character:FindFirstChild('HumanoidRootPart')
+distText.Text=root and mine and(tostring(math.floor((root.Position-mine.Position
+).Magnitude+0.5))..' studs')or'far'end function api:SetTarget(v)local p=
+resolvePlayer(v)target=p lastFrac=nil if p then av.Image=headshot(p.UserId)name.
+Text=p.DisplayName sub.Text='@'..p.Name name.TextColor3=a.Text b(avStroke,{Color
+=a.Accent,Transparency=0.4},0.2)update()else av.Image=''name.Text=opts.EmptyText
+or'No target'name.TextColor3=a.Muted sub.Text=opts.EmptyDesc or''hpText.Text=''
+distText.Text=''b(avStroke,{Color=a.Stroke,Transparency=0},0.2)b(fill,{Size=
+UDim2.fromScale(0,1)},0.25)end end function api:Get()return target end local
+alive=true table.insert(api._listeners,function()alive=false end)task.spawn(
+function()while alive and frame.Parent do if target and visibleInTree(frame)then
+pcall(update)end task.wait(0.1)end end)api:SetTarget(opts.Target)return q(self,
+opts,api,frame,'TargetCard')end local statusColors={Active='Success',On=
+'Success',Idle='Muted',Off='Muted',Warning='Warning',Error='Error'}function k:
+Status(opts)opts=n(opts,{Title='Name',Description='Desc'})local _,frame=B(self,
+opts,{},'Frame',150,'Status')local label=f({AnchorPoint=Vector2.new(1,0.5),
+Position=UDim2.new(1,-14,0.5,0),Size=UDim2.fromOffset(120,18),Text='',TextSize=
+13,TextXAlignment=Enum.TextXAlignment.Right,Parent=frame})local dotHolder=c(
+'Frame',{AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,-14,0.5,0),Size=
+UDim2.fromOffset(18,18),BackgroundTransparency=1,Parent=frame})local ring=c(
+'Frame',{AnchorPoint=Vector2.new(0.5,0.5),Position=UDim2.fromScale(0.5,0.5),Size
+=UDim2.fromOffset(8,8),BackgroundColor3=a.Muted,BackgroundTransparency=1,
+BorderSizePixel=0,Parent=dotHolder})g(ring,UDim.new(1,0))local dot0=c('Frame',{
+AnchorPoint=Vector2.new(0.5,0.5),Position=UDim2.fromScale(0.5,0.5),Size=UDim2.
+fromOffset(8,8),BackgroundColor3=a.Muted,BorderSizePixel=0,Parent=dotHolder})g(
+dot0,UDim.new(1,0))local api={_listeners={},State='Idle',Text=''}local function
+colorOf(s)return a[statusColors[s]or s]or a.Muted end local function paint()
+local col=colorOf(api.State)b(dot0,{BackgroundColor3=col},0.2)ring.
+BackgroundColor3=col label.Text=api.Text label.TextColor3=(api.State=='Idle'or
+api.State=='Off')and a.Muted or a.Text local w=math.max(label.TextBounds.X,0)
+dotHolder.Position=UDim2.new(1,-(20+w),0.5,0)end function api:Set(text,state)if
+type(text)=='boolean'then text,state=text and(opts.OnText or'Active')or(opts.
+OffText or'Idle'),text and'Active'or'Idle'end api.Text=text~=nil and tostring(
+text)or api.Text if state~=nil then api.State=state==true and'Active'or state==
+false and'Idle'or tostring(state)end paint()end function api:SetState(state)api:
+Set(nil,state)end function api:Get()return api.Text,api.State end label:
+GetPropertyChangedSignal('TextBounds'):Connect(paint)local alive=true table.
+insert(api._listeners,function()alive=false end)task.spawn(function()while alive
+and frame.Parent do if(api.State=='Active'or api.State=='On')and visibleInTree(
+frame)then ring.Size=UDim2.fromOffset(8,8)ring.BackgroundTransparency=0.45 b(
+ring,{Size=UDim2.fromOffset(18,18),BackgroundTransparency=1},1,Enum.EasingStyle.
+Quad)task.wait(1.2)else task.wait(0.3)end end end)api:Set(opts.Text or(opts.
+Default and'Active'or'Idle'),opts.State or(opts.Default and'Active'or'Idle'))
+return q(self,opts,api,frame,'Status')end function k:Mic(opts)opts=n(opts,{Title
+='Name',Description='Desc',CurrentValue='Default',Value='Default'})local methods
+=type(opts.Methods)=='table'and#opts.Methods>0 and opts.Methods or nil local top
+=76 local height=top+(methods and 42 or 0)+(opts.Notice and 26 or 0)local card,
+stroke=G(self,'Frame',height,opts)L(card,stroke)local el={Value=opts.Default==
+true,Method=methods and(opts.Method or methods[1])or nil,Level=0,_listeners={}}
+local btn=c('TextButton',{AnchorPoint=Vector2.new(0,0.5),Position=UDim2.
+fromOffset(14,top/2),Size=UDim2.fromOffset(44,44),BackgroundColor3=a.Surface3,
+AutoButtonColor=false,Text='',BorderSizePixel=0,Parent=card})g(btn,UDim.new(1,0)
+)local btnStroke=i(btn,a.Stroke)local glow=c('ImageLabel',{AnchorPoint=Vector2.
+new(0.5,0.5),Position=UDim2.fromScale(0.5,0.5),Size=UDim2.new(1,30,1,30),
+BackgroundTransparency=1,Image=v.Glow,ImageColor3=a.Accent,ImageTransparency=1,
+ZIndex=0,Parent=btn})local icon=c('ImageLabel',{AnchorPoint=Vector2.new(0.5,0.5)
+,Position=UDim2.fromScale(0.5,0.5),Size=UDim2.fromOffset(20,20),
+BackgroundTransparency=1,ImageColor3=a.Muted,ScaleType=Enum.ScaleType.Fit,Parent
+=btn})local title=f({Name='Title',Position=UDim2.fromOffset(72,top/2-19),Size=
+UDim2.new(1,-230,0,18),Text=opts.Name or'Microphone',Parent=card})local dot=c(
+'Frame',{AnchorPoint=Vector2.new(0,0.5),Position=UDim2.fromOffset(72,top/2+11),
+Size=UDim2.fromOffset(6,6),BackgroundColor3=a.Muted,BorderSizePixel=0,Parent=
+card})g(dot,UDim.new(1,0))local status=f({Name='Desc',Position=UDim2.fromOffset(
+84,top/2+2),Size=UDim2.new(1,-242,0,17),TextSize=13,FontFace=j.Regular,
+TextColor3=a.Muted,Parent=card})local swW,knobW=m and 44 or 36,m and 18 or 14
+local sw=c('TextButton',{AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,-14
+,0,top/2),Size=UDim2.fromOffset(swW,m and 24 or 20),BackgroundColor3=a.Surface3,
+AutoButtonColor=false,Text='',BorderSizePixel=0,Parent=card})g(sw,UDim.new(1,0))
+i(sw,a.Stroke)local knob=c('Frame',{AnchorPoint=Vector2.new(0,0.5),Position=
+UDim2.new(0,3,0.5,0),Size=UDim2.fromOffset(knobW,knobW),BackgroundColor3=a.Muted
+,BorderSizePixel=0,Parent=sw})g(knob,UDim.new(1,0))local bars={}local meter=c(
+'Frame',{AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,-14-(m and 44 or 36
+)-16,0,top/2),Size=UDim2.fromOffset(14*5-2,24),BackgroundTransparency=1,Parent=
+card})for n=1,14 do local bar=c('Frame',{AnchorPoint=Vector2.new(0,0.5),Position
+=UDim2.new(0,(n-1)*5,0.5,0),Size=UDim2.fromOffset(3,4),BackgroundColor3=a.
+Surface3,BorderSizePixel=0,Parent=meter})g(bar,UDim.new(1,0))bars[n]=bar end
+local custom local function paint(animate)local on=el.Value local t=animate and
+0.25 or 0 b(btn,{BackgroundColor3=on and a.Accent or a.Surface3},t)b(btnStroke,{
+Color=on and a.Accent or a.Stroke},t)b(glow,{ImageTransparency=on and 0.7 or 1},
+t)b(sw,{BackgroundColor3=on and a.Accent or a.Surface3},t)b(knob,{Position=on
+and UDim2.new(0,swW-3-knobW,0.5,0)or UDim2.new(0,3,0.5,0)},t,Enum.EasingStyle.
+Back)b(knob,{BackgroundColor3=on and a.AccentDark or a.Muted},t)u(icon,on and
+'mic'or'mic-off')b(icon,{ImageColor3=on and a.AccentDark or a.Muted},t)if not
+custom then status.Text=on and(opts.OnText or'Protected')or(opts.OffText or'Off'
+)b(dot,{BackgroundColor3=on and a.Accent or a.Muted},t)b(status,{TextColor3=on
+and a.Text or a.Muted},t)end for _,bar in ipairs(bars)do b(bar,{BackgroundColor3
+=on and a.Accent or a.Surface3},t)end end local seg,pills=nil,{}local pill
 local function paintMethod(animate)if not seg then return end for idx,name in
 ipairs(methods)do local sel=name==el.Method b(pills[idx],{TextColor3=sel and a.
 Text or a.Muted},animate and 0.2 or 0)if sel then b(pill,{Position=UDim2.new((

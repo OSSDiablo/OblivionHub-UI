@@ -3050,13 +3050,19 @@ function k:PlayerList(opts)
 	local multi = opts.Multi == true
 	local listH = math.max(tonumber(opts.Height) or 196, 80)
 	local rowH = m and 44 or 38
-	local frame, stroke = G(self, "Frame", 46 + listH + 8, opts)
+	local collapsible = opts.Collapsed ~= false
+	local open = not collapsible
+	local headH = 46
+	local topH = collapsible and headH + 36 or headH
+	local fullH = topH + listH + 8
+	local frame, stroke = G(self, "Frame", open and fullH or headH, opts)
+	frame.ClipsDescendants = true
 	L(frame, stroke)
 	f({ Name = "Title", Position = UDim2.fromOffset(14, 0), Size = UDim2.new(1, -184, 0, 44), Text = opts.Name or "Players", Parent = frame })
 	local searchBg = c("Frame", {
-		AnchorPoint = Vector2.new(1, 0),
-		Position = UDim2.new(1, -9, 0, 9),
-		Size = UDim2.fromOffset(156, 28),
+		AnchorPoint = collapsible and Vector2.new(0, 0) or Vector2.new(1, 0),
+		Position = collapsible and UDim2.fromOffset(9, headH) or UDim2.new(1, -9, 0, 9),
+		Size = collapsible and UDim2.new(1, -18, 0, 28) or UDim2.fromOffset(156, 28),
 		BackgroundColor3 = a.Surface3,
 		BorderSizePixel = 0,
 		Parent = frame,
@@ -3086,7 +3092,7 @@ function k:PlayerList(opts)
 		b(searchStroke, { Color = a.Stroke, Transparency = 0 }, 0.25)
 	end)
 	local scroll = c("ScrollingFrame", {
-		Position = UDim2.fromOffset(6, 46),
+		Position = UDim2.fromOffset(6, topH),
 		Size = UDim2.new(1, -12, 0, listH),
 		BackgroundTransparency = 1,
 		BorderSizePixel = 0,
@@ -3099,7 +3105,7 @@ function k:PlayerList(opts)
 	})
 	c("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 2), Parent = scroll })
 	local empty = f({
-		Position = UDim2.fromOffset(0, 46),
+		Position = UDim2.fromOffset(0, topH),
 		Size = UDim2.new(1, 0, 0, listH),
 		Text = opts.EmptyText or "No players here",
 		TextSize = 13,
@@ -3133,7 +3139,96 @@ function k:PlayerList(opts)
 		end
 		return nil
 	end
+	local chip, chipAv, chipText, chev
+	if collapsible then
+		local hit = c("TextButton", {
+			Size = UDim2.new(1, 0, 0, headH),
+			BackgroundTransparency = 1,
+			AutoButtonColor = false,
+			Text = "",
+			ZIndex = 2,
+			Parent = frame,
+		})
+		chip = c("Frame", {
+			AnchorPoint = Vector2.new(1, 0.5),
+			Position = UDim2.new(1, -38, 0, headH / 2),
+			Size = UDim2.fromOffset(0, 24),
+			AutomaticSize = Enum.AutomaticSize.X,
+			BackgroundTransparency = 1,
+			Parent = frame,
+		})
+		c("UIListLayout", {
+			FillDirection = Enum.FillDirection.Horizontal,
+			HorizontalAlignment = Enum.HorizontalAlignment.Right,
+			VerticalAlignment = Enum.VerticalAlignment.Center,
+			SortOrder = Enum.SortOrder.LayoutOrder,
+			Padding = UDim.new(0, 8),
+			Parent = chip,
+		})
+		chipAv = c("ImageLabel", {
+			Size = UDim2.fromOffset(22, 22),
+			BackgroundColor3 = a.Surface3,
+			BorderSizePixel = 0,
+			LayoutOrder = 1,
+			Visible = false,
+			Parent = chip,
+		})
+		g(chipAv, UDim.new(1, 0))
+		chipText = f({
+			Size = UDim2.fromOffset(0, 22),
+			AutomaticSize = Enum.AutomaticSize.X,
+			Text = "",
+			TextSize = 13,
+			FontFace = j.Medium,
+			TextColor3 = a.Muted,
+			LayoutOrder = 2,
+			Parent = chip,
+		})
+		chev = A(frame, "chevron-down", a.Muted, UDim2.new(1, -30, 0, headH / 2))
+		hit.MouseButton1Click:Connect(function()
+			api:SetOpen(not open)
+		end)
+	end
+	local function short(s0)
+		return #s0 > 18 and (s0:sub(1, 17) .. "..") or s0
+	end
+	local function updateChip()
+		if not chip then
+			return
+		end
+		local v = value()
+		local one = multi and (#v == 1 and v[1]) or (not multi and v)
+		if one then
+			chipAv.Image = headshot(one.UserId)
+			chipAv.Visible = true
+			chipText.Text = short(one.DisplayName)
+			chipText.TextColor3 = a.Text
+		elseif multi and #v > 1 then
+			chipAv.Visible = false
+			chipText.Text = #v .. " players"
+			chipText.TextColor3 = a.Text
+		else
+			chipAv.Visible = false
+			chipText.Text = opts.NoneText or "Nobody"
+			chipText.TextColor3 = a.Muted
+		end
+	end
+	function api:SetOpen(v)
+		if not collapsible then
+			return
+		end
+		open = v == true
+		b(frame, { Size = UDim2.new(1, 0, 0, open and fullH or headH) }, 0.22)
+		b(chev, { Rotation = open and 180 or 0 }, 0.22)
+		if not open and box:IsFocused() then
+			box:ReleaseFocus()
+		end
+	end
+	function api:IsOpen()
+		return open
+	end
 	local function fire()
+		updateChip()
 		l(opts.Callback, value())
 	end
 	local function filter()
@@ -3173,6 +3268,9 @@ function k:PlayerList(opts)
 			paint(r)
 		end
 		fire()
+		if collapsible and not multi then
+			api:SetOpen(false)
+		end
 	end
 	local function addRow(p)
 		if p == J and not opts.IncludeSelf then
@@ -3294,7 +3392,9 @@ function k:PlayerList(opts)
 		for _, r in ipairs(rows) do
 			paint(r)
 		end
-		if not silent then
+		if silent then
+			updateChip()
+		else
 			fire()
 		end
 	end
@@ -3316,6 +3416,7 @@ function k:PlayerList(opts)
 	if opts.Default ~= nil then
 		api:Set(opts.Default, true)
 	end
+	updateChip()
 	return q(self, opts, api, frame, "PlayerList")
 end
 function k:FeatureTile(opts)
