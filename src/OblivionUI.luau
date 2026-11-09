@@ -432,7 +432,13 @@ end
 local function i(b, d, e, f)
 	local s = c(
 		"UIStroke",
-		{ Color = d or a.Stroke, Transparency = e or 0, Thickness = f or 1, ApplyStrokeMode = Enum.ApplyStrokeMode.Border, Parent = b }
+		{
+			Color = d or a.Stroke,
+			Transparency = e or 0,
+			Thickness = f or 1,
+			ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+			Parent = b,
+		}
 	)
 	pcall(function()
 		s.BorderStrokePosition = Enum.BorderStrokePosition.Inner
@@ -440,16 +446,13 @@ local function i(b, d, e, f)
 	return s
 end
 local function o(a, b, d, e, f)
-	return c(
-		"UIPadding",
-		{
-			PaddingLeft = UDim.new(0, b or 0),
-			PaddingRight = UDim.new(0, d or 0),
-			PaddingTop = UDim.new(0, e or 0),
-			PaddingBottom = UDim.new(0, f or 0),
-			Parent = a,
-		}
-	)
+	return c("UIPadding", {
+		PaddingLeft = UDim.new(0, b or 0),
+		PaddingRight = UDim.new(0, d or 0),
+		PaddingTop = UDim.new(0, e or 0),
+		PaddingBottom = UDim.new(0, f or 0),
+		Parent = a,
+	})
 end
 local function f(d)
 	local b = {
@@ -467,20 +470,17 @@ local function f(d)
 	return c("TextLabel", b)
 end
 local function z(d, e, f, g, h)
-	local b = c(
-		"ImageLabel",
-		{
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = f,
-			Size = e,
-			BackgroundTransparency = 1,
-			Image = v.Glow,
-			ImageColor3 = a.Glow,
-			ImageTransparency = g,
-			ZIndex = 0,
-			Parent = d,
-		}
-	)
+	local b = c("ImageLabel", {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = f,
+		Size = e,
+		BackgroundTransparency = 1,
+		Image = v.Glow,
+		ImageColor3 = a.Glow,
+		ImageTransparency = g,
+		ZIndex = 0,
+		Parent = d,
+	})
 	c(
 		"UIGradient",
 		{ Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), a.Accent), Rotation = h or 90, Parent = b }
@@ -488,18 +488,15 @@ local function z(d, e, f, g, h)
 	return b
 end
 local function T(a)
-	return c(
-		"Frame",
-		{
-			Position = UDim2.fromOffset(0, 0),
-			Size = UDim2.new(1, 0, 0, 1),
-			BackgroundColor3 = Color3.new(1, 1, 1),
-			BackgroundTransparency = 0.93,
-			BorderSizePixel = 0,
-			ZIndex = 0,
-			Parent = a,
-		}
-	)
+	return c("Frame", {
+		Position = UDim2.fromOffset(0, 0),
+		Size = UDim2.new(1, 0, 0, 1),
+		BackgroundColor3 = Color3.new(1, 1, 1),
+		BackgroundTransparency = 0.93,
+		BorderSizePixel = 0,
+		ZIndex = 0,
+		Parent = a,
+	})
 end
 local function u(a, c)
 	local b, d, e = ar(c)
@@ -550,39 +547,45 @@ end
 local function A(d, e, f, g)
 	local a = c(
 		"Frame",
-		{ AnchorPoint = Vector2.new(0, 0.5), Position = g, Size = UDim2.fromOffset(16, 16), BackgroundTransparency = 1, Parent = d }
+		{
+			AnchorPoint = Vector2.new(0, 0.5),
+			Position = g,
+			Size = UDim2.fromOffset(16, 16),
+			BackgroundTransparency = 1,
+			Parent = d,
+		}
 	)
 	local b = c(
 		"ImageLabel",
-		{ Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1, ImageColor3 = f, ScaleType = Enum.ScaleType.Fit, Parent = a }
+		{
+			Size = UDim2.fromScale(1, 1),
+			BackgroundTransparency = 1,
+			ImageColor3 = f,
+			ScaleType = Enum.ScaleType.Fit,
+			Parent = a,
+		}
 	)
 	u(b, e)
 	return a, b
 end
 local function ah(j, g, k)
-	local h = c(
-		"Frame",
-		{
-			AnchorPoint = Vector2.new(g, 0.5),
-			Position = UDim2.new(g, k, 0.5, 0),
-			Size = UDim2.fromOffset(18, 18),
-			BackgroundTransparency = 1,
-			Parent = j,
-		}
-	)
+	local h = c("Frame", {
+		AnchorPoint = Vector2.new(g, 0.5),
+		Position = UDim2.new(g, k, 0.5, 0),
+		Size = UDim2.fromOffset(18, 18),
+		BackgroundTransparency = 1,
+		Parent = j,
+	})
 	local d = {}
-	local e = c(
-		"ImageLabel",
-		{
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.fromScale(0.5, 0.5),
-			Size = UDim2.fromOffset(16, 16),
-			BackgroundTransparency = 1,
-			ImageColor3 = a.Muted,
-			ScaleType = Enum.ScaleType.Fit,
-			Parent = h,
-		}
-	)
+	local e = c("ImageLabel", {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.fromScale(0.5, 0.5),
+		Size = UDim2.fromOffset(16, 16),
+		BackgroundTransparency = 1,
+		ImageColor3 = a.Muted,
+		ScaleType = Enum.ScaleType.Fit,
+		Parent = h,
+	})
 	u(e, "chevron-down")
 	if e.Image ~= "" then
 		function d:Set(c)
@@ -773,8 +776,13 @@ local function M(b, e, g, c)
 	local d, h
 	if g then
 		local i = (y - 38) / 2
-		d =
-			f({ Name = "Title", Position = UDim2.fromOffset(14, i), Size = UDim2.new(1, -(14 + c), 0, 18), Text = e, Parent = b })
+		d = f({
+			Name = "Title",
+			Position = UDim2.fromOffset(14, i),
+			Size = UDim2.new(1, -(14 + c), 0, 18),
+			Text = e,
+			Parent = b,
+		})
 		h = f({
 			Name = "Desc",
 			Position = UDim2.fromOffset(14, i + 20),
@@ -786,8 +794,13 @@ local function M(b, e, g, c)
 			Parent = b,
 		})
 	else
-		d =
-			f({ Name = "Title", Position = UDim2.fromOffset(14, 0), Size = UDim2.new(1, -(14 + c), 1, 0), Text = e, Parent = b })
+		d = f({
+			Name = "Title",
+			Position = UDim2.fromOffset(14, 0),
+			Size = UDim2.new(1, -(14 + c), 1, 0),
+			Text = e,
+			Parent = b,
+		})
 	end
 	return d, h
 end
@@ -848,58 +861,46 @@ ac = function(b, e, h)
 			if not b.Locked then
 				return
 			end
-			d = c(
-				"TextButton",
-				{
-					Name = "Lock",
-					Size = UDim2.fromScale(1, 1),
-					BackgroundColor3 = a.Background,
-					BackgroundTransparency = 1,
-					Text = "",
-					AutoButtonColor = false,
-					ZIndex = 20,
-					Parent = e,
-				}
-			)
+			d = c("TextButton", {
+				Name = "Lock",
+				Size = UDim2.fromScale(1, 1),
+				BackgroundColor3 = a.Background,
+				BackgroundTransparency = 1,
+				Text = "",
+				AutoButtonColor = false,
+				ZIndex = 20,
+				Parent = e,
+			})
 			g(d)
-			local h = c(
-				"Frame",
-				{
-					AnchorPoint = Vector2.new(1, 0.5),
-					Position = UDim2.new(1, -10, 0.5, 0),
-					Size = UDim2.fromOffset(0, t),
-					AutomaticSize = Enum.AutomaticSize.X,
-					BackgroundColor3 = a.Surface,
-					BorderSizePixel = 0,
-					ZIndex = 21,
-					Parent = d,
-				}
-			)
+			local h = c("Frame", {
+				AnchorPoint = Vector2.new(1, 0.5),
+				Position = UDim2.new(1, -10, 0.5, 0),
+				Size = UDim2.fromOffset(0, t),
+				AutomaticSize = Enum.AutomaticSize.X,
+				BackgroundColor3 = a.Surface,
+				BorderSizePixel = 0,
+				ZIndex = 21,
+				Parent = d,
+			})
 			g(h, UDim.new(0, 6))
 			i(h)
 			o(h, 8, 10)
-			c(
-				"UIListLayout",
-				{
-					FillDirection = Enum.FillDirection.Horizontal,
-					VerticalAlignment = Enum.VerticalAlignment.Center,
-					SortOrder = Enum.SortOrder.LayoutOrder,
-					Padding = UDim.new(0, 6),
-					Parent = h,
-				}
-			)
-			local j = c(
-				"ImageLabel",
-				{
-					Size = UDim2.fromOffset(14, 14),
-					BackgroundTransparency = 1,
-					ImageColor3 = a.Muted,
-					ScaleType = Enum.ScaleType.Fit,
-					LayoutOrder = 1,
-					ZIndex = 22,
-					Parent = h,
-				}
-			)
+			c("UIListLayout", {
+				FillDirection = Enum.FillDirection.Horizontal,
+				VerticalAlignment = Enum.VerticalAlignment.Center,
+				SortOrder = Enum.SortOrder.LayoutOrder,
+				Padding = UDim.new(0, 6),
+				Parent = h,
+			})
+			local j = c("ImageLabel", {
+				Size = UDim2.fromOffset(14, 14),
+				BackgroundTransparency = 1,
+				ImageColor3 = a.Muted,
+				ScaleType = Enum.ScaleType.Fit,
+				LayoutOrder = 1,
+				ZIndex = 22,
+				Parent = h,
+			})
 			u(j, "lock")
 			k = f({
 				Size = UDim2.new(0, 0, 1, 0),
@@ -935,7 +936,12 @@ function k:Section(b)
 	end
 	local d = c(
 		"Frame",
-		{ Size = UDim2.new(1, 0, 0, 28), BackgroundTransparency = 1, LayoutOrder = self:_nextOrder(), Parent = self.List }
+		{
+			Size = UDim2.new(1, 0, 0, 28),
+			BackgroundTransparency = 1,
+			LayoutOrder = self:_nextOrder(),
+			Parent = self.List,
+		}
 	)
 	local e = f({
 		Position = UDim2.fromOffset(2, 8),
@@ -947,17 +953,14 @@ function k:Section(b)
 		TextTruncate = Enum.TextTruncate.None,
 		Parent = d,
 	})
-	local h = c(
-		"Frame",
-		{
-			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, 0, 0, 16),
-			Size = UDim2.new(1, -12, 0, 1),
-			BackgroundColor3 = a.Stroke,
-			BorderSizePixel = 0,
-			Parent = d,
-		}
-	)
+	local h = c("Frame", {
+		AnchorPoint = Vector2.new(1, 0.5),
+		Position = UDim2.new(1, 0, 0, 16),
+		Size = UDim2.new(1, -12, 0, 1),
+		BackgroundColor3 = a.Stroke,
+		BorderSizePixel = 0,
+		Parent = d,
+	})
 	local i = self.Window
 	local function g()
 		h.Size = UDim2.new(1, -(e.AbsoluteSize.X / i.Scale.Scale + 14), 0, 1)
@@ -995,60 +998,51 @@ function k:SubTab(optsParam, iconParam)
 		tab._emptyPlaceholder.Visible = false
 	end
 
-	local subPage = c(
-		"ScrollingFrame",
-		{
-			Name = "SubTabPage_" .. subName,
-			Position = UDim2.fromOffset(0, tab._contentOffset + 38),
-			Size = UDim2.new(1, 0, 1, -(tab._contentOffset + 38)),
-			BackgroundTransparency = 1,
-			BorderSizePixel = 0,
-			ScrollBarThickness = 2,
-			ScrollBarImageColor3 = a.Accent,
-			ScrollBarImageTransparency = 0.5,
-			AutomaticCanvasSize = Enum.AutomaticSize.Y,
-			CanvasSize = UDim2.new(),
-			Visible = false,
-			Parent = tab._page,
-		}
-	)
+	local subPage = c("ScrollingFrame", {
+		Name = "SubTabPage_" .. subName,
+		Position = UDim2.fromOffset(0, tab._contentOffset + 38),
+		Size = UDim2.new(1, 0, 1, -(tab._contentOffset + 38)),
+		BackgroundTransparency = 1,
+		BorderSizePixel = 0,
+		ScrollBarThickness = 2,
+		ScrollBarImageColor3 = a.Accent,
+		ScrollBarImageTransparency = 0.5,
+		AutomaticCanvasSize = Enum.AutomaticSize.Y,
+		CanvasSize = UDim2.new(),
+		Visible = false,
+		Parent = tab._page,
+	})
 	o(subPage, 24, 24, 2, 24)
 	if m then
 		subPage:SetAttribute("NoDrag", true)
 	end
 	c("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 8), Parent = subPage })
 
-	local subBtn = c(
-		"TextButton",
-		{
-			Size = UDim2.fromOffset(0, 30),
-			AutomaticSize = Enum.AutomaticSize.X,
-			BackgroundColor3 = a.Surface2,
-			BackgroundTransparency = 1,
-			Text = "",
-			AutoButtonColor = false,
-			LayoutOrder = #(tab.SubTabs or tab.Sections) + 1,
-			Parent = tab._sectionBar,
-		}
-	)
+	local subBtn = c("TextButton", {
+		Size = UDim2.fromOffset(0, 30),
+		AutomaticSize = Enum.AutomaticSize.X,
+		BackgroundColor3 = a.Surface2,
+		BackgroundTransparency = 1,
+		Text = "",
+		AutoButtonColor = false,
+		LayoutOrder = #(tab.SubTabs or tab.Sections) + 1,
+		Parent = tab._sectionBar,
+	})
 	g(subBtn, UDim.new(0, 7))
 	local subStroke = i(subBtn, a.Stroke, 1)
 	o(subBtn, 12, 12)
 
 	local subIcon
 	if opts.Icon then
-		subIcon = c(
-			"ImageLabel",
-			{
-				AnchorPoint = Vector2.new(0, 0.5),
-				Position = UDim2.new(0, 0, 0.5, 0),
-				Size = UDim2.fromOffset(14, 14),
-				BackgroundTransparency = 1,
-				ImageColor3 = a.Muted,
-				ScaleType = Enum.ScaleType.Fit,
-				Parent = subBtn,
-			}
-		)
+		subIcon = c("ImageLabel", {
+			AnchorPoint = Vector2.new(0, 0.5),
+			Position = UDim2.new(0, 0, 0.5, 0),
+			Size = UDim2.fromOffset(14, 14),
+			BackgroundTransparency = 1,
+			ImageColor3 = a.Muted,
+			ScaleType = Enum.ScaleType.Fit,
+			Parent = subBtn,
+		})
 		u(subIcon, opts.Icon)
 	end
 
@@ -1137,49 +1131,40 @@ function k:Box(optsParam, descParam)
 	local boxName = opts.Name or opts.Title or ""
 	local target = self._activeSection or self
 
-	local boxFrame = c(
-		"Frame",
-		{
-			Name = "Box_" .. (boxName ~= "" and boxName or "Card"),
-			Size = UDim2.new(1, 0, 0, 0),
-			AutomaticSize = Enum.AutomaticSize.Y,
-			BackgroundColor3 = a.Surface,
-			BackgroundTransparency = 0.35,
-			BorderSizePixel = 0,
-			LayoutOrder = target:_nextOrder(),
-			Parent = target.List,
-		}
-	)
+	local boxFrame = c("Frame", {
+		Name = "Box_" .. (boxName ~= "" and boxName or "Card"),
+		Size = UDim2.new(1, 0, 0, 0),
+		AutomaticSize = Enum.AutomaticSize.Y,
+		BackgroundColor3 = a.Surface,
+		BackgroundTransparency = 0.35,
+		BorderSizePixel = 0,
+		LayoutOrder = target:_nextOrder(),
+		Parent = target.List,
+	})
 	g(boxFrame, UDim.new(0, 10))
 	i(boxFrame, a.Stroke, 1)
 	o(boxFrame, 12, 12, 12, 12)
 	c("UIListLayout", { SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 8), Parent = boxFrame })
 
 	if boxName ~= "" then
-		local header = c(
-			"Frame",
-			{
-				Name = "Header",
-				Size = UDim2.new(1, 0, 0, 20),
-				BackgroundTransparency = 1,
-				LayoutOrder = 1,
-				Parent = boxFrame,
-			}
-		)
+		local header = c("Frame", {
+			Name = "Header",
+			Size = UDim2.new(1, 0, 0, 20),
+			BackgroundTransparency = 1,
+			LayoutOrder = 1,
+			Parent = boxFrame,
+		})
 		local iconOffset = 2
 		if opts.Icon then
-			local boxIcon = c(
-				"ImageLabel",
-				{
-					AnchorPoint = Vector2.new(0, 0.5),
-					Position = UDim2.new(0, 2, 0.5, 0),
-					Size = UDim2.fromOffset(14, 14),
-					BackgroundTransparency = 1,
-					ImageColor3 = a.Accent,
-					ScaleType = Enum.ScaleType.Fit,
-					Parent = header,
-				}
-			)
+			local boxIcon = c("ImageLabel", {
+				AnchorPoint = Vector2.new(0, 0.5),
+				Position = UDim2.new(0, 2, 0.5, 0),
+				Size = UDim2.fromOffset(14, 14),
+				BackgroundTransparency = 1,
+				ImageColor3 = a.Accent,
+				ScaleType = Enum.ScaleType.Fit,
+				Parent = header,
+			})
 			u(boxIcon, opts.Icon)
 			iconOffset = 20
 		end
@@ -1194,17 +1179,14 @@ function k:Box(optsParam, descParam)
 			TextTruncate = Enum.TextTruncate.None,
 			Parent = header,
 		})
-		local line = c(
-			"Frame",
-			{
-				AnchorPoint = Vector2.new(0, 0.5),
-				Position = UDim2.new(0, 0, 0.5, 0),
-				Size = UDim2.new(1, 0, 0, 1),
-				BackgroundColor3 = a.Stroke,
-				BorderSizePixel = 0,
-				Parent = header,
-			}
-		)
+		local line = c("Frame", {
+			AnchorPoint = Vector2.new(0, 0.5),
+			Position = UDim2.new(0, 0, 0.5, 0),
+			Size = UDim2.new(1, 0, 0, 1),
+			BackgroundColor3 = a.Stroke,
+			BorderSizePixel = 0,
+			Parent = header,
+		})
 		local win = target.Window
 		local function updateLine()
 			local scale = (win and win.Scale and win.Scale.Scale) or 1
@@ -1233,16 +1215,13 @@ k.SectionBox = k.Box
 k.CreateSectionBox = k.Box
 
 function k:Divider()
-	local b = c(
-		"Frame",
-		{
-			Size = UDim2.new(1, 0, 0, 1),
-			BackgroundColor3 = a.Stroke,
-			BorderSizePixel = 0,
-			LayoutOrder = self:_nextOrder(),
-			Parent = self.List,
-		}
-	)
+	local b = c("Frame", {
+		Size = UDim2.new(1, 0, 0, 1),
+		BackgroundColor3 = a.Stroke,
+		BorderSizePixel = 0,
+		LayoutOrder = self:_nextOrder(),
+		Parent = self.List,
+	})
 	return q(self, {}, {}, b, "Divider")
 end
 function k:Label(b)
@@ -1339,7 +1318,8 @@ function k:Stats(b)
 	function api:Add(o)
 		o = n(o, { Title = "Name" })
 		local key = o.Name or ("Stat " .. (#order + 1))
-		local card = c("Frame", { BackgroundColor3 = a.Surface2, BorderSizePixel = 0, LayoutOrder = #order + 1, Parent = d })
+		local card =
+			c("Frame", { BackgroundColor3 = a.Surface2, BorderSizePixel = 0, LayoutOrder = #order + 1, Parent = d })
 		card:SetAttribute("NoDrag", true)
 		g(card)
 		i(card)
@@ -1463,45 +1443,36 @@ function k:Toggle(e)
 		56,
 		"Toggle"
 	)
-	local f = c(
-		"Frame",
-		{
-			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, -14, 0.5, 0),
-			Size = m and UDim2.fromOffset(44, 24) or UDim2.fromOffset(36, 20),
-			BackgroundColor3 = a.Surface3,
-			BorderSizePixel = 0,
-			Parent = j,
-		}
-	)
+	local f = c("Frame", {
+		AnchorPoint = Vector2.new(1, 0.5),
+		Position = UDim2.new(1, -14, 0.5, 0),
+		Size = m and UDim2.fromOffset(44, 24) or UDim2.fromOffset(36, 20),
+		BackgroundColor3 = a.Surface3,
+		BorderSizePixel = 0,
+		Parent = j,
+	})
 	g(f, UDim.new(1, 0))
 	i(f, a.Stroke)
-	local h = c(
-		"Frame",
-		{
-			AnchorPoint = Vector2.new(0, 0.5),
-			Position = UDim2.new(0, 3, 0.5, 0),
-			Size = m and UDim2.fromOffset(18, 18) or UDim2.fromOffset(14, 14),
-			BackgroundColor3 = a.Muted,
-			BorderSizePixel = 0,
-			Parent = f,
-		}
-	)
+	local h = c("Frame", {
+		AnchorPoint = Vector2.new(0, 0.5),
+		Position = UDim2.new(0, 3, 0.5, 0),
+		Size = m and UDim2.fromOffset(18, 18) or UDim2.fromOffset(14, 14),
+		BackgroundColor3 = a.Muted,
+		BorderSizePixel = 0,
+		Parent = f,
+	})
 	g(h, UDim.new(1, 0))
-	local p = c(
-		"ImageLabel",
-		{
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.fromScale(0.5, 0.5),
-			Size = UDim2.new(1, 24, 1, 24),
-			BackgroundTransparency = 1,
-			Image = v.Glow,
-			ImageColor3 = a.Accent,
-			ImageTransparency = 1,
-			ZIndex = 0,
-			Parent = f,
-		}
-	)
+	local p = c("ImageLabel", {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.fromScale(0.5, 0.5),
+		Size = UDim2.new(1, 24, 1, 24),
+		BackgroundTransparency = 1,
+		Image = v.Glow,
+		ImageColor3 = a.Accent,
+		ImageTransparency = 1,
+		ZIndex = 0,
+		Parent = f,
+	})
 	local d = { Value = e.Default == true }
 	local function o(i)
 		local e = d.Value
@@ -1564,7 +1535,13 @@ function k:Slider(d)
 	local N = y + (d.Desc and 18 or 0)
 	local t, Q = G(self, B, N, d)
 	L(t, Q)
-	f({ Name = "Title", Position = UDim2.fromOffset(14, 12), Size = UDim2.new(1, -120, 0, 18), Text = d.Name or "Slider", Parent = t })
+	f({
+		Name = "Title",
+		Position = UDim2.fromOffset(14, 12),
+		Size = UDim2.new(1, -120, 0, 18),
+		Text = d.Name or "Slider",
+		Parent = t,
+	})
 	if d.Desc then
 		f({
 			Name = "Desc",
@@ -1577,18 +1554,15 @@ function k:Slider(d)
 			Parent = t,
 		})
 	end
-	local o = c(
-		B,
-		{
-			AnchorPoint = Vector2.new(1, 0),
-			Position = UDim2.new(1, -10, 0, 9),
-			Size = UDim2.fromOffset(40, 24),
-			BackgroundColor3 = a.Surface,
-			BorderSizePixel = 0,
-			ClipsDescendants = true,
-			Parent = t,
-		}
-	)
+	local o = c(B, {
+		AnchorPoint = Vector2.new(1, 0),
+		Position = UDim2.new(1, -10, 0, 9),
+		Size = UDim2.fromOffset(40, 24),
+		BackgroundColor3 = a.Surface,
+		BorderSizePixel = 0,
+		ClipsDescendants = true,
+		Parent = t,
+	})
 	g(o, UDim.new(0, 6))
 	local J = i(o)
 	local z = f({
@@ -1599,23 +1573,20 @@ function k:Slider(d)
 		TextTruncate = Enum.TextTruncate.None,
 		Parent = o,
 	})
-	local h = c(
-		"TextBox",
-		{
-			Position = UDim2.fromOffset(9, 0),
-			Size = UDim2.new(0, 0, 1, 0),
-			AutomaticSize = Enum.AutomaticSize.X,
-			BackgroundTransparency = 1,
-			Text = "",
-			TextColor3 = a.Text,
-			TextSize = 13,
-			FontFace = j.Medium,
-			TextXAlignment = Enum.TextXAlignment.Left,
-			ClearTextOnFocus = false,
-			Visible = false,
-			Parent = o,
-		}
-	)
+	local h = c("TextBox", {
+		Position = UDim2.fromOffset(9, 0),
+		Size = UDim2.new(0, 0, 1, 0),
+		AutomaticSize = Enum.AutomaticSize.X,
+		BackgroundTransparency = 1,
+		Text = "",
+		TextColor3 = a.Text,
+		TextSize = 13,
+		FontFace = j.Medium,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		ClearTextOnFocus = false,
+		Visible = false,
+		Parent = o,
+	})
 	c("UISizeConstraint", { MinSize = Vector2.new(14, 0), Parent = h })
 	local K = f({
 		Size = UDim2.new(0, 0, 1, 0),
@@ -1630,7 +1601,14 @@ function k:Slider(d)
 	local D, E =
 		c(
 			"TextButton",
-			{ Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1, Text = "", AutoButtonColor = false, ZIndex = 2, Parent = o }
+			{
+				Size = UDim2.fromScale(1, 1),
+				BackgroundTransparency = 1,
+				Text = "",
+				AutoButtonColor = false,
+				ZIndex = 2,
+				Parent = o,
+			}
 		),
 		false
 	local function F(c)
@@ -1658,58 +1636,46 @@ function k:Slider(d)
 			F(false)
 		end
 	end)
-	local u = c(
-		B,
-		{
-			Position = UDim2.new(0, 14, 0, N - 18),
-			Size = UDim2.new(1, -28, 0, 5),
-			BackgroundColor3 = a.Surface3,
-			BorderSizePixel = 0,
-			Parent = t,
-		}
-	)
+	local u = c(B, {
+		Position = UDim2.new(0, 14, 0, N - 18),
+		Size = UDim2.new(1, -28, 0, 5),
+		BackgroundColor3 = a.Surface3,
+		BorderSizePixel = 0,
+		Parent = t,
+	})
 	g(u, UDim.new(1, 0))
 	local R = c(B, { Size = UDim2.new(0, 0, 1, 0), BackgroundColor3 = a.Accent, BorderSizePixel = 0, Parent = u })
 	g(R, UDim.new(1, 0))
-	local x = c(
-		"ImageLabel",
-		{
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.new(0, 0, 0.5, 0),
-			Size = UDim2.fromOffset(28, 28),
-			BackgroundTransparency = 1,
-			Image = v.Glow,
-			ImageColor3 = a.Accent,
-			ImageTransparency = 0.85,
-			ZIndex = 2,
-			Parent = u,
-		}
-	)
-	local A = c(
-		B,
-		{
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.new(0, 0, 0.5, 0),
-			Size = UDim2.fromOffset(12, 12),
-			BackgroundColor3 = a.Accent,
-			BorderSizePixel = 0,
-			ZIndex = 3,
-			Parent = u,
-		}
-	)
+	local x = c("ImageLabel", {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.new(0, 0, 0.5, 0),
+		Size = UDim2.fromOffset(28, 28),
+		BackgroundTransparency = 1,
+		Image = v.Glow,
+		ImageColor3 = a.Accent,
+		ImageTransparency = 0.85,
+		ZIndex = 2,
+		Parent = u,
+	})
+	local A = c(B, {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.new(0, 0, 0.5, 0),
+		Size = UDim2.fromOffset(12, 12),
+		BackgroundColor3 = a.Accent,
+		BorderSizePixel = 0,
+		ZIndex = 3,
+		Parent = u,
+	})
 	g(A, UDim.new(1, 0))
-	local O = c(
-		"TextButton",
-		{
-			Position = UDim2.new(0, 8, 0, N - (m and 37 or 31)),
-			Size = UDim2.new(1, -16, 0, m and 40 or 28),
-			BackgroundTransparency = 1,
-			Text = "",
-			AutoButtonColor = false,
-			ZIndex = 4,
-			Parent = t,
-		}
-	)
+	local O = c("TextButton", {
+		Position = UDim2.new(0, 8, 0, N - (m and 37 or 31)),
+		Size = UDim2.new(1, -16, 0, m and 40 or 28),
+		BackgroundTransparency = 1,
+		Text = "",
+		AutoButtonColor = false,
+		ZIndex = 4,
+		Parent = t,
+	})
 	local e, p = { Value = math.clamp(d.Default or k, k, C) }, false
 	D.MouseEnter:Connect(function()
 		b(J, { Color = a.StrokeHover }, 0.12)
@@ -1844,17 +1810,14 @@ function k:Slider(d)
 end
 function k:Dropdown(d)
 	local y = "Frame"
-	d = n(
-		d,
-		{
-			Title = "Name",
-			Description = "Desc",
-			CurrentOption = "Default",
-			Value = "Default",
-			MultipleOptions = "Multi",
-			Values = "Options",
-		}
-	)
+	d = n(d, {
+		Title = "Name",
+		Description = "Desc",
+		CurrentOption = "Default",
+		Value = "Default",
+		MultipleOptions = "Multi",
+		Values = "Options",
+	})
 	if d.Multi and type(d.Default) ~= "table" and d.Default ~= nil then
 		d.Default = { d.Default }
 	elseif not d.Multi and type(d.Default) == "table" then
@@ -1870,18 +1833,15 @@ function k:Dropdown(d)
 		{ Size = UDim2.new(1, 0, 0, x), BackgroundTransparency = 1, Text = "", AutoButtonColor = false, Parent = p }
 	)
 	local T, U = M(G, d.Name or "Dropdown", d.Desc, 180)
-	local r = c(
-		y,
-		{
-			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, -10, 0.5, 0),
-			Size = UDim2.fromOffset(60, t),
-			BackgroundColor3 = a.Surface,
-			BorderSizePixel = 0,
-			ClipsDescendants = true,
-			Parent = G,
-		}
-	)
+	local r = c(y, {
+		AnchorPoint = Vector2.new(1, 0.5),
+		Position = UDim2.new(1, -10, 0.5, 0),
+		Size = UDim2.fromOffset(60, t),
+		BackgroundColor3 = a.Surface,
+		BorderSizePixel = 0,
+		ClipsDescendants = true,
+		Parent = G,
+	})
 	g(r, UDim.new(0, 6))
 	local V = i(r)
 	local H = f({
@@ -1895,7 +1855,13 @@ function k:Dropdown(d)
 	})
 	local W = ah(r, 1, -6)
 	local z, k =
-		f({ Size = UDim2.fromOffset(0, t), AutomaticSize = Enum.AutomaticSize.X, TextSize = 13, Visible = false, Parent = r }),
+		f({
+			Size = UDim2.fromOffset(0, t),
+			AutomaticSize = Enum.AutomaticSize.X,
+			TextSize = 13,
+			Visible = false,
+			Parent = r,
+		}),
 		""
 	local function X()
 		z.Text = k
@@ -1943,38 +1909,32 @@ function k:Dropdown(d)
 	local m, A = {}, ""
 	local Y = d.SearchAfter or 6
 	local P = d.Placeholder or "None"
-	local v = c(
-		y,
-		{
-			Size = UDim2.new(1, 0, 0, S),
-			BackgroundColor3 = a.Surface,
-			BackgroundTransparency = 1,
-			BorderSizePixel = 0,
-			LayoutOrder = 0,
-			Visible = false,
-			Parent = I,
-		}
-	)
+	local v = c(y, {
+		Size = UDim2.new(1, 0, 0, S),
+		BackgroundColor3 = a.Surface,
+		BackgroundTransparency = 1,
+		BorderSizePixel = 0,
+		LayoutOrder = 0,
+		Visible = false,
+		Parent = I,
+	})
 	g(v, UDim.new(0, 6))
 	local Z = i(v, a.Stroke, 1)
-	local C = c(
-		"TextBox",
-		{
-			Position = UDim2.fromOffset(12, 0),
-			Size = UDim2.new(1, -20, 1, 0),
-			BackgroundTransparency = 1,
-			Text = "",
-			PlaceholderText = "Search",
-			PlaceholderColor3 = a.Muted,
-			TextColor3 = a.Text,
-			TextSize = 13,
-			FontFace = j.Regular,
-			TextXAlignment = Enum.TextXAlignment.Left,
-			ClearTextOnFocus = false,
-			TextTransparency = 1,
-			Parent = v,
-		}
-	)
+	local C = c("TextBox", {
+		Position = UDim2.fromOffset(12, 0),
+		Size = UDim2.new(1, -20, 1, 0),
+		BackgroundTransparency = 1,
+		Text = "",
+		PlaceholderText = "Search",
+		PlaceholderColor3 = a.Muted,
+		TextColor3 = a.Text,
+		TextSize = 13,
+		FontFace = j.Regular,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		ClearTextOnFocus = false,
+		TextTransparency = 1,
+		Parent = v,
+	})
 	local function Q(a)
 		return A == "" or string.find(string.lower(tostring(a)), A, 1, true) ~= nil
 	end
@@ -2133,32 +2093,26 @@ function k:Dropdown(d)
 				o.Frame.LayoutOrder = n
 				continue
 			end
-			local i = c(
-				"TextButton",
-				{
-					Size = UDim2.new(1, 0, 0, S),
-					BackgroundColor3 = a.Surface,
-					BackgroundTransparency = 1,
-					Text = "",
-					AutoButtonColor = false,
-					LayoutOrder = n,
-					Parent = I,
-				}
-			)
+			local i = c("TextButton", {
+				Size = UDim2.new(1, 0, 0, S),
+				BackgroundColor3 = a.Surface,
+				BackgroundTransparency = 1,
+				Text = "",
+				AutoButtonColor = false,
+				LayoutOrder = n,
+				Parent = I,
+			})
 			g(i, UDim.new(0, 6))
-			local j = c(
-				"ImageLabel",
-				{
-					AnchorPoint = Vector2.new(1, 0.5),
-					Position = UDim2.new(1, -10, 0.5, 0),
-					Size = UDim2.fromOffset(14, 14),
-					BackgroundTransparency = 1,
-					ImageColor3 = a.Accent,
-					ImageTransparency = 1,
-					ScaleType = Enum.ScaleType.Fit,
-					Parent = i,
-				}
-			)
+			local j = c("ImageLabel", {
+				AnchorPoint = Vector2.new(1, 0.5),
+				Position = UDim2.new(1, -10, 0.5, 0),
+				Size = UDim2.fromOffset(14, 14),
+				BackgroundTransparency = 1,
+				ImageColor3 = a.Accent,
+				ImageTransparency = 1,
+				ScaleType = Enum.ScaleType.Fit,
+				Parent = i,
+			})
 			u(j, "check")
 			local p = c("UIScale", { Scale = 0.6, Parent = j })
 			local k = f({
@@ -2258,22 +2212,25 @@ function k:Input(e)
 	e, k, s, x, t, u = B(
 		self,
 		e,
-		{ Title = "Name", Description = "Desc", PlaceholderText = "Placeholder", CurrentValue = "Default", Value = "Default" },
+		{
+			Title = "Name",
+			Description = "Desc",
+			PlaceholderText = "Placeholder",
+			CurrentValue = "Default",
+			Value = "Default",
+		},
 		"Frame",
 		160,
 		"Input"
 	)
-	local f = c(
-		"Frame",
-		{
-			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, -10, 0.5, 0),
-			Size = UDim2.fromOffset(170, 30),
-			BackgroundColor3 = a.Surface,
-			BorderSizePixel = 0,
-			Parent = k,
-		}
-	)
+	local f = c("Frame", {
+		AnchorPoint = Vector2.new(1, 0.5),
+		Position = UDim2.new(1, -10, 0.5, 0),
+		Size = UDim2.fromOffset(170, 30),
+		BackgroundColor3 = a.Surface,
+		BorderSizePixel = 0,
+		Parent = k,
+	})
 	g(f, UDim.new(0, 6))
 	local v = i(f)
 	local m = e.Icon
@@ -2288,25 +2245,22 @@ function k:Input(e)
 		end
 		return a
 	end
-	local d = c(
-		"TextBox",
-		{
-			Position = UDim2.fromOffset(m and 30 or 8, 0),
-			Size = UDim2.new(1, m and -38 or -16, 1, 0),
-			BackgroundTransparency = 1,
-			Text = p(e.Default),
-			PlaceholderText = e.Placeholder or "",
-			PlaceholderColor3 = a.Muted,
-			TextColor3 = a.Text,
-			TextSize = 14,
-			FontFace = j.Regular,
-			TextXAlignment = Enum.TextXAlignment.Left,
-			ClearTextOnFocus = e.ClearOnFocus == true,
-			TextTruncate = Enum.TextTruncate.None,
-			ClipsDescendants = true,
-			Parent = f,
-		}
-	)
+	local d = c("TextBox", {
+		Position = UDim2.fromOffset(m and 30 or 8, 0),
+		Size = UDim2.new(1, m and -38 or -16, 1, 0),
+		BackgroundTransparency = 1,
+		Text = p(e.Default),
+		PlaceholderText = e.Placeholder or "",
+		PlaceholderColor3 = a.Muted,
+		TextColor3 = a.Text,
+		TextSize = 14,
+		FontFace = j.Regular,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		ClearTextOnFocus = e.ClearOnFocus == true,
+		TextTruncate = Enum.TextTruncate.None,
+		ClipsDescendants = true,
+		Parent = f,
+	})
 	f.ClipsDescendants = true
 	local r = false
 	local y = (m and 30 or 8) + 8
@@ -2388,20 +2342,17 @@ function k:Keybind(e)
 	)
 	e.Default = F(e.Default)
 	local u = e.Mode == "Hold"
-	local h = c(
-		"TextButton",
-		{
-			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, -10, 0.5, 0),
-			Size = UDim2.fromOffset(44, t),
-			BackgroundColor3 = a.Surface,
-			BorderSizePixel = 0,
-			Text = "",
-			AutoButtonColor = false,
-			ClipsDescendants = true,
-			Parent = n,
-		}
-	)
+	local h = c("TextButton", {
+		AnchorPoint = Vector2.new(1, 0.5),
+		Position = UDim2.new(1, -10, 0.5, 0),
+		Size = UDim2.fromOffset(44, t),
+		BackgroundColor3 = a.Surface,
+		BorderSizePixel = 0,
+		Text = "",
+		AutoButtonColor = false,
+		ClipsDescendants = true,
+		Parent = n,
+	})
 	g(h, UDim.new(0, 6))
 	local z = i(h)
 	local k = f({
@@ -2510,126 +2461,114 @@ function k:ColorPicker(h)
 		{ Size = UDim2.new(1, 0, 0, v), BackgroundTransparency = 1, Text = "", AutoButtonColor = false, Parent = m }
 	)
 	M(A, h.Name or "Color", h.Desc, 90)
-	local C = c(
-		k,
-		{
-			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, -34, 0.5, 0),
-			Size = UDim2.fromOffset(36, 20),
-			BorderSizePixel = 0,
-			Parent = A,
-		}
-	)
+	local C = c(k, {
+		AnchorPoint = Vector2.new(1, 0.5),
+		Position = UDim2.new(1, -34, 0.5, 0),
+		Size = UDim2.fromOffset(36, 20),
+		BorderSizePixel = 0,
+		Parent = A,
+	})
 	C:SetAttribute("OblivionNoTheme", true)
 	g(C, UDim.new(0, 6))
 	i(C, a.Stroke)
 	local S = ah(A, 1, -12)
 	local n = c(
 		k,
-		{ Position = UDim2.fromOffset(14, v + 2), Size = UDim2.new(1, -28, 0, 156), BackgroundTransparency = 1, Visible = false, Parent = m }
-	)
-	local e = c(
-		G,
 		{
-			Size = UDim2.new(1, -30, 0, 110),
-			BackgroundColor3 = Color3.new(1, 1, 1),
-			BorderSizePixel = 0,
-			Text = "",
-			AutoButtonColor = false,
-			ClipsDescendants = true,
-			Parent = n,
+			Position = UDim2.fromOffset(14, v + 2),
+			Size = UDim2.new(1, -28, 0, 156),
+			BackgroundTransparency = 1,
+			Visible = false,
+			Parent = m,
 		}
 	)
+	local e = c(G, {
+		Size = UDim2.new(1, -30, 0, 110),
+		BackgroundColor3 = Color3.new(1, 1, 1),
+		BorderSizePixel = 0,
+		Text = "",
+		AutoButtonColor = false,
+		ClipsDescendants = true,
+		Parent = n,
+	})
 	g(e, UDim.new(0, 6))
 	local T = c(H, { Color = ColorSequence.new(Color3.new(1, 1, 1), Color3.new(1, 0, 0)), Parent = e })
 	local V =
 		c(k, { Size = UDim2.fromScale(1, 1), BackgroundColor3 = Color3.new(0, 0, 0), BorderSizePixel = 0, Parent = e })
-	c(
-		H,
-		{
-			Transparency = NumberSequence.new({ NumberSequenceKeypoint.new(0, 1), NumberSequenceKeypoint.new(1, 0) }),
-			Rotation = 90,
-			Parent = V,
-		}
-	)
+	c(H, {
+		Transparency = NumberSequence.new({ NumberSequenceKeypoint.new(0, 1), NumberSequenceKeypoint.new(1, 0) }),
+		Rotation = 90,
+		Parent = V,
+	})
 	local x = c(
-		k,
-		{ AnchorPoint = Vector2.new(0.5, 0.5), Size = UDim2.fromOffset(10, 10), BackgroundTransparency = 1, ZIndex = 3, Parent = e }
-	)
-	g(x, UDim.new(1, 0))
-	i(x, Color3.new(1, 1, 1), 0, 2)
-	local o = c(
-		G,
-		{
-			AnchorPoint = Vector2.new(1, 0),
-			Position = UDim2.new(1, 0, 0, 0),
-			Size = UDim2.fromOffset(14, 110),
-			BorderSizePixel = 0,
-			Text = "",
-			AutoButtonColor = false,
-			Parent = n,
-		}
-	)
-	g(o, UDim.new(0, 6))
-	c(
-		H,
-		{
-			Color = ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),
-				ColorSequenceKeypoint.new(0.16666666666666666, Color3.fromRGB(255, 255, 0)),
-				ColorSequenceKeypoint.new(0.3333333333333333, Color3.fromRGB(0, 255, 0)),
-				ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0, 255, 255)),
-				ColorSequenceKeypoint.new(0.6666666666666666, Color3.fromRGB(0, 0, 255)),
-				ColorSequenceKeypoint.new(0.8333333333333334, Color3.fromRGB(255, 0, 255)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 0, 0)),
-			}),
-			Rotation = 90,
-			Parent = o,
-		}
-	)
-	local y = c(
 		k,
 		{
 			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.new(0.5, 0, 0, 0),
-			Size = UDim2.fromOffset(18, 5),
-			BackgroundColor3 = Color3.new(1, 1, 1),
-			BorderSizePixel = 0,
+			Size = UDim2.fromOffset(10, 10),
+			BackgroundTransparency = 1,
 			ZIndex = 3,
-			Parent = o,
+			Parent = e,
 		}
 	)
+	g(x, UDim.new(1, 0))
+	i(x, Color3.new(1, 1, 1), 0, 2)
+	local o = c(G, {
+		AnchorPoint = Vector2.new(1, 0),
+		Position = UDim2.new(1, 0, 0, 0),
+		Size = UDim2.fromOffset(14, 110),
+		BorderSizePixel = 0,
+		Text = "",
+		AutoButtonColor = false,
+		Parent = n,
+	})
+	g(o, UDim.new(0, 6))
+	c(H, {
+		Color = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),
+			ColorSequenceKeypoint.new(0.16666666666666666, Color3.fromRGB(255, 255, 0)),
+			ColorSequenceKeypoint.new(0.3333333333333333, Color3.fromRGB(0, 255, 0)),
+			ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0, 255, 255)),
+			ColorSequenceKeypoint.new(0.6666666666666666, Color3.fromRGB(0, 0, 255)),
+			ColorSequenceKeypoint.new(0.8333333333333334, Color3.fromRGB(255, 0, 255)),
+			ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 0, 0)),
+		}),
+		Rotation = 90,
+		Parent = o,
+	})
+	local y = c(k, {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.new(0.5, 0, 0, 0),
+		Size = UDim2.fromOffset(18, 5),
+		BackgroundColor3 = Color3.new(1, 1, 1),
+		BorderSizePixel = 0,
+		ZIndex = 3,
+		Parent = o,
+	})
 	g(y, UDim.new(1, 0))
 	i(y, a.AccentDark, 0.4)
-	local I = c(
-		k,
-		{
-			Position = UDim2.fromOffset(6, 122),
-			Size = UDim2.fromOffset(118, 28),
-			BackgroundColor3 = a.Surface,
-			BorderSizePixel = 0,
-			Parent = n,
-		}
-	)
+	local I = c(k, {
+		Position = UDim2.fromOffset(6, 122),
+		Size = UDim2.fromOffset(118, 28),
+		BackgroundColor3 = a.Surface,
+		BorderSizePixel = 0,
+		Parent = n,
+	})
 	g(I, UDim.new(0, 6))
 	local L = i(I)
-	local p = c(
-		"TextBox",
-		{
-			Position = UDim2.fromOffset(14, 0),
-			Size = UDim2.new(1, -24, 1, 0),
-			BackgroundTransparency = 1,
-			Text = "",
-			TextTruncate = Enum.TextTruncate.None,
-			ClipsDescendants = false,
-			TextColor3 = a.Text,
-			TextSize = 13,
-			FontFace = j.Regular,
-			TextXAlignment = Enum.TextXAlignment.Left,
-			ClearTextOnFocus = false,
-			Parent = I,
-		}
-	)
+	local p = c("TextBox", {
+		Position = UDim2.fromOffset(14, 0),
+		Size = UDim2.new(1, -24, 1, 0),
+		BackgroundTransparency = 1,
+		Text = "",
+		TextTruncate = Enum.TextTruncate.None,
+		ClipsDescendants = false,
+		TextColor3 = a.Text,
+		TextSize = 13,
+		FontFace = j.Regular,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		ClearTextOnFocus = false,
+		Parent = I,
+	})
 	local W = f({
 		Position = UDim2.fromOffset(134, 122),
 		Size = UDim2.new(1, -134, 0, 28),
@@ -2788,44 +2727,35 @@ function k:Stepper(e)
 	local x = e.Step or 1
 	local J = e.Suffix or ""
 	local y = ai(k, o, x)
-	local h = c(
-		"Frame",
-		{
-			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, -10, 0.5, 0),
-			Size = UDim2.fromOffset(0, t),
-			AutomaticSize = Enum.AutomaticSize.X,
-			BackgroundColor3 = a.Surface,
-			BorderSizePixel = 0,
-			Parent = n,
-		}
-	)
+	local h = c("Frame", {
+		AnchorPoint = Vector2.new(1, 0.5),
+		Position = UDim2.new(1, -10, 0.5, 0),
+		Size = UDim2.fromOffset(0, t),
+		AutomaticSize = Enum.AutomaticSize.X,
+		BackgroundColor3 = a.Surface,
+		BorderSizePixel = 0,
+		Parent = n,
+	})
 	g(h, UDim.new(0, 6))
 	local z = i(h)
-	c(
-		"UIListLayout",
-		{
-			FillDirection = Enum.FillDirection.Horizontal,
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			VerticalAlignment = Enum.VerticalAlignment.Center,
-			Parent = h,
-		}
-	)
+	c("UIListLayout", {
+		FillDirection = Enum.FillDirection.Horizontal,
+		SortOrder = Enum.SortOrder.LayoutOrder,
+		VerticalAlignment = Enum.VerticalAlignment.Center,
+		Parent = h,
+	})
 	local function A(e, f)
-		local d = c(
-			"TextButton",
-			{
-				Size = UDim2.fromOffset(t, t),
-				BackgroundTransparency = 1,
-				Text = e,
-				TextColor3 = a.Muted,
-				TextSize = 18,
-				FontFace = j.Medium,
-				AutoButtonColor = false,
-				LayoutOrder = f,
-				Parent = h,
-			}
-		)
+		local d = c("TextButton", {
+			Size = UDim2.fromOffset(t, t),
+			BackgroundTransparency = 1,
+			Text = e,
+			TextColor3 = a.Muted,
+			TextSize = 18,
+			FontFace = j.Medium,
+			AutoButtonColor = false,
+			LayoutOrder = f,
+			Parent = h,
+		})
 		d.MouseEnter:Connect(function()
 			b(d, { TextColor3 = a.Accent }, 0.12)
 		end)
@@ -2930,8 +2860,13 @@ function k:Progress(d)
 	local h, s = G(self, "Frame", d.Desc and y + 10 or R + 10, d)
 	L(h, s)
 	local i = d.Desc and (y - 38) / 2 - 2 or 12
-	f({ Name = "Title", Position = UDim2.fromOffset(14, i), Size = UDim2.new(1, -110, 0, 18), Text = d.Name
-		or "Progress", Parent = h })
+	f({
+		Name = "Title",
+		Position = UDim2.fromOffset(14, i),
+		Size = UDim2.new(1, -110, 0, 18),
+		Text = d.Name or "Progress",
+		Parent = h,
+	})
 	if d.Desc then
 		f({
 			Name = "Desc",
@@ -2953,16 +2888,13 @@ function k:Progress(d)
 		TextColor3 = a.Accent,
 		Parent = h,
 	})
-	local o = c(
-		"Frame",
-		{
-			Position = UDim2.new(0, 14, 1, -16),
-			Size = UDim2.new(1, -28, 0, 5),
-			BackgroundColor3 = a.Surface3,
-			BorderSizePixel = 0,
-			Parent = h,
-		}
-	)
+	local o = c("Frame", {
+		Position = UDim2.new(0, 14, 1, -16),
+		Size = UDim2.new(1, -28, 0, 5),
+		BackgroundColor3 = a.Surface3,
+		BorderSizePixel = 0,
+		Parent = h,
+	})
 	g(o, UDim.new(1, 0))
 	local k = c(
 		"Frame",
@@ -3058,7 +2990,13 @@ function k:PlayerList(opts)
 	local frame, stroke = G(self, "Frame", open and fullH or headH, opts)
 	frame.ClipsDescendants = true
 	L(frame, stroke)
-	f({ Name = "Title", Position = UDim2.fromOffset(14, 0), Size = UDim2.new(1, -184, 0, 44), Text = opts.Name or "Players", Parent = frame })
+	f({
+		Name = "Title",
+		Position = UDim2.fromOffset(14, 0),
+		Size = UDim2.new(1, -184, 0, 44),
+		Text = opts.Name or "Players",
+		Parent = frame,
+	})
 	local searchBg = c("Frame", {
 		AnchorPoint = collapsible and Vector2.new(0, 0) or Vector2.new(1, 0),
 		Position = collapsible and UDim2.fromOffset(9, headH) or UDim2.new(1, -9, 0, 9),
@@ -3541,7 +3479,13 @@ function k:Radar(opts)
 	local enabled = opts.Enabled ~= false
 	local frame, stroke = G(self, "Frame", size + 58, opts)
 	L(frame, stroke)
-	f({ Name = "Title", Position = UDim2.fromOffset(14, 0), Size = UDim2.new(1, -130, 0, 42), Text = opts.Name or "Radar", Parent = frame })
+	f({
+		Name = "Title",
+		Position = UDim2.fromOffset(14, 0),
+		Size = UDim2.new(1, -130, 0, 42),
+		Text = opts.Name or "Radar",
+		Parent = frame,
+	})
 	local rangeText = f({
 		AnchorPoint = Vector2.new(1, 0),
 		Position = UDim2.new(1, -14, 0, 0),
@@ -3760,7 +3704,13 @@ function k:TargetCard(opts)
 	g(av, UDim.new(1, 0))
 	local avStroke = i(av, a.Stroke)
 	local x0 = 74
-	local name = f({ Name = "Title", Position = UDim2.fromOffset(x0, 13), Size = UDim2.new(1, -(x0 + 90), 0, 18), Text = "", Parent = frame })
+	local name = f({
+		Name = "Title",
+		Position = UDim2.fromOffset(x0, 13),
+		Size = UDim2.new(1, -(x0 + 90), 0, 18),
+		Text = "",
+		Parent = frame,
+	})
 	local sub = f({
 		Name = "Desc",
 		Position = UDim2.fromOffset(x0, 32),
@@ -3799,7 +3749,8 @@ function k:TargetCard(opts)
 		Parent = frame,
 	})
 	g(track, UDim.new(1, 0))
-	local fill = c("Frame", { Size = UDim2.fromScale(0, 1), BackgroundColor3 = a.Success, BorderSizePixel = 0, Parent = track })
+	local fill =
+		c("Frame", { Size = UDim2.fromScale(0, 1), BackgroundColor3 = a.Success, BorderSizePixel = 0, Parent = track })
 	g(fill, UDim.new(1, 0))
 	local api = { _listeners = {} }
 	local target
@@ -3825,7 +3776,10 @@ function k:TargetCard(opts)
 			hpText.Text = hum and (tostring(math.floor(hum.Health + 0.5)) .. " HP") or "Dead"
 		end
 		local mine = J.Character and J.Character:FindFirstChild("HumanoidRootPart")
-		distText.Text = root and mine and (tostring(math.floor((root.Position - mine.Position).Magnitude + 0.5)) .. " studs") or "far"
+		distText.Text = root
+				and mine
+				and (tostring(math.floor((root.Position - mine.Position).Magnitude + 0.5)) .. " studs")
+			or "far"
 	end
 	function api:SetTarget(v)
 		local p = resolvePlayer(v)
@@ -3867,7 +3821,8 @@ function k:TargetCard(opts)
 	api:SetTarget(opts.Target)
 	return q(self, opts, api, frame, "TargetCard")
 end
-local statusColors = { Active = "Success", On = "Success", Idle = "Muted", Off = "Muted", Warning = "Warning", Error = "Error" }
+local statusColors =
+	{ Active = "Success", On = "Success", Idle = "Muted", Off = "Muted", Warning = "Warning", Error = "Error" }
 function k:Status(opts)
 	opts = n(opts, { Title = "Name", Description = "Desc" })
 	local _, frame = B(self, opts, {}, "Frame", 150, "Status")
@@ -3962,7 +3917,12 @@ function k:Mic(opts)
 	local height = top + (methods and 42 or 0) + (opts.Notice and 26 or 0)
 	local card, stroke = G(self, "Frame", height, opts)
 	L(card, stroke)
-	local el = { Value = opts.Default == true, Method = methods and (opts.Method or methods[1]) or nil, Level = 0, _listeners = {} }
+	local el = {
+		Value = opts.Default == true,
+		Method = methods and (opts.Method or methods[1]) or nil,
+		Level = 0,
+		_listeners = {},
+	}
 
 	local btn = c("TextButton", {
 		AnchorPoint = Vector2.new(0, 0.5),
@@ -3997,7 +3957,13 @@ function k:Mic(opts)
 		Parent = btn,
 	})
 
-	local title = f({ Name = "Title", Position = UDim2.fromOffset(72, top / 2 - 19), Size = UDim2.new(1, -230, 0, 18), Text = opts.Name or "Microphone", Parent = card })
+	local title = f({
+		Name = "Title",
+		Position = UDim2.fromOffset(72, top / 2 - 19),
+		Size = UDim2.new(1, -230, 0, 18),
+		Text = opts.Name or "Microphone",
+		Parent = card,
+	})
 	local dot = c("Frame", {
 		AnchorPoint = Vector2.new(0, 0.5),
 		Position = UDim2.fromOffset(72, top / 2 + 11),
@@ -4069,7 +4035,12 @@ function k:Mic(opts)
 		b(btnStroke, { Color = on and a.Accent or a.Stroke }, t)
 		b(glow, { ImageTransparency = on and 0.7 or 1 }, t)
 		b(sw, { BackgroundColor3 = on and a.Accent or a.Surface3 }, t)
-		b(knob, { Position = on and UDim2.new(0, swW - 3 - knobW, 0.5, 0) or UDim2.new(0, 3, 0.5, 0) }, t, Enum.EasingStyle.Back)
+		b(
+			knob,
+			{ Position = on and UDim2.new(0, swW - 3 - knobW, 0.5, 0) or UDim2.new(0, 3, 0.5, 0) },
+			t,
+			Enum.EasingStyle.Back
+		)
 		b(knob, { BackgroundColor3 = on and a.AccentDark or a.Muted }, t)
 		u(icon, on and "mic" or "mic-off")
 		b(icon, { ImageColor3 = on and a.AccentDark or a.Muted }, t)
@@ -4093,7 +4064,12 @@ function k:Mic(opts)
 			local sel = name == el.Method
 			b(pills[idx], { TextColor3 = sel and a.Text or a.Muted }, animate and 0.2 or 0)
 			if sel then
-				b(pill, { Position = UDim2.new((idx - 1) / #methods, 3, 0, 3) }, animate and 0.3 or 0, Enum.EasingStyle.Quint)
+				b(
+					pill,
+					{ Position = UDim2.new((idx - 1) / #methods, 3, 0, 3) },
+					animate and 0.3 or 0,
+					Enum.EasingStyle.Quint
+				)
 			end
 		end
 	end
@@ -4513,7 +4489,8 @@ function k:Menu(opts)
 	})
 	dither(body, nil, 0)
 
-	local header = c("Frame", { Name = "Header", Size = UDim2.new(1, 0, 0, 58), BackgroundTransparency = 1, Parent = body })
+	local header =
+		c("Frame", { Name = "Header", Size = UDim2.new(1, 0, 0, 58), BackgroundTransparency = 1, Parent = body })
 	local textX = 18
 	if opts.Icon then
 		local hIcon = c("ImageLabel", {
@@ -4946,21 +4923,18 @@ function e.Window(ac, k)
 	end
 	local V = k.Size or UDim2.fromOffset(640, 480)
 	local N = F(k.Keybind) or Enum.KeyCode.RightControl
-	local d = setmetatable(
-		{
-			Tabs = {},
-			Flags = {},
-			CurrentTab = nil,
-			Open = true,
-			Keybind = N,
-			_connections = {},
-			_controls = {},
-			_inputListeners = { Began = {}, Changed = {}, Ended = {}, Render = {} },
-			_frameSteps = {},
-			_destroyed = false,
-		},
-		h
-	)
+	local d = setmetatable({
+		Tabs = {},
+		Flags = {},
+		CurrentTab = nil,
+		Open = true,
+		Keybind = N,
+		_connections = {},
+		_controls = {},
+		_inputListeners = { Began = {}, Changed = {}, Ended = {}, Render = {} },
+		_frameSteps = {},
+		_destroyed = false,
+	}, h)
 	local function C(a)
 		return function(...)
 			for b, a in ipairs(d._inputListeners[a]) do
@@ -4981,67 +4955,61 @@ function e.Window(ac, k)
 	table.insert(d._connections, p.InputBegan:Connect(C("Began")))
 	table.insert(d._connections, p.InputChanged:Connect(C("Changed")))
 	table.insert(d._connections, p.InputEnded:Connect(C("Ended")))
-	local s = c(
-		"ScreenGui",
-		{
-			Name = k.Name or H,
-			IgnoreGuiInset = true,
-			ResetOnSpawn = false,
-			DisplayOrder = 999,
-			ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
-		}
-	)
+	local s = c("ScreenGui", {
+		Name = k.Name or H,
+		IgnoreGuiInset = true,
+		ResetOnSpawn = false,
+		DisplayOrder = 999,
+		ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
+	})
 	d.Gui = s
-	local y = c(
-		q,
-		{
-			Name = "Window",
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.fromScale(0.5, 0.5),
-			Size = V,
-			BackgroundTransparency = 1,
-			Parent = s,
-		}
-	)
+	local y = c(q, {
+		Name = "Window",
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.fromScale(0.5, 0.5),
+		Size = V,
+		BackgroundTransparency = 1,
+		Parent = s,
+	})
 	d.Root = y
 	local O = c("UIScale", { Parent = y })
 	d.Scale = O
-	local P = c(
-		"ImageLabel",
-		{
-			Position = UDim2.fromOffset(-25, -25),
-			Size = UDim2.new(1, 50, 1, 50),
-			BackgroundTransparency = 1,
-			Image = v.Shadow,
-			ImageColor3 = Color3.new(0, 0, 0),
-			ImageTransparency = 0.6,
-			ScaleType = Enum.ScaleType.Slice,
-			SliceCenter = v.ShadowSlice,
-			Parent = y,
-		}
-	)
+	local P = c("ImageLabel", {
+		Position = UDim2.fromOffset(-25, -25),
+		Size = UDim2.new(1, 50, 1, 50),
+		BackgroundTransparency = 1,
+		Image = v.Shadow,
+		ImageColor3 = Color3.new(0, 0, 0),
+		ImageTransparency = 0.6,
+		ScaleType = Enum.ScaleType.Slice,
+		SliceCenter = v.ShadowSlice,
+		Parent = y,
+	})
 	d.Shadow = P
 	local l = c(
 		I,
-		{ Name = "Body", Size = UDim2.fromScale(1, 1), BackgroundColor3 = a.Background, BorderSizePixel = 0, Parent = y }
+		{
+			Name = "Body",
+			Size = UDim2.fromScale(1, 1),
+			BackgroundColor3 = a.Background,
+			BorderSizePixel = 0,
+			Parent = y,
+		}
 	)
 	d.Body = l
 	g(l, UDim.new(0, 14))
 	d.BodyStroke = i(l, a.Stroke)
 	T(l)
 	local D = c(q, { Name = "Sidebar", Size = UDim2.new(0, 170, 1, 0), BackgroundTransparency = 1, Parent = l })
-	local sp = c(
-		q,
-		{
-			Name = "Panel",
-			Position = UDim2.fromOffset(8, 8),
-			Size = UDim2.new(1, -12, 1, -16),
-			BackgroundColor3 = a.Surface,
-			BorderSizePixel = 0,
-			ZIndex = 0,
-			Parent = D,
-		}
-	)
+	local sp = c(q, {
+		Name = "Panel",
+		Position = UDim2.fromOffset(8, 8),
+		Size = UDim2.new(1, -12, 1, -16),
+		BackgroundColor3 = a.Surface,
+		BorderSizePixel = 0,
+		ZIndex = 0,
+		Parent = D,
+	})
 	g(sp, UDim.new(0, 8))
 	i(sp, a.Stroke)
 	-- gradient body: soft radial accent glows over a base that darkens toward the bottom
@@ -5081,18 +5049,15 @@ function e.Window(ac, k)
 	dither(sp)
 	dither(l, nil, 0)
 	local K = c(q, { Name = "Header", Size = UDim2.new(1, 0, 0, 72), BackgroundTransparency = 1, Parent = D })
-	local Q = c(
-		"ImageLabel",
-		{
-			Position = UDim2.fromOffset(22, 27),
-			Size = UDim2.fromOffset(30, 28),
-			BackgroundTransparency = 1,
-			Image = "",
-			ImageColor3 = a.Text,
-			ScaleType = Enum.ScaleType.Fit,
-			Parent = K,
-		}
-	)
+	local Q = c("ImageLabel", {
+		Position = UDim2.fromOffset(22, 27),
+		Size = UDim2.fromOffset(30, 28),
+		BackgroundTransparency = 1,
+		Image = "",
+		ImageColor3 = a.Text,
+		ScaleType = Enum.ScaleType.Fit,
+		Parent = K,
+	})
 	u(Q, k.Icon or v.Logo)
 	d._logo = Q
 	d._titleLabel = f({
@@ -5112,39 +5077,92 @@ function e.Window(ac, k)
 		TextColor3 = a.Muted,
 		Parent = K,
 	})
-	local t = c(
-		"ScrollingFrame",
-		{
-			Name = "Tabs",
-			Position = UDim2.fromOffset(0, 80),
-			Size = UDim2.new(1, 0, 1, -116),
-			BackgroundTransparency = 1,
-			BorderSizePixel = 0,
-			ScrollBarThickness = 0,
-			AutomaticCanvasSize = Enum.AutomaticSize.Y,
-			CanvasSize = UDim2.new(),
-			Parent = D,
-		}
-	)
+	local t = c("ScrollingFrame", {
+		Name = "Tabs",
+		Position = UDim2.fromOffset(0, 80),
+		Size = UDim2.new(1, 0, 1, -116),
+		BackgroundTransparency = 1,
+		BorderSizePixel = 0,
+		ScrollBarThickness = 0,
+		AutomaticCanvasSize = Enum.AutomaticSize.Y,
+		CanvasSize = UDim2.new(),
+		Parent = D,
+	})
 	d.TabList = t
 	if m then
 		t:SetAttribute("NoDrag", true)
 	end
 	o(t, 16, 16, 4, 4)
 	c(M, { SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 4), Parent = t })
-	local E = c(
-		q,
-		{
-			AnchorPoint = Vector2.new(0, 0.5),
-			Position = UDim2.fromOffset(19, 0),
-			Size = UDim2.fromOffset(3, 16),
-			BackgroundColor3 = a.Accent,
+	local function tabFade(top)
+		local f = c(q, {
+			Name = top and "TabsFadeTop" or "TabsFadeBottom",
+			AnchorPoint = Vector2.new(0, top and 0 or 1),
+			Position = top and UDim2.fromOffset(8, 80) or UDim2.new(0, 8, 1, -36),
+			Size = UDim2.new(1, -12, 0, top and 28 or 44),
+			BackgroundColor3 = a.Surface,
 			BorderSizePixel = 0,
 			Visible = false,
-			ZIndex = 2,
+			ZIndex = 3,
 			Parent = D,
-		}
-	)
+		})
+		c("UIGradient", {
+			Rotation = top and 90 or -90,
+			Transparency = NumberSequence.new({
+				NumberSequenceKeypoint.new(0, 0),
+				NumberSequenceKeypoint.new(0.55, 0.35),
+				NumberSequenceKeypoint.new(1, 1),
+			}),
+			Parent = f,
+		})
+		return f
+	end
+	local fadeTop, fadeBottom = tabFade(true), tabFade(false)
+	local moreBtn = c("ImageButton", {
+		Name = "TabsMore",
+		AnchorPoint = Vector2.new(0.5, 1),
+		Position = UDim2.new(0.5, 2, 1, -38),
+		Size = UDim2.fromOffset(26, 18),
+		BackgroundColor3 = a.Surface2,
+		BorderSizePixel = 0,
+		AutoButtonColor = false,
+		Visible = false,
+		ZIndex = 4,
+		Parent = D,
+	})
+	g(moreBtn, UDim.new(1, 0))
+	i(moreBtn)
+	local _, moreIcon = A(moreBtn, "chevron-down", a.Muted, UDim2.new(0.5, -6, 0.5, 0))
+	moreIcon.Parent.Size = UDim2.fromOffset(12, 12)
+	moreIcon.ZIndex = 5
+	moreBtn.MouseButton1Click:Connect(function()
+		local maxY = math.max(0, t.AbsoluteCanvasSize.Y - t.AbsoluteWindowSize.Y)
+		local step = t.AbsoluteWindowSize.Y * 0.6
+		aa:Create(t, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {
+			CanvasPosition = Vector2.new(0, math.min(maxY, t.CanvasPosition.Y + step)),
+		}):Play()
+	end)
+	local function tabEdges()
+		local y = t.CanvasPosition.Y
+		local below = t.AbsoluteCanvasSize.Y - t.AbsoluteWindowSize.Y - y > 4
+		fadeTop.Visible = y > 4
+		fadeBottom.Visible = below
+		moreBtn.Visible = below
+	end
+	t:GetPropertyChangedSignal("CanvasPosition"):Connect(tabEdges)
+	t:GetPropertyChangedSignal("AbsoluteCanvasSize"):Connect(tabEdges)
+	t:GetPropertyChangedSignal("AbsoluteWindowSize"):Connect(tabEdges)
+	task.defer(tabEdges)
+	local E = c(q, {
+		AnchorPoint = Vector2.new(0, 0.5),
+		Position = UDim2.fromOffset(19, 0),
+		Size = UDim2.fromOffset(3, 16),
+		BackgroundColor3 = a.Accent,
+		BorderSizePixel = 0,
+		Visible = false,
+		ZIndex = 2,
+		Parent = D,
+	})
 	g(E, UDim.new(1, 0))
 	d.Indicator = E
 	local R = t.CanvasPosition.Y
@@ -5164,16 +5182,13 @@ function e.Window(ac, k)
 		q,
 		{ Position = UDim2.new(0, 22, 1, -36), Size = UDim2.new(1, -44, 0, 22), BackgroundTransparency = 1, Parent = D }
 	)
-	local x = c(
-		q,
-		{
-			Size = UDim2.fromOffset(0, 22),
-			AutomaticSize = Enum.AutomaticSize.X,
-			BackgroundColor3 = a.Surface,
-			BorderSizePixel = 0,
-			Parent = S,
-		}
-	)
+	local x = c(q, {
+		Size = UDim2.fromOffset(0, 22),
+		AutomaticSize = Enum.AutomaticSize.X,
+		BackgroundColor3 = a.Surface,
+		BorderSizePixel = 0,
+		Parent = S,
+	})
 	g(x, UDim.new(0, 5))
 	i(x)
 	o(x, 7, 7)
@@ -5200,54 +5215,59 @@ function e.Window(ac, k)
 	end
 	x:GetPropertyChangedSignal(J):Connect(U)
 	task.defer(U)
-	local G = c(
-		q,
-		{
-			Name = "Content",
-			Position = UDim2.fromOffset(171, 0),
-			Size = UDim2.new(1, -171, 1, 0),
-			BackgroundTransparency = 1,
-			ClipsDescendants = true,
-			Parent = l,
-		}
-	)
+	local G = c(q, {
+		Name = "Content",
+		Position = UDim2.fromOffset(171, 0),
+		Size = UDim2.new(1, -171, 1, 0),
+		BackgroundTransparency = 1,
+		ClipsDescendants = true,
+		Parent = l,
+	})
 	d.Content = G
 	d._outLayer = c(
 		I,
-		{ Name = "TransitionOut", Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1, Visible = false, ZIndex = 2, Parent = G }
-	)
-	d._inLayer = c(
-		I,
-		{ Name = "TransitionIn", Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1, Visible = false, ZIndex = 3, Parent = G }
-	)
-	local w = c(
-		"TextButton",
 		{
-			AnchorPoint = Vector2.new(1, 0),
-			Position = UDim2.new(1, -16, 0, 18),
-			Size = UDim2.fromOffset(30, 30),
-			BackgroundColor3 = a.Surface3,
+			Name = "TransitionOut",
+			Size = UDim2.fromScale(1, 1),
 			BackgroundTransparency = 1,
-			Text = "",
-			AutoButtonColor = false,
-			ZIndex = 5,
+			Visible = false,
+			ZIndex = 2,
 			Parent = G,
 		}
 	)
-	g(w, UDim.new(0, 8))
-	local wi = c(
-		"ImageLabel",
+	d._inLayer = c(
+		I,
 		{
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.fromScale(0.5, 0.5),
-			Size = UDim2.fromOffset(16, 16),
+			Name = "TransitionIn",
+			Size = UDim2.fromScale(1, 1),
 			BackgroundTransparency = 1,
-			ImageColor3 = a.Muted,
-			ScaleType = Enum.ScaleType.Fit,
-			ZIndex = 6,
-			Parent = w,
+			Visible = false,
+			ZIndex = 3,
+			Parent = G,
 		}
 	)
+	local w = c("TextButton", {
+		AnchorPoint = Vector2.new(1, 0),
+		Position = UDim2.new(1, -16, 0, 18),
+		Size = UDim2.fromOffset(30, 30),
+		BackgroundColor3 = a.Surface3,
+		BackgroundTransparency = 1,
+		Text = "",
+		AutoButtonColor = false,
+		ZIndex = 5,
+		Parent = G,
+	})
+	g(w, UDim.new(0, 8))
+	local wi = c("ImageLabel", {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.fromScale(0.5, 0.5),
+		Size = UDim2.fromOffset(16, 16),
+		BackgroundTransparency = 1,
+		ImageColor3 = a.Muted,
+		ScaleType = Enum.ScaleType.Fit,
+		ZIndex = 6,
+		Parent = w,
+	})
 	u(wi, "x")
 	w.MouseEnter:Connect(function()
 		b(w, { BackgroundTransparency = 0.4 }, 0.15)
@@ -5260,30 +5280,24 @@ function e.Window(ac, k)
 	w.MouseButton1Click:Connect(function()
 		d:Toggle(false)
 	end)
-	local L = c(
-		q,
-		{
-			Name = "Notifications",
-			AnchorPoint = Vector2.new(1, 1),
-			Position = UDim2.new(1, -20, 1, -20),
-			Size = UDim2.new(0, 320, 1, -40),
-			BackgroundTransparency = 1,
-			Parent = s,
-		}
-	)
+	local L = c(q, {
+		Name = "Notifications",
+		AnchorPoint = Vector2.new(1, 1),
+		Position = UDim2.new(1, -20, 1, -20),
+		Size = UDim2.new(0, 320, 1, -40),
+		BackgroundTransparency = 1,
+		Parent = s,
+	})
 	local function aa()
 		L.Size = UDim2.new(0, math.min(320, s.AbsoluteSize.X - 40), 1, -40)
 	end
 	table.insert(d._connections, s:GetPropertyChangedSignal(J):Connect(aa))
-	c(
-		M,
-		{
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			VerticalAlignment = Enum.VerticalAlignment.Bottom,
-			Padding = UDim.new(0, 8),
-			Parent = L,
-		}
-	)
+	c(M, {
+		SortOrder = Enum.SortOrder.LayoutOrder,
+		VerticalAlignment = Enum.VerticalAlignment.Bottom,
+		Padding = UDim.new(0, 8),
+		Parent = L,
+	})
 	d.NotifyHolder = L
 	d._notifyOrder = 0
 	d._toasts = {}
@@ -5717,54 +5731,48 @@ function h:_showLoader(e)
 	local h = "Frame"
 	local m = e.LoadingDuration or 1.6
 	local w = self.Gui
-	local d = c(
-		"CanvasGroup",
-		{
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.new(0.5, 0, 0.5, 16),
-			Size = UDim2.fromOffset(300, 132),
-			BackgroundColor3 = a.Background,
-			BorderSizePixel = 0,
-			GroupTransparency = 1,
-			ZIndex = 10,
-			Parent = w,
-		}
-	)
+	local d = c("CanvasGroup", {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.new(0.5, 0, 0.5, 16),
+		Size = UDim2.fromOffset(300, 132),
+		BackgroundColor3 = a.Background,
+		BorderSizePixel = 0,
+		GroupTransparency = 1,
+		ZIndex = 10,
+		Parent = w,
+	})
 	d.Size = UDim2.fromOffset(300, 176)
 	local x = g(d, UDim.new(0, 14))
 	local y = i(d, a.Stroke, 1)
 	T(d)
 	local p = c("UIScale", { Scale = 0.92, Parent = d })
 	-- shadow lives inside the canvas group, so it is clipped; kept only so the fade code below has a target
-	local q = c("ImageLabel", { BackgroundTransparency = 1, ImageTransparency = 1, Size = UDim2.fromOffset(0, 0), Parent = d })
-	-- logo in an app-icon tile, outline pulses in the accent while loading
-	local r = c(
-		h,
-		{
-			AnchorPoint = Vector2.new(0.5, 0),
-			Position = UDim2.new(0.5, 0, 0, 24),
-			Size = UDim2.fromOffset(48, 48),
-			BackgroundColor3 = a.Surface2,
-			BorderSizePixel = 0,
-			Parent = d,
-		}
+	local q = c(
+		"ImageLabel",
+		{ BackgroundTransparency = 1, ImageTransparency = 1, Size = UDim2.fromOffset(0, 0), Parent = d }
 	)
+	-- logo in an app-icon tile, outline pulses in the accent while loading
+	local r = c(h, {
+		AnchorPoint = Vector2.new(0.5, 0),
+		Position = UDim2.new(0.5, 0, 0, 24),
+		Size = UDim2.fromOffset(48, 48),
+		BackgroundColor3 = a.Surface2,
+		BorderSizePixel = 0,
+		Parent = d,
+	})
 	g(r, UDim.new(0, 12))
 	local ring = i(r, a.Stroke, 1)
-	local n = c(
-		"ImageLabel",
-		{
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.fromScale(0.5, 0.5),
-			Size = UDim2.fromOffset(14, 14),
-			Rotation = -14,
-			BackgroundTransparency = 1,
-			ImageColor3 = a.Text,
-			ImageTransparency = 1,
-			ScaleType = Enum.ScaleType.Fit,
-			Parent = r,
-		}
-	)
+	local n = c("ImageLabel", {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.fromScale(0.5, 0.5),
+		Size = UDim2.fromOffset(14, 14),
+		Rotation = -14,
+		BackgroundTransparency = 1,
+		ImageColor3 = a.Text,
+		ImageTransparency = 1,
+		ScaleType = Enum.ScaleType.Fit,
+		Parent = r,
+	})
 	u(n, e.Icon or v.Logo)
 	task.delay(0.15, function()
 		b(n, { Size = UDim2.fromOffset(28, 28), Rotation = 0 }, 0.6, Enum.EasingStyle.Back)
@@ -5800,43 +5808,34 @@ function h:_showLoader(e)
 		TextXAlignment = Enum.TextXAlignment.Center,
 		Parent = d,
 	})
-	local k = c(
-		h,
-		{
-			Position = UDim2.new(0, 24, 1, -32),
-			Size = UDim2.new(1, -48, 0, 4),
-			BackgroundColor3 = a.Surface3,
-			BorderSizePixel = 0,
-			ClipsDescendants = true,
-			Parent = d,
-		}
-	)
+	local k = c(h, {
+		Position = UDim2.new(0, 24, 1, -32),
+		Size = UDim2.new(1, -48, 0, 4),
+		BackgroundColor3 = a.Surface3,
+		BorderSizePixel = 0,
+		ClipsDescendants = true,
+		Parent = d,
+	})
 	g(k, UDim.new(1, 0))
 	local l = c(h, { Size = UDim2.fromScale(0, 1), BackgroundColor3 = a.Accent, BorderSizePixel = 0, Parent = k })
 	g(l, UDim.new(1, 0))
-	local o = c(
-		h,
-		{
-			Position = UDim2.fromScale(-0.4, 0),
-			Size = UDim2.fromScale(0.4, 1),
-			BackgroundColor3 = Color3.new(1, 1, 1),
-			BackgroundTransparency = 0.55,
-			BorderSizePixel = 0,
-			ZIndex = 2,
-			Parent = k,
-		}
-	)
-	c(
-		"UIGradient",
-		{
-			Transparency = NumberSequence.new({
-				NumberSequenceKeypoint.new(0, 1),
-				NumberSequenceKeypoint.new(0.5, 0),
-				NumberSequenceKeypoint.new(1, 1),
-			}),
-			Parent = o,
-		}
-	)
+	local o = c(h, {
+		Position = UDim2.fromScale(-0.4, 0),
+		Size = UDim2.fromScale(0.4, 1),
+		BackgroundColor3 = Color3.new(1, 1, 1),
+		BackgroundTransparency = 0.55,
+		BorderSizePixel = 0,
+		ZIndex = 2,
+		Parent = k,
+	})
+	c("UIGradient", {
+		Transparency = NumberSequence.new({
+			NumberSequenceKeypoint.new(0, 1),
+			NumberSequenceKeypoint.new(0.5, 0),
+			NumberSequenceKeypoint.new(1, 1),
+		}),
+		Parent = o,
+	})
 	b(d, { GroupTransparency = 0, Position = UDim2.fromScale(0.5, 0.5) }, 0.4, Enum.EasingStyle.Quint)
 	b(p, { Scale = 1 }, 0.5, Enum.EasingStyle.Back)
 	b(q, { ImageTransparency = 0.6 }, 0.4)
@@ -5854,7 +5853,11 @@ function h:_showLoader(e)
 			if d.Parent and A.Text ~= b then
 				-- old step slides up and out, new one rises in
 				local base = UDim2.fromOffset(24, 108)
-				local t = aa:Create(A, TweenInfo.new(0.14, Enum.EasingStyle.Quint, Enum.EasingDirection.In), { TextTransparency = 1, Position = base - UDim2.fromOffset(0, 4) })
+				local t = aa:Create(
+					A,
+					TweenInfo.new(0.14, Enum.EasingStyle.Quint, Enum.EasingDirection.In),
+					{ TextTransparency = 1, Position = base - UDim2.fromOffset(0, 4) }
+				)
 				t:Play()
 				t.Completed:Wait()
 				if not d.Parent then
@@ -5862,7 +5865,11 @@ function h:_showLoader(e)
 				end
 				A.Text = b
 				A.Position = base + UDim2.fromOffset(0, 4)
-				aa:Create(A, TweenInfo.new(0.22, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), { TextTransparency = 0, Position = base }):Play()
+				aa:Create(
+					A,
+					TweenInfo.new(0.22, Enum.EasingStyle.Quint, Enum.EasingDirection.Out),
+					{ TextTransparency = 0, Position = base }
+				):Play()
 			end
 		end)
 	end
@@ -6020,7 +6027,10 @@ function h:_createOpenButton(k)
 			end
 			moved = true
 			local at = m - grab - d.AbsolutePosition
-			free = Vector2.new(math.clamp(at.X, size / 2, d.AbsoluteSize.X - size / 2), math.clamp(at.Y, size, d.AbsoluteSize.Y))
+			free = Vector2.new(
+				math.clamp(at.X, size / 2, d.AbsoluteSize.X - size / 2),
+				math.clamp(at.Y, size, d.AbsoluteSize.Y)
+			)
 			place(free.X, free.Y)
 		end)
 	)
@@ -6039,35 +6049,28 @@ function h:_createOpenButton(k)
 end
 function h:_enableResize(i)
 	local j = self.MaxSize or Vector2.new(math.huge, math.huge)
-	local f = c(
-		"Frame",
-		{
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.new(1, 4, 1, 4),
-			Size = UDim2.fromOffset(32, 32),
-			BackgroundTransparency = 1,
-			Active = true,
-			ZIndex = 20,
-			Parent = self.Root,
-		}
-	)
+	local f = c("Frame", {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.new(1, 4, 1, 4),
+		Size = UDim2.fromOffset(32, 32),
+		BackgroundTransparency = 1,
+		Active = true,
+		ZIndex = 20,
+		Parent = self.Root,
+	})
 	self._grip = f
 	local g, d =
-		c(
-			"ImageLabel",
-			{
-				AnchorPoint = Vector2.new(0.5, 0.5),
-				Position = UDim2.new(0.5, -16, 0.5, -16),
-				Size = UDim2.fromOffset(96, 96),
-				BackgroundTransparency = 1,
-				Image = "rbxassetid://120997033468887",
-				ImageColor3 = a.Text,
-				ImageTransparency = 0.8,
-				ZIndex = 20,
-				Parent = f,
-			}
-		),
-		false
+		c("ImageLabel", {
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Position = UDim2.new(0.5, -16, 0.5, -16),
+			Size = UDim2.fromOffset(96, 96),
+			BackgroundTransparency = 1,
+			Image = "rbxassetid://120997033468887",
+			ImageColor3 = a.Text,
+			ImageTransparency = 0.8,
+			ZIndex = 20,
+			Parent = f,
+		}), false
 	local h = self.Root.Size
 	local k = Vector2.zero
 	local e
@@ -6269,29 +6272,23 @@ function h:_autoSave()
 	end)
 end
 local function aJ(e, g, h)
-	local b = c(
-		"Frame",
-		{
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.new(0.5, 0, 0.5, -10),
-			Size = UDim2.fromOffset(200, 70),
-			BackgroundTransparency = 1,
-			Parent = e,
-		}
-	)
-	local d = c(
-		"ImageLabel",
-		{
-			AnchorPoint = Vector2.new(0.5, 0),
-			Position = UDim2.new(0.5, 0, 0, 0),
-			Size = UDim2.fromOffset(26, 26),
-			BackgroundTransparency = 1,
-			ImageColor3 = a.Muted,
-			ImageTransparency = 0.15,
-			ScaleType = Enum.ScaleType.Fit,
-			Parent = b,
-		}
-	)
+	local b = c("Frame", {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.new(0.5, 0, 0.5, -10),
+		Size = UDim2.fromOffset(200, 70),
+		BackgroundTransparency = 1,
+		Parent = e,
+	})
+	local d = c("ImageLabel", {
+		AnchorPoint = Vector2.new(0.5, 0),
+		Position = UDim2.new(0.5, 0, 0, 0),
+		Size = UDim2.fromOffset(26, 26),
+		BackgroundTransparency = 1,
+		ImageColor3 = a.Muted,
+		ImageTransparency = 0.15,
+		ScaleType = Enum.ScaleType.Fit,
+		Parent = b,
+	})
 	u(d, g)
 	local i = f({
 		Position = UDim2.fromOffset(0, 36),
@@ -6308,7 +6305,13 @@ end
 local function aK(e, h, d, j)
 	local b = c(
 		"Frame",
-		{ Size = UDim2.new(0.5, -4, 0, 62), BackgroundColor3 = a.Surface2, BorderSizePixel = 0, LayoutOrder = h, Parent = e }
+		{
+			Size = UDim2.new(0.5, -4, 0, 62),
+			BackgroundColor3 = a.Surface2,
+			BorderSizePixel = 0,
+			LayoutOrder = h,
+			Parent = e,
+		}
 	)
 	g(b)
 	i(b)
@@ -6324,7 +6327,13 @@ local function aK(e, h, d, j)
 		TextColor3 = a.Muted,
 		Parent = b,
 	})
-	return f({ Position = UDim2.fromOffset(14, 34), Size = UDim2.new(1, -28, 0, 18), Text = "…", TextSize = 15, Parent = b })
+	return f({
+		Position = UDim2.fromOffset(14, 34),
+		Size = UDim2.new(1, -28, 0, 18),
+		Text = "…",
+		TextSize = 15,
+		Parent = b,
+	})
 end
 local am = setmetatable({}, { __mode = "k" })
 local function an(c)
@@ -6376,15 +6385,12 @@ function h:_buildHome(d)
 	local s
 	if type(x) == "table" and #x > 0 then
 		s = c(e, { Size = UDim2.new(1, 0, 0, 32), BackgroundTransparency = 1, LayoutOrder = 1, Parent = q })
-		c(
-			n,
-			{
-				FillDirection = Enum.FillDirection.Horizontal,
-				SortOrder = Enum.SortOrder.LayoutOrder,
-				Padding = UDim.new(0, 6),
-				Parent = s,
-			}
-		)
+		c(n, {
+			FillDirection = Enum.FillDirection.Horizontal,
+			SortOrder = Enum.SortOrder.LayoutOrder,
+			Padding = UDim.new(0, 6),
+			Parent = s,
+		})
 	end
 	local y = d.Greeting
 	if y == nil then
@@ -6394,21 +6400,24 @@ function h:_buildHome(d)
 	end
 	local h = c(
 		e,
-		{ Size = UDim2.new(1, 0, 0, 58), BackgroundColor3 = a.Surface2, BorderSizePixel = 0, LayoutOrder = 2, Parent = q }
+		{
+			Size = UDim2.new(1, 0, 0, 58),
+			BackgroundColor3 = a.Surface2,
+			BorderSizePixel = 0,
+			LayoutOrder = 2,
+			Parent = q,
+		}
 	)
 	h:SetAttribute(p, true)
 	g(h)
 	i(h)
-	local z = c(
-		"ImageLabel",
-		{
-			Position = UDim2.fromOffset(12, 11),
-			Size = UDim2.fromOffset(36, 36),
-			BackgroundColor3 = a.Surface,
-			BorderSizePixel = 0,
-			Parent = h,
-		}
-	)
+	local z = c("ImageLabel", {
+		Position = UDim2.fromOffset(12, 11),
+		Size = UDim2.fromOffset(36, 36),
+		BackgroundColor3 = a.Surface,
+		BorderSizePixel = 0,
+		Parent = h,
+	})
 	g(z, UDim.new(0, 8))
 	i(z)
 	task.spawn(function()
@@ -6437,7 +6446,13 @@ function h:_buildHome(d)
 	})
 	local t = c(
 		e,
-		{ Size = UDim2.new(1, 0, 0, 0), AutomaticSize = Enum.AutomaticSize.Y, BackgroundTransparency = 1, LayoutOrder = 3, Parent = q }
+		{
+			Size = UDim2.new(1, 0, 0, 0),
+			AutomaticSize = Enum.AutomaticSize.Y,
+			BackgroundTransparency = 1,
+			LayoutOrder = 3,
+			Parent = q,
+		}
 	)
 	c(n, { SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 8), Parent = t })
 	if d.Sections ~= false then
@@ -6452,17 +6467,14 @@ function h:_buildHome(d)
 			TextTruncate = Enum.TextTruncate.None,
 			Parent = b,
 		})
-		local i = c(
-			e,
-			{
-				AnchorPoint = Vector2.new(1, 0.5),
-				Position = UDim2.new(1, 0, 0, 14),
-				Size = UDim2.new(1, -12, 0, 1),
-				BackgroundColor3 = a.Stroke,
-				BorderSizePixel = 0,
-				Parent = b,
-			}
-		)
+		local i = c(e, {
+			AnchorPoint = Vector2.new(1, 0.5),
+			Position = UDim2.new(1, 0, 0, 14),
+			Size = UDim2.new(1, -12, 0, 1),
+			BackgroundColor3 = a.Stroke,
+			BorderSizePixel = 0,
+			Parent = b,
+		})
 		local function h()
 			i.Size = UDim2.new(1, -(g.AbsoluteSize.X / self.Scale.Scale + 14), 0, 1)
 		end
@@ -6471,17 +6483,20 @@ function h:_buildHome(d)
 	end
 	local C = c(
 		e,
-		{ Size = UDim2.new(1, 0, 0, 0), AutomaticSize = Enum.AutomaticSize.Y, BackgroundTransparency = 1, LayoutOrder = 2, Parent = t }
-	)
-	c(
-		"UIGridLayout",
 		{
-			CellSize = UDim2.new(0.5, -4, 0, 62),
-			CellPadding = UDim2.fromOffset(8, 8),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = C,
+			Size = UDim2.new(1, 0, 0, 0),
+			AutomaticSize = Enum.AutomaticSize.Y,
+			BackgroundTransparency = 1,
+			LayoutOrder = 2,
+			Parent = t,
 		}
 	)
+	c("UIGridLayout", {
+		CellSize = UDim2.new(0.5, -4, 0, 62),
+		CellPadding = UDim2.fromOffset(8, 8),
+		SortOrder = Enum.SortOrder.LayoutOrder,
+		Parent = C,
+	})
 	local N = d.Stats or { "FPS", "Ping", w, "Game", "Server", "Time" }
 	local D = {}
 	for b, a in ipairs(N) do
@@ -6555,30 +6570,24 @@ function h:_buildHome(d)
 	table.insert(r, { Title = d.SectionName or "Details", Icon = d.TabIcon or "layout-grid", Frame = t })
 	if s then
 		for h, b in ipairs(x) do
-			local d = c(
-				e,
-				{
-					Size = UDim2.new(1, 0, 0, 0),
-					AutomaticSize = Enum.AutomaticSize.Y,
-					BackgroundTransparency = 1,
-					Visible = false,
-					LayoutOrder = 3,
-					Parent = q,
-				}
-			)
+			local d = c(e, {
+				Size = UDim2.new(1, 0, 0, 0),
+				AutomaticSize = Enum.AutomaticSize.Y,
+				BackgroundTransparency = 1,
+				Visible = false,
+				LayoutOrder = 3,
+				Parent = q,
+			})
 			c(n, { SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 8), Parent = d })
 			if type(b.Content) == "string" then
-				local h = c(
-					e,
-					{
-						Size = UDim2.new(1, 0, 0, 0),
-						AutomaticSize = Enum.AutomaticSize.Y,
-						BackgroundColor3 = a.Surface2,
-						BorderSizePixel = 0,
-						LayoutOrder = 1,
-						Parent = d,
-					}
-				)
+				local h = c(e, {
+					Size = UDim2.new(1, 0, 0, 0),
+					AutomaticSize = Enum.AutomaticSize.Y,
+					BackgroundColor3 = a.Surface2,
+					BorderSizePixel = 0,
+					LayoutOrder = 1,
+					Parent = d,
+				})
 				h:SetAttribute(p, true)
 				g(h)
 				i(h)
@@ -6598,17 +6607,14 @@ function h:_buildHome(d)
 			end
 			if type(b.Entries) == "table" then
 				for m, b in ipairs(b.Entries) do
-					local h = c(
-						e,
-						{
-							Size = UDim2.new(1, 0, 0, 0),
-							AutomaticSize = Enum.AutomaticSize.Y,
-							BackgroundColor3 = a.Surface2,
-							BorderSizePixel = 0,
-							LayoutOrder = m,
-							Parent = d,
-						}
-					)
+					local h = c(e, {
+						Size = UDim2.new(1, 0, 0, 0),
+						AutomaticSize = Enum.AutomaticSize.Y,
+						BackgroundColor3 = a.Surface2,
+						BorderSizePixel = 0,
+						LayoutOrder = m,
+						Parent = d,
+					})
 					h:SetAttribute(p, true)
 					g(h)
 					i(h)
@@ -6616,20 +6622,22 @@ function h:_buildHome(d)
 					c(n, { SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 4), Parent = h })
 					local l =
 						c(e, { Size = UDim2.new(1, 0, 0, 18), BackgroundTransparency = 1, LayoutOrder = 1, Parent = h })
-					f({ Size = UDim2.new(1, -70, 1, 0), Text = b.Title or b.Version or "Update", TextSize = 14, Parent = l })
+					f({
+						Size = UDim2.new(1, -70, 1, 0),
+						Text = b.Title or b.Version or "Update",
+						TextSize = 14,
+						Parent = l,
+					})
 					if b.Date or b.Tag then
-						local d = c(
-							e,
-							{
-								AnchorPoint = Vector2.new(1, 0.5),
-								Position = UDim2.new(1, 0, 0.5, 0),
-								Size = UDim2.fromOffset(0, 20),
-								AutomaticSize = Enum.AutomaticSize.X,
-								BackgroundColor3 = a.Surface,
-								BorderSizePixel = 0,
-								Parent = l,
-							}
-						)
+						local d = c(e, {
+							AnchorPoint = Vector2.new(1, 0.5),
+							Position = UDim2.new(1, 0, 0.5, 0),
+							Size = UDim2.fromOffset(0, 20),
+							AutomaticSize = Enum.AutomaticSize.X,
+							BackgroundColor3 = a.Surface,
+							BorderSizePixel = 0,
+							Parent = l,
+						})
 						g(d, UDim.new(0, 5))
 						i(d)
 						o(d, 8, 8)
@@ -6705,36 +6713,30 @@ function h:_buildHome(d)
 			end
 		end
 		for h, l in ipairs(r) do
-			local e = c(
-				"TextButton",
-				{
-					Size = UDim2.fromOffset(0, 32),
-					AutomaticSize = Enum.AutomaticSize.X,
-					BackgroundColor3 = a.Surface2,
-					BackgroundTransparency = 1,
-					Text = "",
-					AutoButtonColor = false,
-					LayoutOrder = h,
-					Parent = s,
-				}
-			)
+			local e = c("TextButton", {
+				Size = UDim2.fromOffset(0, 32),
+				AutomaticSize = Enum.AutomaticSize.X,
+				BackgroundColor3 = a.Surface2,
+				BackgroundTransparency = 1,
+				Text = "",
+				AutoButtonColor = false,
+				LayoutOrder = h,
+				Parent = s,
+			})
 			g(e, UDim.new(0, 7))
 			local m = i(e, a.Stroke, 1)
 			o(e, 12, 12)
 			local j
 			if l.Icon then
-				j = c(
-					"ImageLabel",
-					{
-						AnchorPoint = Vector2.new(0, 0.5),
-						Position = UDim2.new(0, 0, 0.5, 0),
-						Size = UDim2.fromOffset(14, 14),
-						BackgroundTransparency = 1,
-						ImageColor3 = a.Muted,
-						ScaleType = Enum.ScaleType.Fit,
-						Parent = e,
-					}
-				)
+				j = c("ImageLabel", {
+					AnchorPoint = Vector2.new(0, 0.5),
+					Position = UDim2.new(0, 0, 0.5, 0),
+					Size = UDim2.fromOffset(14, 14),
+					BackgroundTransparency = 1,
+					ImageColor3 = a.Muted,
+					ScaleType = Enum.ScaleType.Fit,
+					Parent = e,
+				})
 				u(j, l.Icon)
 			end
 			local n = f({
@@ -6841,7 +6843,13 @@ function h:_buildServer(d)
 	local window = self
 
 	local current = self:_card(tab, 88)
-	f({ Position = UDim2.fromOffset(14, 12), Size = UDim2.new(1, -120, 0, 18), Text = "This server", TextSize = 15, Parent = current })
+	f({
+		Position = UDim2.fromOffset(14, 12),
+		Size = UDim2.new(1, -120, 0, 18),
+		Text = "This server",
+		TextSize = 15,
+		Parent = current,
+	})
 	local live = f({
 		Position = UDim2.fromOffset(14, 32),
 		Size = UDim2.new(1, -120, 0, 16),
@@ -6882,7 +6890,14 @@ function h:_buildServer(d)
 	end
 	local cache = {}
 	local function fetch(order)
-		local ok, body = pcall(game.HttpGet, game, ("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=%s&excludeFullGames=true&limit=100"):format(game.PlaceId, order or "Desc"))
+		local ok, body = pcall(
+			game.HttpGet,
+			game,
+			("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=%s&excludeFullGames=true&limit=100"):format(
+				game.PlaceId,
+				order or "Desc"
+			)
+		)
 		if not ok then
 			return nil
 		end
@@ -6941,14 +6956,30 @@ function h:_buildServer(d)
 	end)
 	action(4, "code", "Copy join script", function()
 		if setclipboard then
-			setclipboard(('game:GetService("TeleportService"):TeleportToPlaceInstance(%d, "%s")'):format(game.PlaceId, game.JobId))
+			setclipboard(
+				('game:GetService("TeleportService"):TeleportToPlaceInstance(%d, "%s")'):format(
+					game.PlaceId,
+					game.JobId
+				)
+			)
 			window:Notify({ Title = "Copied", Content = "Paste it in your executor to join this server.", Duration = 3 })
 		end
 	end)
 
 	tab:Section("Servers")
-	local head = c("Frame", { Size = UDim2.new(1, 0, 0, 32), BackgroundTransparency = 1, LayoutOrder = tab:_nextOrder(), Parent = tab.List })
-	local status = f({ Size = UDim2.new(1, -200, 1, 0), Position = UDim2.fromOffset(2, 0), Text = "Loading", TextSize = 13, FontFace = j.Regular, TextColor3 = a.Muted, Parent = head })
+	local head = c(
+		"Frame",
+		{ Size = UDim2.new(1, 0, 0, 32), BackgroundTransparency = 1, LayoutOrder = tab:_nextOrder(), Parent = tab.List }
+	)
+	local status = f({
+		Size = UDim2.new(1, -200, 1, 0),
+		Position = UDim2.fromOffset(2, 0),
+		Text = "Loading",
+		TextSize = 13,
+		FontFace = j.Regular,
+		TextColor3 = a.Muted,
+		Parent = head,
+	})
 	local sort_btn, sort_label = self:_pill(head, "arrow-down-up", "Most players", {
 		AnchorPoint = Vector2.new(1, 0),
 		Position = UDim2.new(1, -40, 0, 0),
@@ -6976,15 +7007,42 @@ function h:_buildServer(d)
 	local sort_index = 1
 	local busy = false
 	local function row(order, s)
-		local r = c("Frame", { Size = UDim2.new(1, 0, 0, 48), BackgroundColor3 = a.Surface2, BorderSizePixel = 0, LayoutOrder = order, Parent = rows })
+		local r = c(
+			"Frame",
+			{
+				Size = UDim2.new(1, 0, 0, 48),
+				BackgroundColor3 = a.Surface2,
+				BorderSizePixel = 0,
+				LayoutOrder = order,
+				Parent = rows,
+			}
+		)
 		r:SetAttribute("NoDrag", true)
 		g(r)
 		i(r)
 		local fill = (s.playing or 0) / math.max(s.maxPlayers or 1, 1)
-		f({ Position = UDim2.fromOffset(14, 8), Size = UDim2.fromOffset(90, 16), Text = ("%d / %d"):format(s.playing or 0, s.maxPlayers or 0), TextSize = 14, Parent = r })
-		local track = c("Frame", { Position = UDim2.fromOffset(14, 32), Size = UDim2.new(1, -220, 0, 4), BackgroundColor3 = a.Surface3, BorderSizePixel = 0, Parent = r })
+		f({
+			Position = UDim2.fromOffset(14, 8),
+			Size = UDim2.fromOffset(90, 16),
+			Text = ("%d / %d"):format(s.playing or 0, s.maxPlayers or 0),
+			TextSize = 14,
+			Parent = r,
+		})
+		local track = c(
+			"Frame",
+			{
+				Position = UDim2.fromOffset(14, 32),
+				Size = UDim2.new(1, -220, 0, 4),
+				BackgroundColor3 = a.Surface3,
+				BorderSizePixel = 0,
+				Parent = r,
+			}
+		)
 		g(track, UDim.new(1, 0))
-		local bar = c("Frame", { Size = UDim2.fromScale(0, 1), BackgroundColor3 = a.Accent, BorderSizePixel = 0, Parent = track })
+		local bar = c(
+			"Frame",
+			{ Size = UDim2.fromScale(0, 1), BackgroundColor3 = a.Accent, BorderSizePixel = 0, Parent = track }
+		)
 		g(bar, UDim.new(1, 0))
 		b(bar, { Size = UDim2.fromScale(fill, 1) }, 0.4)
 		local ping = s.ping and (s.ping .. " ms") or "–"
@@ -7061,7 +7119,8 @@ function h:_buildServer(d)
 					#I:GetPlayers(),
 					I.MaxPlayers,
 					okp and p or 0,
-					t >= 3600 and ("%d:%02d:%02d"):format(t // 3600, t // 60 % 60, t % 60) or ("%d:%02d"):format(t // 60, t % 60)
+					t >= 3600 and ("%d:%02d:%02d"):format(t // 3600, t // 60 % 60, t % 60)
+						or ("%d:%02d"):format(t // 60, t % 60)
 				)
 			end
 			task.wait(1)
@@ -7072,7 +7131,18 @@ function h:_buildServer(d)
 end
 function h:_buildEsp(d)
 	local tab = self:_pinTab(self:Tab({ Name = d.Name or "ESP", Desc = d.Desc, Icon = d.Icon or "scan-eye" }), 9002)
-	local S = { Enabled = false, Box = true, Name = true, Distance = true, Health = true, Tracer = false, Chams = false, Outline = false, Color = Color3.fromRGB(0, 227, 255), MaxDistance = 1500 }
+	local S = {
+		Enabled = false,
+		Box = true,
+		Name = true,
+		Distance = true,
+		Health = true,
+		Tracer = false,
+		Chams = false,
+		Outline = false,
+		Color = Color3.fromRGB(0, 227, 255),
+		MaxDistance = 1500,
+	}
 	self.Esp = S
 	local W = 280
 
@@ -7089,7 +7159,13 @@ function h:_buildEsp(d)
 	g(panel, UDim.new(0, 10))
 	local panel_stroke = i(panel, a.Stroke)
 	local panel_scale = c("UIScale", { Parent = panel })
-	local panel_title = f({ Position = UDim2.fromOffset(16, 14), Size = UDim2.new(1, -32, 0, 18), Text = "Preview", TextSize = 15, Parent = panel })
+	local panel_title = f({
+		Position = UDim2.fromOffset(16, 14),
+		Size = UDim2.new(1, -32, 0, 18),
+		Text = "Preview",
+		TextSize = 15,
+		Parent = panel,
+	})
 	local card = c("Frame", {
 		Position = UDim2.fromOffset(12, 44),
 		Size = UDim2.new(1, -24, 1, -56),
@@ -7142,7 +7218,16 @@ function h:_buildEsp(d)
 	})
 
 	local function line(parent)
-		local fr = c("Frame", { AnchorPoint = Vector2.new(0.5, 0.5), BorderSizePixel = 0, BackgroundColor3 = S.Color, ZIndex = 3, Parent = parent })
+		local fr = c(
+			"Frame",
+			{
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				BorderSizePixel = 0,
+				BackgroundColor3 = S.Color,
+				ZIndex = 3,
+				Parent = parent,
+			}
+		)
 		fr:SetAttribute("OblivionNoTheme", true)
 		return fr
 	end
@@ -7171,8 +7256,28 @@ function h:_buildEsp(d)
 		return t
 	end
 	local function hp_bar(parent)
-		local bg = c("Frame", { AnchorPoint = Vector2.new(1, 0), BackgroundColor3 = Color3.new(0, 0, 0), BackgroundTransparency = 0.3, BorderSizePixel = 0, ZIndex = 3, Parent = parent })
-		local fill = c("Frame", { AnchorPoint = Vector2.new(0, 1), Position = UDim2.fromScale(0, 1), Size = UDim2.fromScale(1, 1), BorderSizePixel = 0, ZIndex = 4, Parent = bg })
+		local bg = c(
+			"Frame",
+			{
+				AnchorPoint = Vector2.new(1, 0),
+				BackgroundColor3 = Color3.new(0, 0, 0),
+				BackgroundTransparency = 0.3,
+				BorderSizePixel = 0,
+				ZIndex = 3,
+				Parent = parent,
+			}
+		)
+		local fill = c(
+			"Frame",
+			{
+				AnchorPoint = Vector2.new(0, 1),
+				Position = UDim2.fromScale(0, 1),
+				Size = UDim2.fromScale(1, 1),
+				BorderSizePixel = 0,
+				ZIndex = 4,
+				Parent = bg,
+			}
+		)
 		bg:SetAttribute("OblivionNoTheme", true)
 		fill:SetAttribute("OblivionNoTheme", true)
 		return bg, fill
@@ -7210,7 +7315,14 @@ function h:_buildEsp(d)
 			return
 		end
 		for _, x in ipairs(clone:GetDescendants()) do
-			if x:IsA("LuaSourceContainer") or x:IsA("Sound") or x:IsA("ForceField") or x:IsA("BillboardGui") or x:IsA("Highlight") or x:IsA("ParticleEmitter") then
+			if
+				x:IsA("LuaSourceContainer")
+				or x:IsA("Sound")
+				or x:IsA("ForceField")
+				or x:IsA("BillboardGui")
+				or x:IsA("Highlight")
+				or x:IsA("ParticleEmitter")
+			then
 				x:Destroy()
 			elseif x:IsA("BasePart") then
 				x.Anchored = true
@@ -7229,7 +7341,13 @@ function h:_buildEsp(d)
 		local copy = clone:Clone()
 		local grow = 0.09
 		for _, x in ipairs(copy:GetDescendants()) do
-			if x:IsA("Decal") or x:IsA("Texture") or x:IsA("SurfaceAppearance") or x:IsA("Clothing") or x:IsA("ShirtGraphic") then
+			if
+				x:IsA("Decal")
+				or x:IsA("Texture")
+				or x:IsA("SurfaceAppearance")
+				or x:IsA("Clothing")
+				or x:IsA("ShirtGraphic")
+			then
 				x:Destroy()
 			elseif x:IsA("BasePart") then
 				local sz = x.Size
@@ -7260,10 +7378,13 @@ function h:_buildEsp(d)
 		ghost_cam.CFrame = cam.CFrame
 	end
 	build()
-	table.insert(self._connections, J.CharacterAdded:Connect(function()
-		task.wait(1)
-		build()
-	end))
+	table.insert(
+		self._connections,
+		J.CharacterAdded:Connect(function()
+			task.wait(1)
+			build()
+		end)
+	)
 
 	local function project(p)
 		local lp = cam.CFrame:PointToObjectSpace(p)
@@ -7276,18 +7397,30 @@ function h:_buildEsp(d)
 
 	local yaw, spin, dragging, last = 0, 0.35, false, nil
 	card.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		if
+			input.UserInputType == Enum.UserInputType.MouseButton1
+			or input.UserInputType == Enum.UserInputType.Touch
+		then
 			dragging, last = true, input.Position
 		end
 	end)
 	self:_listen("Changed", function(input)
-		if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+		if
+			dragging
+			and (
+				input.UserInputType == Enum.UserInputType.MouseMovement
+				or input.UserInputType == Enum.UserInputType.Touch
+			)
+		then
 			yaw += (input.Position.X - last.X) * 0.012
 			last = input.Position
 		end
 	end)
 	self:_listen("Ended", function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		if
+			input.UserInputType == Enum.UserInputType.MouseButton1
+			or input.UserInputType == Enum.UserInputType.Touch
+		then
 			dragging = false
 		end
 	end)
@@ -7315,7 +7448,8 @@ function h:_buildEsp(d)
 		panel.Position = UDim2.fromOffset(x, pos.Y + (size.Y - ph) / 2)
 		local t = 1 - ease
 		panel.BackgroundTransparency, panel_stroke.Transparency, panel_title.TextTransparency = t, t, t
-		card.BackgroundTransparency, card_stroke.Transparency, vp.ImageTransparency, ghost_vp.ImageTransparency = t, t, t, t
+		card.BackgroundTransparency, card_stroke.Transparency, vp.ImageTransparency, ghost_vp.ImageTransparency =
+			t, t, t, t
 		layer.Visible = ease > 0.9
 	end)
 
@@ -7378,7 +7512,16 @@ function h:_buildEsp(d)
 	end)
 
 	-- real ESP
-	local gui = c("ScreenGui", { Name = "OblivionESP", IgnoreGuiInset = true, ResetOnSpawn = false, DisplayOrder = 998, Parent = self.Gui.Parent })
+	local gui = c(
+		"ScreenGui",
+		{
+			Name = "OblivionESP",
+			IgnoreGuiInset = true,
+			ResetOnSpawn = false,
+			DisplayOrder = 998,
+			Parent = self.Gui.Parent,
+		}
+	)
 	self._espGui = gui
 	local marks = {}
 	local function mark(plr)
@@ -7388,22 +7531,35 @@ function h:_buildEsp(d)
 		m.dist = tag(gui, 11)
 		m.hpBg, m.hpFill = hp_bar(gui)
 		m.tracer = line(gui)
-		m.hl = c("Highlight", { FillTransparency = 0.5, OutlineTransparency = 0, DepthMode = Enum.HighlightDepthMode.AlwaysOnTop, Enabled = false, Parent = gui })
+		m.hl = c(
+			"Highlight",
+			{
+				FillTransparency = 0.5,
+				OutlineTransparency = 0,
+				DepthMode = Enum.HighlightDepthMode.AlwaysOnTop,
+				Enabled = false,
+				Parent = gui,
+			}
+		)
 		marks[plr] = m
 		return m
 	end
 	local function hide(m)
-		m.box.Visible, m.name.Visible, m.dist.Visible, m.hpBg.Visible, m.tracer.Visible, m.hl.Enabled = false, false, false, false, false, false
+		m.box.Visible, m.name.Visible, m.dist.Visible, m.hpBg.Visible, m.tracer.Visible, m.hl.Enabled =
+			false, false, false, false, false, false
 	end
-	table.insert(self._connections, I.PlayerRemoving:Connect(function(plr)
-		local m = marks[plr]
-		if m then
-			for _, x in pairs(m) do
-				x:Destroy()
+	table.insert(
+		self._connections,
+		I.PlayerRemoving:Connect(function(plr)
+			local m = marks[plr]
+			if m then
+				for _, x in pairs(m) do
+					x:Destroy()
+				end
+				marks[plr] = nil
 			end
-			marks[plr] = nil
-		end
-	end))
+		end)
+	)
 	self:_listen("Render", function()
 		local camera = workspace.CurrentCamera
 		if not S.Enabled or not camera then
@@ -7432,7 +7588,8 @@ function h:_buildEsp(d)
 					m.hl.OutlineTransparency = S.Outline and 0 or 1
 					m.hl.FillColor, m.hl.OutlineColor = S.Color, S.Color
 					if not on then
-						m.box.Visible, m.name.Visible, m.dist.Visible, m.hpBg.Visible, m.tracer.Visible = false, false, false, false, false
+						m.box.Visible, m.name.Visible, m.dist.Visible, m.hpBg.Visible, m.tracer.Visible =
+							false, false, false, false, false
 					else
 						local hgt = math.max(bot.Y - top.Y, 4)
 						local w = hgt * 0.55
@@ -7468,17 +7625,94 @@ function h:_buildEsp(d)
 
 	-- controls
 	tab:Section("Visuals")
-	tab:Toggle({ Name = "ESP", Desc = "Show everyone through walls", Flag = "OblivionEspEnabled", Default = false, Callback = function(v) S.Enabled = v end })
-	tab:Toggle({ Name = "Boxes", Flag = "OblivionEspBox", Default = S.Box, Callback = function(v) S.Box = v end })
-	tab:Toggle({ Name = "Names", Flag = "OblivionEspName", Default = S.Name, Callback = function(v) S.Name = v end })
-	tab:Toggle({ Name = "Distance", Flag = "OblivionEspDistance", Default = S.Distance, Callback = function(v) S.Distance = v end })
-	tab:Toggle({ Name = "Health bars", Flag = "OblivionEspHealth", Default = S.Health, Callback = function(v) S.Health = v end })
-	tab:Toggle({ Name = "Tracers", Flag = "OblivionEspTracer", Default = S.Tracer, Callback = function(v) S.Tracer = v end })
-	tab:Toggle({ Name = "Chams", Desc = "Fill players with colour", Flag = "OblivionEspChams", Default = S.Chams, Callback = function(v) S.Chams = v end })
-	tab:Toggle({ Name = "Outlines", Desc = "Glow outline around players", Flag = "OblivionEspOutline", Default = S.Outline, Callback = function(v) S.Outline = v end })
+	tab:Toggle({
+		Name = "ESP",
+		Desc = "Show everyone through walls",
+		Flag = "OblivionEspEnabled",
+		Default = false,
+		Callback = function(v)
+			S.Enabled = v
+		end,
+	})
+	tab:Toggle({
+		Name = "Boxes",
+		Flag = "OblivionEspBox",
+		Default = S.Box,
+		Callback = function(v)
+			S.Box = v
+		end,
+	})
+	tab:Toggle({
+		Name = "Names",
+		Flag = "OblivionEspName",
+		Default = S.Name,
+		Callback = function(v)
+			S.Name = v
+		end,
+	})
+	tab:Toggle({
+		Name = "Distance",
+		Flag = "OblivionEspDistance",
+		Default = S.Distance,
+		Callback = function(v)
+			S.Distance = v
+		end,
+	})
+	tab:Toggle({
+		Name = "Health bars",
+		Flag = "OblivionEspHealth",
+		Default = S.Health,
+		Callback = function(v)
+			S.Health = v
+		end,
+	})
+	tab:Toggle({
+		Name = "Tracers",
+		Flag = "OblivionEspTracer",
+		Default = S.Tracer,
+		Callback = function(v)
+			S.Tracer = v
+		end,
+	})
+	tab:Toggle({
+		Name = "Chams",
+		Desc = "Fill players with colour",
+		Flag = "OblivionEspChams",
+		Default = S.Chams,
+		Callback = function(v)
+			S.Chams = v
+		end,
+	})
+	tab:Toggle({
+		Name = "Outlines",
+		Desc = "Glow outline around players",
+		Flag = "OblivionEspOutline",
+		Default = S.Outline,
+		Callback = function(v)
+			S.Outline = v
+		end,
+	})
 	tab:Section("Style")
-	tab:ColorPicker({ Name = "Colour", Flag = "OblivionEspColor", Default = S.Color, Callback = function(v) S.Color = v end })
-	tab:Slider({ Name = "Max distance", Flag = "OblivionEspRange", Min = 100, Max = 5000, Step = 50, Default = S.MaxDistance, Suffix = " studs", Callback = function(v) S.MaxDistance = v end })
+	tab:ColorPicker({
+		Name = "Colour",
+		Flag = "OblivionEspColor",
+		Default = S.Color,
+		Callback = function(v)
+			S.Color = v
+		end,
+	})
+	tab:Slider({
+		Name = "Max distance",
+		Flag = "OblivionEspRange",
+		Min = 100,
+		Max = 5000,
+		Step = 50,
+		Default = S.MaxDistance,
+		Suffix = " studs",
+		Callback = function(v)
+			S.MaxDistance = v
+		end,
+	})
 	self.EspTab = tab
 	return tab
 end
@@ -7488,8 +7722,20 @@ function h:_buildMusic(d)
 	local folder = d.Folder or "OblivionUI/Music"
 	local cacheDir = folder .. "/cache"
 	local LRCLIB = "https://lrclib.net/api"
-	local sound = c("Sound", { Name = "OblivionMusic", Volume = (d.Volume or 50) / 100, Parent = game:GetService("SoundService") })
-	local S = { Sound = sound, Queue = {}, Index = 0, Shuffle = false, Repeat = "Off", Lyrics = nil, Synced = false, Token = 0 }
+	local sound = c(
+		"Sound",
+		{ Name = "OblivionMusic", Volume = (d.Volume or 50) / 100, Parent = game:GetService("SoundService") }
+	)
+	local S = {
+		Sound = sound,
+		Queue = {},
+		Index = 0,
+		Shuffle = false,
+		Repeat = "Off",
+		Lyrics = nil,
+		Synced = false,
+		Token = 0,
+	}
 	self.Music = S
 	tab.List.Destroying:Connect(function()
 		sound:Destroy()
@@ -7554,7 +7800,8 @@ function h:_buildMusic(d)
 			aacTried = os.clock()
 			local lib = d.AAC or (getgenv and getgenv().OblivionAAC)
 			if type(lib) ~= "table" then
-				local src = http(d.AACUrl or "https://raw.githubusercontent.com/OSSDiablo/OblivionHub-UI/main/aac/AAC.luau")
+				local src =
+					http(d.AACUrl or "https://raw.githubusercontent.com/OSSDiablo/OblivionHub-UI/main/aac/AAC.luau")
 				local fn = src and loadstring and loadstring(src)
 				local ok, res = false, nil
 				if fn then
@@ -7718,7 +7965,10 @@ function h:_buildMusic(d)
 			return track.CoverAsset
 		end
 		if not track.Cover and track.Local then
-			local data = json("https://itunes.apple.com/search?media=music&entity=song&limit=5&term=" .. H:UrlEncode(((track.Artist or "") .. " " .. track.Title)))
+			local data = json(
+				"https://itunes.apple.com/search?media=music&entity=song&limit=5&term="
+					.. H:UrlEncode(((track.Artist or "") .. " " .. track.Title))
+			)
 			local hit = type(data) == "table" and type(data.results) == "table" and data.results[1]
 			if type(hit) == "table" and type(hit.artworkUrl100) == "string" then
 				track.Cover = hit.artworkUrl100:gsub("100x100bb", "300x300bb")
@@ -7748,7 +7998,11 @@ function h:_buildMusic(d)
 			rec = json(LRCLIB .. "/get?" .. q .. "&duration=" .. math.floor(track.Duration + 0.5))
 		end
 		if type(rec) ~= "table" or not (rec.syncedLyrics or rec.plainLyrics) then
-			local list = json(LRCLIB .. "/search?" .. ((track.Artist and track.Artist ~= "") and q or ("q=" .. H:UrlEncode(track.Title))))
+			local list = json(
+				LRCLIB
+					.. "/search?"
+					.. ((track.Artist and track.Artist ~= "") and q or ("q=" .. H:UrlEncode(track.Title)))
+			)
 			rec = nil
 			for _, r in ipairs(type(list) == "table" and list or {}) do
 				if type(r) == "table" and type(r.syncedLyrics) == "string" and r.syncedLyrics ~= "" then
@@ -7828,8 +8082,22 @@ function h:_buildMusic(d)
 		Parent = art,
 	})
 	u(artIcon, "music")
-	local title = f({ Position = UDim2.fromOffset(112, 14), Size = UDim2.new(1, -210, 0, 18), Text = "Nothing playing", TextSize = 15, Parent = now })
-	local artist = f({ Position = UDim2.fromOffset(112, 34), Size = UDim2.new(1, -210, 0, 16), Text = "Search a song or drop mp3s in your Music folder", TextSize = 13, FontFace = j.Regular, TextColor3 = a.Muted, Parent = now })
+	local title = f({
+		Position = UDim2.fromOffset(112, 14),
+		Size = UDim2.new(1, -210, 0, 18),
+		Text = "Nothing playing",
+		TextSize = 15,
+		Parent = now,
+	})
+	local artist = f({
+		Position = UDim2.fromOffset(112, 34),
+		Size = UDim2.new(1, -210, 0, 16),
+		Text = "Search a song or drop mp3s in your Music folder",
+		TextSize = 13,
+		FontFace = j.Regular,
+		TextColor3 = a.Muted,
+		Parent = now,
+	})
 	local times = f({
 		AnchorPoint = Vector2.new(1, 0),
 		Position = UDim2.new(1, -14, 0, 14),
@@ -7841,10 +8109,30 @@ function h:_buildMusic(d)
 		TextXAlignment = Enum.TextXAlignment.Right,
 		Parent = now,
 	})
-	local controls = c("Frame", { Position = UDim2.fromOffset(112, 56), Size = UDim2.new(1, -126, 0, 30), BackgroundTransparency = 1, Parent = now })
-	c("UIListLayout", { FillDirection = Enum.FillDirection.Horizontal, Padding = UDim.new(0, 6), SortOrder = Enum.SortOrder.LayoutOrder, Parent = controls })
+	local controls = c(
+		"Frame",
+		{
+			Position = UDim2.fromOffset(112, 56),
+			Size = UDim2.new(1, -126, 0, 30),
+			BackgroundTransparency = 1,
+			Parent = now,
+		}
+	)
+	c(
+		"UIListLayout",
+		{
+			FillDirection = Enum.FillDirection.Horizontal,
+			Padding = UDim.new(0, 6),
+			SortOrder = Enum.SortOrder.LayoutOrder,
+			Parent = controls,
+		}
+	)
 	local function control(order, icon)
-		return iconButton(controls, icon, { Size = UDim2.fromOffset(30, 30), LayoutOrder = order, BackgroundColor3 = a.Surface3 })
+		return iconButton(
+			controls,
+			icon,
+			{ Size = UDim2.fromOffset(30, 30), LayoutOrder = order, BackgroundColor3 = a.Surface3 }
+		)
 	end
 	local shuffleBtn, shuffleImg = control(1, "shuffle")
 	local prevBtn = control(2, "skip-back")
@@ -7866,10 +8154,14 @@ function h:_buildMusic(d)
 	})
 	bar:SetAttribute("NoDrag", true)
 	g(bar, UDim.new(1, 0))
-	local fill = c("Frame", { Size = UDim2.fromScale(0, 1), BackgroundColor3 = a.Accent, BorderSizePixel = 0, Parent = bar })
+	local fill =
+		c("Frame", { Size = UDim2.fromScale(0, 1), BackgroundColor3 = a.Accent, BorderSizePixel = 0, Parent = bar })
 	g(fill, UDim.new(1, 0))
 	bar.InputBegan:Connect(function(input)
-		if input.UserInputType ~= Enum.UserInputType.MouseButton1 and input.UserInputType ~= Enum.UserInputType.Touch then
+		if
+			input.UserInputType ~= Enum.UserInputType.MouseButton1
+			and input.UserInputType ~= Enum.UserInputType.Touch
+		then
 			return
 		end
 		if sound.TimeLength > 0 then
@@ -7890,8 +8182,19 @@ function h:_buildMusic(d)
 		end,
 	})
 
-	local segBar = c("Frame", { Size = UDim2.new(1, 0, 0, 32), BackgroundTransparency = 1, LayoutOrder = tab:_nextOrder(), Parent = tab.List })
-	c("UIListLayout", { FillDirection = Enum.FillDirection.Horizontal, Padding = UDim.new(0, 6), SortOrder = Enum.SortOrder.LayoutOrder, Parent = segBar })
+	local segBar = c(
+		"Frame",
+		{ Size = UDim2.new(1, 0, 0, 32), BackgroundTransparency = 1, LayoutOrder = tab:_nextOrder(), Parent = tab.List }
+	)
+	c(
+		"UIListLayout",
+		{
+			FillDirection = Enum.FillDirection.Horizontal,
+			Padding = UDim.new(0, 6),
+			SortOrder = Enum.SortOrder.LayoutOrder,
+			Parent = segBar,
+		}
+	)
 	local pages, segs = {}, {}
 	local function showPage(name)
 		S.Page = name
@@ -7969,8 +8272,22 @@ function h:_buildMusic(d)
 			end)
 		end
 		local right = #buttons * 36 + 70
-		local name = f({ Position = UDim2.fromOffset(54, 9), Size = UDim2.new(1, -54 - right, 0, 18), Text = track.Title, TextSize = 14, Parent = r })
-		f({ Position = UDim2.fromOffset(54, 28), Size = UDim2.new(1, -54 - right, 0, 16), Text = track.Artist ~= "" and track.Artist or (track.Local and "Local file" or ""), TextSize = 12, FontFace = j.Regular, TextColor3 = a.Muted, Parent = r })
+		local name = f({
+			Position = UDim2.fromOffset(54, 9),
+			Size = UDim2.new(1, -54 - right, 0, 18),
+			Text = track.Title,
+			TextSize = 14,
+			Parent = r,
+		})
+		f({
+			Position = UDim2.fromOffset(54, 28),
+			Size = UDim2.new(1, -54 - right, 0, 16),
+			Text = track.Artist ~= "" and track.Artist or (track.Local and "Local file" or ""),
+			TextSize = 12,
+			FontFace = j.Regular,
+			TextColor3 = a.Muted,
+			Parent = r,
+		})
 		f({
 			AnchorPoint = Vector2.new(1, 0.5),
 			Position = UDim2.new(1, -(#buttons * 36 + 10), 0.5, 0),
@@ -8014,7 +8331,16 @@ function h:_buildMusic(d)
 	end
 
 	local searchPage = pages.Search
-	local searchCard = c("Frame", { Size = UDim2.new(1, 0, 0, 40), BackgroundColor3 = a.Surface2, BorderSizePixel = 0, LayoutOrder = 1, Parent = searchPage })
+	local searchCard = c(
+		"Frame",
+		{
+			Size = UDim2.new(1, 0, 0, 40),
+			BackgroundColor3 = a.Surface2,
+			BorderSizePixel = 0,
+			LayoutOrder = 1,
+			Parent = searchPage,
+		}
+	)
 	searchCard:SetAttribute("NoDrag", true)
 	g(searchCard)
 	i(searchCard)
@@ -8042,7 +8368,15 @@ function h:_buildMusic(d)
 		ClearTextOnFocus = false,
 		Parent = searchCard,
 	})
-	local searchStatus = f({ Size = UDim2.new(1, 0, 0, 16), Text = "Full songs from SoundCloud. Your own files go in workspace/" .. folder, TextSize = 12, FontFace = j.Regular, TextColor3 = a.Muted, LayoutOrder = 2, Parent = searchPage })
+	local searchStatus = f({
+		Size = UDim2.new(1, 0, 0, 16),
+		Text = "Full songs from SoundCloud. Your own files go in workspace/" .. folder,
+		TextSize = 12,
+		FontFace = j.Regular,
+		TextColor3 = a.Muted,
+		LayoutOrder = 2,
+		Parent = searchPage,
+	})
 	searchStatus.TextWrapped = true
 	searchStatus.AutomaticSize = Enum.AutomaticSize.Y
 	local results = listFrame(searchPage, 3)
@@ -8065,15 +8399,34 @@ function h:_buildMusic(d)
 				trackRow(results, n_, track, { addButton(track) })
 			end
 			local full = found[1] and not found[1].Preview
-			searchStatus.Text = #found == 0 and "No results" or (#found .. (#found == 1 and " result" or " results") .. (full and "" or "  ·  30 second previews"))
+			searchStatus.Text = #found == 0 and "No results"
+				or (#found .. (#found == 1 and " result" or " results") .. (full and "" or "  ·  30 second previews"))
 		end)
 	end)
 
 	local libPage = pages.Library
-	local libHead = c("Frame", { Size = UDim2.new(1, 0, 0, 32), BackgroundTransparency = 1, LayoutOrder = 1, Parent = libPage })
-	local libStatus = f({ Size = UDim2.new(1, -44, 1, 0), Position = UDim2.fromOffset(2, 0), Text = "", TextSize = 12, FontFace = j.Regular, TextColor3 = a.Muted, Parent = libHead })
+	local libHead =
+		c("Frame", { Size = UDim2.new(1, 0, 0, 32), BackgroundTransparency = 1, LayoutOrder = 1, Parent = libPage })
+	local libStatus = f({
+		Size = UDim2.new(1, -44, 1, 0),
+		Position = UDim2.fromOffset(2, 0),
+		Text = "",
+		TextSize = 12,
+		FontFace = j.Regular,
+		TextColor3 = a.Muted,
+		Parent = libHead,
+	})
 	libStatus.TextWrapped = true
-	local libRefresh = iconButton(libHead, "refresh-cw", { AnchorPoint = Vector2.new(1, 0), Position = UDim2.new(1, 0, 0, 0), Size = UDim2.fromOffset(32, 32), BackgroundColor3 = a.Surface2 })
+	local libRefresh = iconButton(
+		libHead,
+		"refresh-cw",
+		{
+			AnchorPoint = Vector2.new(1, 0),
+			Position = UDim2.new(1, 0, 0, 0),
+			Size = UDim2.fromOffset(32, 32),
+			BackgroundColor3 = a.Surface2,
+		}
+	)
 	local libList = listFrame(libPage, 2)
 	local function loadLibrary()
 		clear(libList)
@@ -8092,18 +8445,45 @@ function h:_buildMusic(d)
 			if base and (ext == "mp3" or ext == "ogg") then
 				count += 1
 				local who, what = base:match("^(.-)%s+%-%s+(.+)$")
-				local track = { Key = "local_" .. safeName(base), Title = what or base, Artist = who or "", Path = path, Local = true }
+				local track = {
+					Key = "local_" .. safeName(base),
+					Title = what or base,
+					Artist = who or "",
+					Path = path,
+					Local = true,
+				}
 				trackRow(libList, count, track, { addButton(track) })
 			end
 		end
-		libStatus.Text = count == 0 and ("Drop mp3 or ogg files in workspace/" .. folder .. ". Name them Artist - Title for covers and lyrics.") or (count .. (count == 1 and " song" or " songs") .. " in workspace/" .. folder)
+		libStatus.Text = count == 0
+				and ("Drop mp3 or ogg files in workspace/" .. folder .. ". Name them Artist - Title for covers and lyrics.")
+			or (count .. (count == 1 and " song" or " songs") .. " in workspace/" .. folder)
 	end
 	libRefresh.MouseButton1Click:Connect(loadLibrary)
 
 	local queuePage = pages.Queue
-	local queueHead = c("Frame", { Size = UDim2.new(1, 0, 0, 32), BackgroundTransparency = 1, LayoutOrder = 1, Parent = queuePage })
-	local queueStatus = f({ Size = UDim2.new(1, -110, 1, 0), Position = UDim2.fromOffset(2, 0), Text = "Queue is empty", TextSize = 12, FontFace = j.Regular, TextColor3 = a.Muted, Parent = queueHead })
-	local queueClear = self:_pill(queueHead, "trash-2", "Clear", { AnchorPoint = Vector2.new(1, 0), Position = UDim2.new(1, 0, 0, 0), Size = UDim2.fromOffset(90, 32), BackgroundColor3 = a.Surface2 })
+	local queueHead =
+		c("Frame", { Size = UDim2.new(1, 0, 0, 32), BackgroundTransparency = 1, LayoutOrder = 1, Parent = queuePage })
+	local queueStatus = f({
+		Size = UDim2.new(1, -110, 1, 0),
+		Position = UDim2.fromOffset(2, 0),
+		Text = "Queue is empty",
+		TextSize = 12,
+		FontFace = j.Regular,
+		TextColor3 = a.Muted,
+		Parent = queueHead,
+	})
+	local queueClear = self:_pill(
+		queueHead,
+		"trash-2",
+		"Clear",
+		{
+			AnchorPoint = Vector2.new(1, 0),
+			Position = UDim2.new(1, 0, 0, 0),
+			Size = UDim2.fromOffset(90, 32),
+			BackgroundColor3 = a.Surface2,
+		}
+	)
 	queueClear:SetAttribute("NoDrag", true)
 	local queueList = listFrame(queuePage, 2)
 	refreshQueue = function()
@@ -8157,7 +8537,14 @@ function h:_buildMusic(d)
 		activeLine = 0
 		S.Lyrics, S.Synced = lines, synced
 		if not lines then
-			local msg = f({ Size = UDim2.new(1, 0, 0, 18), Text = note or "No lyrics found", TextSize = 13, FontFace = j.Regular, TextColor3 = a.Muted, Parent = lyricsCard })
+			local msg = f({
+				Size = UDim2.new(1, 0, 0, 18),
+				Text = note or "No lyrics found",
+				TextSize = 13,
+				FontFace = j.Regular,
+				TextColor3 = a.Muted,
+				Parent = lyricsCard,
+			})
 			msg.TextWrapped = true
 			return
 		end
@@ -8472,7 +8859,9 @@ function h:_buildMusic(d)
 							if lyricsMenu.IsOpen then
 								local list = lyricsCard
 								local sc = self.Scale and self.Scale.Scale or 1
-								local target = list.CanvasPosition.Y + (lbl.AbsolutePosition.Y - list.AbsolutePosition.Y) / sc - list.AbsoluteSize.Y / sc / 2
+								local target = list.CanvasPosition.Y
+									+ (lbl.AbsolutePosition.Y - list.AbsolutePosition.Y) / sc
+									- list.AbsoluteSize.Y / sc / 2
 								b(list, { CanvasPosition = Vector2.new(0, math.max(0, target)) }, 0.3)
 							end
 						end
@@ -8486,7 +8875,8 @@ function h:_buildMusic(d)
 	return tab
 end
 function h:_buildSettings(d)
-	local tab = self:_pinTab(self:Tab({ Name = d.Name or "Settings", Desc = d.Desc, Icon = d.Icon or "settings" }), 9004)
+	local tab =
+		self:_pinTab(self:Tab({ Name = d.Name or "Settings", Desc = d.Desc, Icon = d.Icon or "settings" }), 9004)
 	local window = self
 	tab:Section("Interface")
 	tab:ThemePicker({ Flag = "OblivionTheme" })
@@ -8522,36 +8912,30 @@ function h:Tab(e, v)
 		e.Icon = v
 	end
 	local d = setmetatable({ Name = e.Name or "Tab", Window = self, _order = 0 }, k)
-	local h = c(
-		"TextButton",
-		{
-			Size = UDim2.new(1, 0, 0, 36),
-			BackgroundColor3 = a.Surface3,
-			BackgroundTransparency = 1,
-			Text = "",
-			AutoButtonColor = false,
-			LayoutOrder = #self.Tabs + 1,
-			Parent = self.TabList,
-		}
-	)
+	local h = c("TextButton", {
+		Size = UDim2.new(1, 0, 0, 36),
+		BackgroundColor3 = a.Surface3,
+		BackgroundTransparency = 1,
+		Text = "",
+		AutoButtonColor = false,
+		LayoutOrder = #self.Tabs + 1,
+		Parent = self.TabList,
+	})
 	g(h)
 	c("UIGradient", { Rotation = 90, Color = shadeSeq(170), Parent = h })
 	local r = i(h, a.Stroke, 1)
 	d._button = h
 	local s = e.Icon ~= nil
 	if s then
-		local b = c(
-			"ImageLabel",
-			{
-				AnchorPoint = Vector2.new(0, 0.5),
-				Position = UDim2.new(0, 14, 0.5, 0),
-				Size = UDim2.fromOffset(16, 16),
-				BackgroundTransparency = 1,
-				ImageColor3 = a.Muted,
-				ScaleType = Enum.ScaleType.Fit,
-				Parent = h,
-			}
-		)
+		local b = c("ImageLabel", {
+			AnchorPoint = Vector2.new(0, 0.5),
+			Position = UDim2.new(0, 14, 0.5, 0),
+			Size = UDim2.fromOffset(16, 16),
+			BackgroundTransparency = 1,
+			ImageColor3 = a.Muted,
+			ScaleType = Enum.ScaleType.Fit,
+			Parent = h,
+		})
 		u(b, e.Icon)
 		d._icon = b
 	end
@@ -8564,7 +8948,13 @@ function h:Tab(e, v)
 	})
 	local p = c(
 		"Frame",
-		{ Name = d.Name, Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1, Visible = false, Parent = self.Content }
+		{
+			Name = d.Name,
+			Size = UDim2.fromScale(1, 1),
+			BackgroundTransparency = 1,
+			Visible = false,
+			Parent = self.Content,
+		}
 	)
 	d._page = p
 	f({ Position = UDim2.fromOffset(24, 20), Size = UDim2.new(1, -72, 0, 24), Text = d.Name, TextSize = 22, Parent = p })
@@ -8585,41 +8975,32 @@ function h:Tab(e, v)
 	d.Sections = d.SubTabs
 	d.CurrentSection = nil
 	d._contentOffset = w
-	d._sectionBar = c(
-		"Frame",
-		{
-			Name = "SectionBar",
-			Position = UDim2.fromOffset(24, w),
-			Size = UDim2.new(1, -48, 0, 32),
-			BackgroundTransparency = 1,
-			Visible = false,
-			Parent = p,
-		}
-	)
-	c(
-		"UIListLayout",
-		{
-			FillDirection = Enum.FillDirection.Horizontal,
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Padding = UDim.new(0, 6),
-			Parent = d._sectionBar,
-		}
-	)
-	local l = c(
-		"ScrollingFrame",
-		{
-			Position = UDim2.fromOffset(0, w),
-			Size = UDim2.new(1, 0, 1, -w),
-			BackgroundTransparency = 1,
-			BorderSizePixel = 0,
-			ScrollBarThickness = 2,
-			ScrollBarImageColor3 = a.Accent,
-			ScrollBarImageTransparency = 0.5,
-			AutomaticCanvasSize = Enum.AutomaticSize.Y,
-			CanvasSize = UDim2.new(),
-			Parent = p,
-		}
-	)
+	d._sectionBar = c("Frame", {
+		Name = "SectionBar",
+		Position = UDim2.fromOffset(24, w),
+		Size = UDim2.new(1, -48, 0, 32),
+		BackgroundTransparency = 1,
+		Visible = false,
+		Parent = p,
+	})
+	c("UIListLayout", {
+		FillDirection = Enum.FillDirection.Horizontal,
+		SortOrder = Enum.SortOrder.LayoutOrder,
+		Padding = UDim.new(0, 6),
+		Parent = d._sectionBar,
+	})
+	local l = c("ScrollingFrame", {
+		Position = UDim2.fromOffset(0, w),
+		Size = UDim2.new(1, 0, 1, -w),
+		BackgroundTransparency = 1,
+		BorderSizePixel = 0,
+		ScrollBarThickness = 2,
+		ScrollBarImageColor3 = a.Accent,
+		ScrollBarImageTransparency = 0.5,
+		AutomaticCanvasSize = Enum.AutomaticSize.Y,
+		CanvasSize = UDim2.new(),
+		Parent = p,
+	})
 	o(l, 24, 24, 2, 24)
 	if m then
 		l:SetAttribute("NoDrag", true)
@@ -8676,33 +9057,27 @@ function h:Dialog(h)
 		self._dialog.Close()
 	end
 	local d = 18
-	local q = c(
-		s,
-		{
-			Size = UDim2.fromScale(1, 1),
-			BackgroundColor3 = Color3.new(0, 0, 0),
-			BackgroundTransparency = 1,
-			Text = "",
-			AutoButtonColor = false,
-			ZIndex = 40,
-			Parent = self.Body,
-		}
-	)
-	local e = c(
-		s,
-		{
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.new(0.5, 0, 0.5, 10),
-			Size = UDim2.fromOffset(300, 120),
-			BackgroundColor3 = a.Background,
-			BackgroundTransparency = 1,
-			BorderSizePixel = 0,
-			Text = "",
-			AutoButtonColor = false,
-			ZIndex = 41,
-			Parent = q,
-		}
-	)
+	local q = c(s, {
+		Size = UDim2.fromScale(1, 1),
+		BackgroundColor3 = Color3.new(0, 0, 0),
+		BackgroundTransparency = 1,
+		Text = "",
+		AutoButtonColor = false,
+		ZIndex = 40,
+		Parent = self.Body,
+	})
+	local e = c(s, {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.new(0.5, 0, 0.5, 10),
+		Size = UDim2.fromOffset(300, 120),
+		BackgroundColor3 = a.Background,
+		BackgroundTransparency = 1,
+		BorderSizePixel = 0,
+		Text = "",
+		AutoButtonColor = false,
+		ZIndex = 41,
+		Parent = q,
+	})
 	g(e, UDim.new(0, 10))
 	local v = i(e, a.Stroke, 1)
 	local w = c("UIScale", { Scale = 0.94, Parent = e })
@@ -8756,27 +9131,21 @@ function h:Dialog(h)
 			end
 		end)
 	end
-	local x = c(
-		"Frame",
-		{
-			Name = "ButtonRow",
-			Position = UDim2.fromOffset(d, d + 24 + p + 12),
-			Size = UDim2.new(1, -d * 2, 0, 34),
-			BackgroundTransparency = 1,
-			ZIndex = 42,
-			Parent = e,
-		}
-	)
-	c(
-		"UIListLayout",
-		{
-			FillDirection = Enum.FillDirection.Horizontal,
-			HorizontalAlignment = Enum.HorizontalAlignment.Right,
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Padding = UDim.new(0, 8),
-			Parent = x,
-		}
-	)
+	local x = c("Frame", {
+		Name = "ButtonRow",
+		Position = UDim2.fromOffset(d, d + 24 + p + 12),
+		Size = UDim2.new(1, -d * 2, 0, 34),
+		BackgroundTransparency = 1,
+		ZIndex = 42,
+		Parent = e,
+	})
+	c("UIListLayout", {
+		FillDirection = Enum.FillDirection.Horizontal,
+		HorizontalAlignment = Enum.HorizontalAlignment.Right,
+		SortOrder = Enum.SortOrder.LayoutOrder,
+		Padding = UDim.new(0, 8),
+		Parent = x,
+	})
 	e.Size = UDim2.fromOffset(300, d + 24 + p + 12 + 34 + d)
 	local k, r = {}, false
 	function k.Close()
@@ -8800,22 +9169,19 @@ function h:Dialog(h)
 	end
 	for q, j in ipairs(h.Buttons or {}) do
 		local e = j.Variant == "Primary"
-		local d = c(
-			s,
-			{
-				Size = UDim2.fromOffset(0, 34),
-				AutomaticSize = Enum.AutomaticSize.X,
-				BackgroundColor3 = e and a.Accent or a.Surface2,
-				BackgroundTransparency = 1,
-				BorderSizePixel = 0,
-				Text = "",
-				AutoButtonColor = false,
-				ClipsDescendants = true,
-				LayoutOrder = q,
-				ZIndex = 43,
-				Parent = x,
-			}
-		)
+		local d = c(s, {
+			Size = UDim2.fromOffset(0, 34),
+			AutomaticSize = Enum.AutomaticSize.X,
+			BackgroundColor3 = e and a.Accent or a.Surface2,
+			BackgroundTransparency = 1,
+			BorderSizePixel = 0,
+			Text = "",
+			AutoButtonColor = false,
+			ClipsDescendants = true,
+			LayoutOrder = q,
+			ZIndex = 43,
+			Parent = x,
+		})
 		g(d, UDim.new(0, 7))
 		local h = i(d, e and a.Accent or a.Stroke, 1)
 		o(d, 14, 14)
@@ -9202,11 +9568,17 @@ function h:Notify(d)
 		BorderSizePixel = 0,
 		Parent = card,
 	})
-	local bar = c("Frame", { Size = UDim2.fromScale(1, 1), BackgroundColor3 = tone, BorderSizePixel = 0, Parent = track })
+	local bar =
+		c("Frame", { Size = UDim2.fromScale(1, 1), BackgroundColor3 = tone, BorderSizePixel = 0, Parent = track })
 
 	task.defer(function()
 		if slot.Parent then
-			b(slot, { Size = UDim2.new(1, 0, 0, card.AbsoluteSize.Y / math.max(pop.Scale, 0.01)) }, 0.35, Enum.EasingStyle.Quint)
+			b(
+				slot,
+				{ Size = UDim2.new(1, 0, 0, card.AbsoluteSize.Y / math.max(pop.Scale, 0.01)) },
+				0.35,
+				Enum.EasingStyle.Quint
+			)
 		end
 	end)
 	b(mover, { Position = UDim2.fromOffset(0, 0) }, 0.45, Enum.EasingStyle.Quint)
