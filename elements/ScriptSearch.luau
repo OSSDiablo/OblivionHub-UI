@@ -187,7 +187,7 @@ return function(Lib)
 			q = "",
 			source = opts.Source or "All",
 			sort = opts.Sort or "Recent",
-			here = false,
+			here = opts.Mode == "game",
 			keyless = false,
 			verified = false,
 		}
@@ -205,56 +205,59 @@ return function(Lib)
 		root:SetAttribute("NoDrag", true)
 		new("UIListLayout", { Padding = UDim.new(0, 8), SortOrder = Enum.SortOrder.LayoutOrder, Parent = root })
 
-		local barH = touch and 44 or 40
-		local bar = new("Frame", {
-			Size = UDim2.new(1, 0, 0, barH),
-			BackgroundColor3 = T.Surface2,
-			BorderSizePixel = 0,
-			LayoutOrder = 1,
-			Parent = root,
-		})
-		corner(bar, 10)
-		shade(bar)
-		local barStroke = stroke(bar)
-		iconLabel(bar, "search", 16, T.Muted, {
-			AnchorPoint = Vector2.new(0, 0.5),
-			Position = UDim2.new(0, 12, 0.5, 0),
-		})
-		local box = new("TextBox", {
-			BackgroundTransparency = 1,
-			Position = UDim2.fromOffset(36, 0),
-			Size = UDim2.new(1, -36 - 76, 1, 0),
-			ClearTextOnFocus = false,
-			PlaceholderText = opts.Placeholder or "Game or script name",
-			PlaceholderColor3 = T.Muted,
-			Text = "",
-			TextColor3 = T.Text,
-			TextSize = 14,
-			FontFace = F.Regular,
-			TextXAlignment = Enum.TextXAlignment.Left,
-			TextTruncate = Enum.TextTruncate.AtEnd,
-			Parent = bar,
-		})
-		local go = new("TextButton", {
-			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, -6, 0.5, 0),
-			Size = UDim2.new(0, 64, 1, -12),
-			BackgroundColor3 = T.Accent,
-			BorderSizePixel = 0,
-			AutoButtonColor = false,
-			Text = "Search",
-			TextColor3 = T.Background,
-			TextSize = 13,
-			FontFace = F.Bold,
-			Parent = bar,
-		})
-		corner(go, 7)
-		box.Focused:Connect(function()
-			tween(barStroke, { Color = T.Accent })
-		end)
-		box.FocusLost:Connect(function()
-			tween(barStroke, { Color = T.Stroke })
-		end)
+		local box, go
+		if opts.Mode ~= "game" then
+			local barH = touch and 44 or 40
+			local bar = new("Frame", {
+				Size = UDim2.new(1, 0, 0, barH),
+				BackgroundColor3 = T.Surface2,
+				BorderSizePixel = 0,
+				LayoutOrder = 1,
+				Parent = root,
+			})
+			corner(bar, 10)
+			shade(bar)
+			local barStroke = stroke(bar)
+			iconLabel(bar, "search", 16, T.Muted, {
+				AnchorPoint = Vector2.new(0, 0.5),
+				Position = UDim2.new(0, 12, 0.5, 0),
+			})
+			box = new("TextBox", {
+				BackgroundTransparency = 1,
+				Position = UDim2.fromOffset(36, 0),
+				Size = UDim2.new(1, -36 - 76, 1, 0),
+				ClearTextOnFocus = false,
+				PlaceholderText = opts.Placeholder or "Game or script name",
+				PlaceholderColor3 = T.Muted,
+				Text = "",
+				TextColor3 = T.Text,
+				TextSize = 14,
+				FontFace = F.Regular,
+				TextXAlignment = Enum.TextXAlignment.Left,
+				TextTruncate = Enum.TextTruncate.AtEnd,
+				Parent = bar,
+			})
+			go = new("TextButton", {
+				AnchorPoint = Vector2.new(1, 0.5),
+				Position = UDim2.new(1, -6, 0.5, 0),
+				Size = UDim2.new(0, 64, 1, -12),
+				BackgroundColor3 = T.Accent,
+				BorderSizePixel = 0,
+				AutoButtonColor = false,
+				Text = "Search",
+				TextColor3 = T.Background,
+				TextSize = 13,
+				FontFace = F.Bold,
+				Parent = bar,
+			})
+			corner(go, 7)
+			box.Focused:Connect(function()
+				tween(barStroke, { Color = T.Accent })
+			end)
+			box.FocusLost:Connect(function()
+				tween(barStroke, { Color = T.Stroke })
+			end)
+		end
 
 		local function chipRow(lo)
 			local row = new("ScrollingFrame", {
@@ -346,7 +349,6 @@ return function(Lib)
 		sep.Name = "Sep"
 		group(r1, "sort", { "Recent", "Popular", "Top rated" }, 10)
 		local r2 = chipRow(3)
-		flag(r2, "here", "This game", 1)
 		flag(r2, "keyless", "Keyless", 2)
 		flag(r2, "verified", "Verified", 3)
 
@@ -660,18 +662,21 @@ return function(Lib)
 			end)
 		end
 
-		go.MouseButton1Click:Connect(function()
-			state.q = box.Text
-			search(1)
-		end)
-		box.FocusLost:Connect(function(enter)
-			if enter then
+		if box then
+			go.MouseButton1Click:Connect(function()
 				state.q = box.Text
 				search(1)
-			end
-		end)
+			end)
+			box.FocusLost:Connect(function(enter)
+				if enter then
+					state.q = box.Text
+					search(1)
+				end
+			end)
+		end
 
-		emptyF = empty("Find a script", "Type a name, or press Search for the newest")
+		emptyF = opts.Mode == "game" and empty("Scripts for this game", "Loading the list")
+			or empty("Find a script", "Type a name, or press Search for the newest")
 
 		task.defer(function()
 			local scroller = root:FindFirstAncestorWhichIsA("ScrollingFrame")
@@ -681,6 +686,13 @@ return function(Lib)
 			scroller:GetPropertyChangedSignal("CanvasPosition"):Connect(function()
 				if not moreBtn or busy or not root.Parent then
 					return
+				end
+				local p = root
+				while p and p ~= scroller do
+					if p:IsA("GuiObject") and not p.Visible then
+						return
+					end
+					p = p.Parent
 				end
 				local bottom = scroller.CanvasPosition.Y + scroller.AbsoluteWindowSize.Y
 				if bottom >= scroller.AbsoluteCanvasSize.Y - 120 then
@@ -692,8 +704,10 @@ return function(Lib)
 		local api = { _frame = root }
 		function api:Search(q)
 			if q ~= nil then
-				box.Text = tostring(q)
-				state.q = box.Text
+				state.q = tostring(q)
+				if box then
+					box.Text = state.q
+				end
 			end
 			search(1)
 		end
