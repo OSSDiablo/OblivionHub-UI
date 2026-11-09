@@ -128,6 +128,49 @@ return function(Lib)
 		return universes[key] or nil
 	end
 
+	local thumbs = {}
+	local canFile = type(writefile) == "function" and type(isfile) == "function" and type(getcustomasset) == "function"
+	local function thumbFor(uid)
+		local key = tostring(uid)
+		local fallback = "rbxthumb://type=GameIcon&id=" .. key .. "&w=150&h=150"
+		if not canFile then
+			return fallback
+		end
+		if thumbs[key] == nil then
+			thumbs[key] = "pending"
+			local ok, asset = pcall(function()
+				local path = "oblivion_thumbs/" .. key .. ".png"
+				if not isfile(path) then
+					local d = game:GetService("HttpService"):JSONDecode(
+						game:HttpGet(
+							"https://thumbnails.roblox.com/v1/games/icons?universeIds="
+								.. key
+								.. "&size=150x150&format=Png&isCircular=false"
+						)
+					)
+					local url = d.data and d.data[1] and d.data[1].imageUrl
+					if type(url) ~= "string" or url == "" then
+						error("no icon")
+					end
+					local bytes = game:HttpGet(url)
+					if #bytes < 64 then
+						error("bad icon")
+					end
+					if type(makefolder) == "function" and not (isfolder and isfolder("oblivion_thumbs")) then
+						makefolder("oblivion_thumbs")
+					end
+					writefile(path, bytes)
+				end
+				return getcustomasset(path)
+			end)
+			thumbs[key] = ok and asset or fallback
+		end
+		while thumbs[key] == "pending" do
+			task.wait()
+		end
+		return thumbs[key]
+	end
+
 	local function short(n)
 		n = tonumber(n) or 0
 		if n >= 1e6 then
@@ -435,8 +478,10 @@ return function(Lib)
 				task.spawn(function()
 					local uid = universe(item.placeId)
 					if uid and img.Parent then
-						img.Image = "rbxthumb://type=GameIcon&id=" .. uid .. "&w=150&h=150"
-						tween(img, { ImageTransparency = 0 })
+						img.Image = thumbFor(uid)
+						if img.Parent then
+							tween(img, { ImageTransparency = 0 })
+						end
 					end
 				end)
 			else
@@ -627,6 +672,22 @@ return function(Lib)
 		end)
 
 		emptyF = empty("Find a script", "Type a name, or press Search for the newest")
+
+		task.defer(function()
+			local scroller = root:FindFirstAncestorWhichIsA("ScrollingFrame")
+			if not scroller then
+				return
+			end
+			scroller:GetPropertyChangedSignal("CanvasPosition"):Connect(function()
+				if not moreBtn or busy or not root.Parent then
+					return
+				end
+				local bottom = scroller.CanvasPosition.Y + scroller.AbsoluteWindowSize.Y
+				if bottom >= scroller.AbsoluteCanvasSize.Y - 120 then
+					search(page + 1)
+				end
+			end)
+		end)
 
 		local api = { _frame = root }
 		function api:Search(q)
