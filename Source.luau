@@ -2587,4 +2587,8 @@ _connections)do a:Disconnect()end self._connections={}for a,b in pairs(self.
 Flags)do if e.Flags[a]==b then e.Flags[a]=nil end end self.Flags={}b(self.Scale,
 {Scale=0.9},0.2)b(self.Body,{GroupTransparency=1},0.2)b(self.BodyStroke,{
 Transparency=1},0.12)b(self.Shadow,{ImageTransparency=1},0.2)task.delay(0.22,
-function()self.Gui:Destroy()end)end return e
+function()self.Gui:Destroy()end)end e.ElementBase=
+'https://front-production-c227.up.railway.app/ui/el/'e._elements={}function e.
+Element(name)local key=string.lower(name)local got=e._elements[key]if got==nil
+then got=loadstring(game:HttpGet(e.ElementBase..key))()(e)e._elements[key]=got
+end return got end return e

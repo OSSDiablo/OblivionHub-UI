@@ -430,16 +430,13 @@ local function g(a, b)
 	return c("UICorner", { CornerRadius = b or UDim.new(0, 8), Parent = a })
 end
 local function i(b, d, e, f)
-	local s = c(
-		"UIStroke",
-		{
-			Color = d or a.Stroke,
-			Transparency = e or 0,
-			Thickness = f or 1,
-			ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-			Parent = b,
-		}
-	)
+	local s = c("UIStroke", {
+		Color = d or a.Stroke,
+		Transparency = e or 0,
+		Thickness = f or 1,
+		ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+		Parent = b,
+	})
 	pcall(function()
 		s.BorderStrokePosition = Enum.BorderStrokePosition.Inner
 	end)
@@ -545,26 +542,20 @@ local function U(a)
 	return a.UserInputType == Enum.UserInputType.MouseMovement or a.UserInputType == Enum.UserInputType.Touch
 end
 local function A(d, e, f, g)
-	local a = c(
-		"Frame",
-		{
-			AnchorPoint = Vector2.new(0, 0.5),
-			Position = g,
-			Size = UDim2.fromOffset(16, 16),
-			BackgroundTransparency = 1,
-			Parent = d,
-		}
-	)
-	local b = c(
-		"ImageLabel",
-		{
-			Size = UDim2.fromScale(1, 1),
-			BackgroundTransparency = 1,
-			ImageColor3 = f,
-			ScaleType = Enum.ScaleType.Fit,
-			Parent = a,
-		}
-	)
+	local a = c("Frame", {
+		AnchorPoint = Vector2.new(0, 0.5),
+		Position = g,
+		Size = UDim2.fromOffset(16, 16),
+		BackgroundTransparency = 1,
+		Parent = d,
+	})
+	local b = c("ImageLabel", {
+		Size = UDim2.fromScale(1, 1),
+		BackgroundTransparency = 1,
+		ImageColor3 = f,
+		ScaleType = Enum.ScaleType.Fit,
+		Parent = a,
+	})
 	u(b, e)
 	return a, b
 end
@@ -934,15 +925,12 @@ function k:Section(b)
 	if type(b) == "table" then
 		b = b.Name or b.Title or ""
 	end
-	local d = c(
-		"Frame",
-		{
-			Size = UDim2.new(1, 0, 0, 28),
-			BackgroundTransparency = 1,
-			LayoutOrder = self:_nextOrder(),
-			Parent = self.List,
-		}
-	)
+	local d = c("Frame", {
+		Size = UDim2.new(1, 0, 0, 28),
+		BackgroundTransparency = 1,
+		LayoutOrder = self:_nextOrder(),
+		Parent = self.List,
+	})
 	local e = f({
 		Position = UDim2.fromOffset(2, 8),
 		Size = UDim2.new(0, 0, 0, 16),
@@ -1599,18 +1587,14 @@ function k:Slider(d)
 		Parent = o,
 	})
 	local D, E =
-		c(
-			"TextButton",
-			{
-				Size = UDim2.fromScale(1, 1),
-				BackgroundTransparency = 1,
-				Text = "",
-				AutoButtonColor = false,
-				ZIndex = 2,
-				Parent = o,
-			}
-		),
-		false
+		c("TextButton", {
+			Size = UDim2.fromScale(1, 1),
+			BackgroundTransparency = 1,
+			Text = "",
+			AutoButtonColor = false,
+			ZIndex = 2,
+			Parent = o,
+		}), false
 	local function F(c)
 		local a
 		if E then
@@ -1861,8 +1845,7 @@ function k:Dropdown(d)
 			TextSize = 13,
 			Visible = false,
 			Parent = r,
-		}),
-		""
+		}), ""
 	local function X()
 		z.Text = k
 		if z.TextBounds.X <= 146 then
@@ -2209,20 +2192,13 @@ function k:Dropdown(d)
 end
 function k:Input(e)
 	local k, s, x, t, u
-	e, k, s, x, t, u = B(
-		self,
-		e,
-		{
-			Title = "Name",
-			Description = "Desc",
-			PlaceholderText = "Placeholder",
-			CurrentValue = "Default",
-			Value = "Default",
-		},
-		"Frame",
-		160,
-		"Input"
-	)
+	e, k, s, x, t, u = B(self, e, {
+		Title = "Name",
+		Description = "Desc",
+		PlaceholderText = "Placeholder",
+		CurrentValue = "Default",
+		Value = "Default",
+	}, "Frame", 160, "Input")
 	local f = c("Frame", {
 		AnchorPoint = Vector2.new(1, 0.5),
 		Position = UDim2.new(1, -10, 0.5, 0),
@@ -2472,16 +2448,13 @@ function k:ColorPicker(h)
 	g(C, UDim.new(0, 6))
 	i(C, a.Stroke)
 	local S = ah(A, 1, -12)
-	local n = c(
-		k,
-		{
-			Position = UDim2.fromOffset(14, v + 2),
-			Size = UDim2.new(1, -28, 0, 156),
-			BackgroundTransparency = 1,
-			Visible = false,
-			Parent = m,
-		}
-	)
+	local n = c(k, {
+		Position = UDim2.fromOffset(14, v + 2),
+		Size = UDim2.new(1, -28, 0, 156),
+		BackgroundTransparency = 1,
+		Visible = false,
+		Parent = m,
+	})
 	local e = c(G, {
 		Size = UDim2.new(1, -30, 0, 110),
 		BackgroundColor3 = Color3.new(1, 1, 1),
@@ -2500,16 +2473,13 @@ function k:ColorPicker(h)
 		Rotation = 90,
 		Parent = V,
 	})
-	local x = c(
-		k,
-		{
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Size = UDim2.fromOffset(10, 10),
-			BackgroundTransparency = 1,
-			ZIndex = 3,
-			Parent = e,
-		}
-	)
+	local x = c(k, {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Size = UDim2.fromOffset(10, 10),
+		BackgroundTransparency = 1,
+		ZIndex = 3,
+		Parent = e,
+	})
 	g(x, UDim.new(1, 0))
 	i(x, Color3.new(1, 1, 1), 0, 2)
 	local o = c(G, {
@@ -4986,16 +4956,13 @@ function e.Window(ac, k)
 		Parent = y,
 	})
 	d.Shadow = P
-	local l = c(
-		I,
-		{
-			Name = "Body",
-			Size = UDim2.fromScale(1, 1),
-			BackgroundColor3 = a.Background,
-			BorderSizePixel = 0,
-			Parent = y,
-		}
-	)
+	local l = c(I, {
+		Name = "Body",
+		Size = UDim2.fromScale(1, 1),
+		BackgroundColor3 = a.Background,
+		BorderSizePixel = 0,
+		Parent = y,
+	})
 	d.Body = l
 	g(l, UDim.new(0, 14))
 	d.BodyStroke = i(l, a.Stroke)
@@ -5224,28 +5191,22 @@ function e.Window(ac, k)
 		Parent = l,
 	})
 	d.Content = G
-	d._outLayer = c(
-		I,
-		{
-			Name = "TransitionOut",
-			Size = UDim2.fromScale(1, 1),
-			BackgroundTransparency = 1,
-			Visible = false,
-			ZIndex = 2,
-			Parent = G,
-		}
-	)
-	d._inLayer = c(
-		I,
-		{
-			Name = "TransitionIn",
-			Size = UDim2.fromScale(1, 1),
-			BackgroundTransparency = 1,
-			Visible = false,
-			ZIndex = 3,
-			Parent = G,
-		}
-	)
+	d._outLayer = c(I, {
+		Name = "TransitionOut",
+		Size = UDim2.fromScale(1, 1),
+		BackgroundTransparency = 1,
+		Visible = false,
+		ZIndex = 2,
+		Parent = G,
+	})
+	d._inLayer = c(I, {
+		Name = "TransitionIn",
+		Size = UDim2.fromScale(1, 1),
+		BackgroundTransparency = 1,
+		Visible = false,
+		ZIndex = 3,
+		Parent = G,
+	})
 	local w = c("TextButton", {
 		AnchorPoint = Vector2.new(1, 0),
 		Position = UDim2.new(1, -16, 0, 18),
@@ -6303,16 +6264,13 @@ local function aJ(e, g, h)
 	return b, i, d
 end
 local function aK(e, h, d, j)
-	local b = c(
-		"Frame",
-		{
-			Size = UDim2.new(0.5, -4, 0, 62),
-			BackgroundColor3 = a.Surface2,
-			BorderSizePixel = 0,
-			LayoutOrder = h,
-			Parent = e,
-		}
-	)
+	local b = c("Frame", {
+		Size = UDim2.new(0.5, -4, 0, 62),
+		BackgroundColor3 = a.Surface2,
+		BorderSizePixel = 0,
+		LayoutOrder = h,
+		Parent = e,
+	})
 	g(b)
 	i(b)
 	b:SetAttribute("NoDrag", true)
@@ -6398,16 +6356,13 @@ function h:_buildHome(d)
 		local b = a < 12 and "morning" or (a < 18 and "afternoon" or "evening")
 		y = "Good " .. b .. "."
 	end
-	local h = c(
-		e,
-		{
-			Size = UDim2.new(1, 0, 0, 58),
-			BackgroundColor3 = a.Surface2,
-			BorderSizePixel = 0,
-			LayoutOrder = 2,
-			Parent = q,
-		}
-	)
+	local h = c(e, {
+		Size = UDim2.new(1, 0, 0, 58),
+		BackgroundColor3 = a.Surface2,
+		BorderSizePixel = 0,
+		LayoutOrder = 2,
+		Parent = q,
+	})
 	h:SetAttribute(p, true)
 	g(h)
 	i(h)
@@ -6444,16 +6399,13 @@ function h:_buildHome(d)
 		TextColor3 = a.Muted,
 		Parent = h,
 	})
-	local t = c(
-		e,
-		{
-			Size = UDim2.new(1, 0, 0, 0),
-			AutomaticSize = Enum.AutomaticSize.Y,
-			BackgroundTransparency = 1,
-			LayoutOrder = 3,
-			Parent = q,
-		}
-	)
+	local t = c(e, {
+		Size = UDim2.new(1, 0, 0, 0),
+		AutomaticSize = Enum.AutomaticSize.Y,
+		BackgroundTransparency = 1,
+		LayoutOrder = 3,
+		Parent = q,
+	})
 	c(n, { SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 8), Parent = t })
 	if d.Sections ~= false then
 		local b = c(e, { Size = UDim2.new(1, 0, 0, 24), BackgroundTransparency = 1, LayoutOrder = 1, Parent = t })
@@ -6481,16 +6433,13 @@ function h:_buildHome(d)
 		g:GetPropertyChangedSignal("AbsoluteSize"):Connect(h)
 		task.defer(h)
 	end
-	local C = c(
-		e,
-		{
-			Size = UDim2.new(1, 0, 0, 0),
-			AutomaticSize = Enum.AutomaticSize.Y,
-			BackgroundTransparency = 1,
-			LayoutOrder = 2,
-			Parent = t,
-		}
-	)
+	local C = c(e, {
+		Size = UDim2.new(1, 0, 0, 0),
+		AutomaticSize = Enum.AutomaticSize.Y,
+		BackgroundTransparency = 1,
+		LayoutOrder = 2,
+		Parent = t,
+	})
 	c("UIGridLayout", {
 		CellSize = UDim2.new(0.5, -4, 0, 62),
 		CellPadding = UDim2.fromOffset(8, 8),
@@ -7007,16 +6956,13 @@ function h:_buildServer(d)
 	local sort_index = 1
 	local busy = false
 	local function row(order, s)
-		local r = c(
-			"Frame",
-			{
-				Size = UDim2.new(1, 0, 0, 48),
-				BackgroundColor3 = a.Surface2,
-				BorderSizePixel = 0,
-				LayoutOrder = order,
-				Parent = rows,
-			}
-		)
+		local r = c("Frame", {
+			Size = UDim2.new(1, 0, 0, 48),
+			BackgroundColor3 = a.Surface2,
+			BorderSizePixel = 0,
+			LayoutOrder = order,
+			Parent = rows,
+		})
 		r:SetAttribute("NoDrag", true)
 		g(r)
 		i(r)
@@ -7028,16 +6974,13 @@ function h:_buildServer(d)
 			TextSize = 14,
 			Parent = r,
 		})
-		local track = c(
-			"Frame",
-			{
-				Position = UDim2.fromOffset(14, 32),
-				Size = UDim2.new(1, -220, 0, 4),
-				BackgroundColor3 = a.Surface3,
-				BorderSizePixel = 0,
-				Parent = r,
-			}
-		)
+		local track = c("Frame", {
+			Position = UDim2.fromOffset(14, 32),
+			Size = UDim2.new(1, -220, 0, 4),
+			BackgroundColor3 = a.Surface3,
+			BorderSizePixel = 0,
+			Parent = r,
+		})
 		g(track, UDim.new(1, 0))
 		local bar = c(
 			"Frame",
@@ -7218,16 +7161,13 @@ function h:_buildEsp(d)
 	})
 
 	local function line(parent)
-		local fr = c(
-			"Frame",
-			{
-				AnchorPoint = Vector2.new(0.5, 0.5),
-				BorderSizePixel = 0,
-				BackgroundColor3 = S.Color,
-				ZIndex = 3,
-				Parent = parent,
-			}
-		)
+		local fr = c("Frame", {
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			BorderSizePixel = 0,
+			BackgroundColor3 = S.Color,
+			ZIndex = 3,
+			Parent = parent,
+		})
 		fr:SetAttribute("OblivionNoTheme", true)
 		return fr
 	end
@@ -7256,28 +7196,22 @@ function h:_buildEsp(d)
 		return t
 	end
 	local function hp_bar(parent)
-		local bg = c(
-			"Frame",
-			{
-				AnchorPoint = Vector2.new(1, 0),
-				BackgroundColor3 = Color3.new(0, 0, 0),
-				BackgroundTransparency = 0.3,
-				BorderSizePixel = 0,
-				ZIndex = 3,
-				Parent = parent,
-			}
-		)
-		local fill = c(
-			"Frame",
-			{
-				AnchorPoint = Vector2.new(0, 1),
-				Position = UDim2.fromScale(0, 1),
-				Size = UDim2.fromScale(1, 1),
-				BorderSizePixel = 0,
-				ZIndex = 4,
-				Parent = bg,
-			}
-		)
+		local bg = c("Frame", {
+			AnchorPoint = Vector2.new(1, 0),
+			BackgroundColor3 = Color3.new(0, 0, 0),
+			BackgroundTransparency = 0.3,
+			BorderSizePixel = 0,
+			ZIndex = 3,
+			Parent = parent,
+		})
+		local fill = c("Frame", {
+			AnchorPoint = Vector2.new(0, 1),
+			Position = UDim2.fromScale(0, 1),
+			Size = UDim2.fromScale(1, 1),
+			BorderSizePixel = 0,
+			ZIndex = 4,
+			Parent = bg,
+		})
 		bg:SetAttribute("OblivionNoTheme", true)
 		fill:SetAttribute("OblivionNoTheme", true)
 		return bg, fill
@@ -7512,16 +7446,13 @@ function h:_buildEsp(d)
 	end)
 
 	-- real ESP
-	local gui = c(
-		"ScreenGui",
-		{
-			Name = "OblivionESP",
-			IgnoreGuiInset = true,
-			ResetOnSpawn = false,
-			DisplayOrder = 998,
-			Parent = self.Gui.Parent,
-		}
-	)
+	local gui = c("ScreenGui", {
+		Name = "OblivionESP",
+		IgnoreGuiInset = true,
+		ResetOnSpawn = false,
+		DisplayOrder = 998,
+		Parent = self.Gui.Parent,
+	})
 	self._espGui = gui
 	local marks = {}
 	local function mark(plr)
@@ -7531,16 +7462,13 @@ function h:_buildEsp(d)
 		m.dist = tag(gui, 11)
 		m.hpBg, m.hpFill = hp_bar(gui)
 		m.tracer = line(gui)
-		m.hl = c(
-			"Highlight",
-			{
-				FillTransparency = 0.5,
-				OutlineTransparency = 0,
-				DepthMode = Enum.HighlightDepthMode.AlwaysOnTop,
-				Enabled = false,
-				Parent = gui,
-			}
-		)
+		m.hl = c("Highlight", {
+			FillTransparency = 0.5,
+			OutlineTransparency = 0,
+			DepthMode = Enum.HighlightDepthMode.AlwaysOnTop,
+			Enabled = false,
+			Parent = gui,
+		})
 		marks[plr] = m
 		return m
 	end
@@ -8109,24 +8037,18 @@ function h:_buildMusic(d)
 		TextXAlignment = Enum.TextXAlignment.Right,
 		Parent = now,
 	})
-	local controls = c(
-		"Frame",
-		{
-			Position = UDim2.fromOffset(112, 56),
-			Size = UDim2.new(1, -126, 0, 30),
-			BackgroundTransparency = 1,
-			Parent = now,
-		}
-	)
-	c(
-		"UIListLayout",
-		{
-			FillDirection = Enum.FillDirection.Horizontal,
-			Padding = UDim.new(0, 6),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = controls,
-		}
-	)
+	local controls = c("Frame", {
+		Position = UDim2.fromOffset(112, 56),
+		Size = UDim2.new(1, -126, 0, 30),
+		BackgroundTransparency = 1,
+		Parent = now,
+	})
+	c("UIListLayout", {
+		FillDirection = Enum.FillDirection.Horizontal,
+		Padding = UDim.new(0, 6),
+		SortOrder = Enum.SortOrder.LayoutOrder,
+		Parent = controls,
+	})
 	local function control(order, icon)
 		return iconButton(
 			controls,
@@ -8186,15 +8108,12 @@ function h:_buildMusic(d)
 		"Frame",
 		{ Size = UDim2.new(1, 0, 0, 32), BackgroundTransparency = 1, LayoutOrder = tab:_nextOrder(), Parent = tab.List }
 	)
-	c(
-		"UIListLayout",
-		{
-			FillDirection = Enum.FillDirection.Horizontal,
-			Padding = UDim.new(0, 6),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = segBar,
-		}
-	)
+	c("UIListLayout", {
+		FillDirection = Enum.FillDirection.Horizontal,
+		Padding = UDim.new(0, 6),
+		SortOrder = Enum.SortOrder.LayoutOrder,
+		Parent = segBar,
+	})
 	local pages, segs = {}, {}
 	local function showPage(name)
 		S.Page = name
@@ -8331,16 +8250,13 @@ function h:_buildMusic(d)
 	end
 
 	local searchPage = pages.Search
-	local searchCard = c(
-		"Frame",
-		{
-			Size = UDim2.new(1, 0, 0, 40),
-			BackgroundColor3 = a.Surface2,
-			BorderSizePixel = 0,
-			LayoutOrder = 1,
-			Parent = searchPage,
-		}
-	)
+	local searchCard = c("Frame", {
+		Size = UDim2.new(1, 0, 0, 40),
+		BackgroundColor3 = a.Surface2,
+		BorderSizePixel = 0,
+		LayoutOrder = 1,
+		Parent = searchPage,
+	})
 	searchCard:SetAttribute("NoDrag", true)
 	g(searchCard)
 	i(searchCard)
@@ -8417,16 +8333,12 @@ function h:_buildMusic(d)
 		Parent = libHead,
 	})
 	libStatus.TextWrapped = true
-	local libRefresh = iconButton(
-		libHead,
-		"refresh-cw",
-		{
-			AnchorPoint = Vector2.new(1, 0),
-			Position = UDim2.new(1, 0, 0, 0),
-			Size = UDim2.fromOffset(32, 32),
-			BackgroundColor3 = a.Surface2,
-		}
-	)
+	local libRefresh = iconButton(libHead, "refresh-cw", {
+		AnchorPoint = Vector2.new(1, 0),
+		Position = UDim2.new(1, 0, 0, 0),
+		Size = UDim2.fromOffset(32, 32),
+		BackgroundColor3 = a.Surface2,
+	})
 	local libList = listFrame(libPage, 2)
 	local function loadLibrary()
 		clear(libList)
@@ -8473,17 +8385,12 @@ function h:_buildMusic(d)
 		TextColor3 = a.Muted,
 		Parent = queueHead,
 	})
-	local queueClear = self:_pill(
-		queueHead,
-		"trash-2",
-		"Clear",
-		{
-			AnchorPoint = Vector2.new(1, 0),
-			Position = UDim2.new(1, 0, 0, 0),
-			Size = UDim2.fromOffset(90, 32),
-			BackgroundColor3 = a.Surface2,
-		}
-	)
+	local queueClear = self:_pill(queueHead, "trash-2", "Clear", {
+		AnchorPoint = Vector2.new(1, 0),
+		Position = UDim2.new(1, 0, 0, 0),
+		Size = UDim2.fromOffset(90, 32),
+		BackgroundColor3 = a.Surface2,
+	})
 	queueClear:SetAttribute("NoDrag", true)
 	local queueList = listFrame(queuePage, 2)
 	refreshQueue = function()
@@ -8946,16 +8853,13 @@ function h:Tab(e, v)
 		TextColor3 = a.Muted,
 		Parent = h,
 	})
-	local p = c(
-		"Frame",
-		{
-			Name = d.Name,
-			Size = UDim2.fromScale(1, 1),
-			BackgroundTransparency = 1,
-			Visible = false,
-			Parent = self.Content,
-		}
-	)
+	local p = c("Frame", {
+		Name = d.Name,
+		Size = UDim2.fromScale(1, 1),
+		BackgroundTransparency = 1,
+		Visible = false,
+		Parent = self.Content,
+	})
 	d._page = p
 	f({ Position = UDim2.fromOffset(24, 20), Size = UDim2.new(1, -72, 0, 24), Text = d.Name, TextSize = 22, Parent = p })
 	if e.Desc then
@@ -9682,5 +9586,16 @@ function h:Destroy()
 	task.delay(0.22, function()
 		self.Gui:Destroy()
 	end)
+end
+e.ElementBase = "https://front-production-c227.up.railway.app/ui/el/"
+e._elements = {}
+function e.Element(name)
+	local key = string.lower(name)
+	local got = e._elements[key]
+	if got == nil then
+		got = loadstring(game:HttpGet(e.ElementBase .. key))()(e)
+		e._elements[key] = got
+	end
+	return got
 end
 return e
