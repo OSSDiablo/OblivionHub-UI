@@ -80,6 +80,9 @@ return function(Lib)
 			icons = ok and lib or false
 		end
 		local c = icons and (icons.Icons and icons.Icons[name] or icons[name])
+		if type(c) == "string" then
+			return c
+		end
 		if type(c) ~= "table" then
 			return nil
 		end
@@ -106,6 +109,23 @@ return function(Lib)
 			o[k] = v
 		end
 		return o
+	end
+
+	local universes = {}
+	local function universe(placeId)
+		local key = tostring(placeId)
+		if universes[key] == nil then
+			universes[key] = "pending"
+			local ok, d = pcall(function()
+				return game:GetService("HttpService")
+					:JSONDecode(game:HttpGet("https://apis.roblox.com/universes/v1/places/" .. key .. "/universe"))
+			end)
+			universes[key] = ok and type(d) == "table" and d.universeId or false
+		end
+		while universes[key] == "pending" do
+			task.wait()
+		end
+		return universes[key] or nil
 	end
 
 	local function short(n)
@@ -406,12 +426,19 @@ return function(Lib)
 				local img = new("ImageLabel", {
 					Size = UDim2.fromScale(1, 1),
 					BackgroundTransparency = 1,
-					Image = "rbxthumb://type=GameIcon&id=" .. item.placeId .. "&w=150&h=150",
+					ImageTransparency = 1,
 					ScaleType = Enum.ScaleType.Crop,
 					Parent = thumb,
 				})
 				img:SetAttribute("OblivionNoTheme", true)
 				corner(img, 8)
+				task.spawn(function()
+					local uid = universe(item.placeId)
+					if uid and img.Parent then
+						img.Image = "rbxthumb://type=GameIcon&id=" .. uid .. "&w=150&h=150"
+						tween(img, { ImageTransparency = 0 })
+					end
+				end)
 			else
 				iconLabel(thumb, "globe", 24, T.Muted, {
 					AnchorPoint = Vector2.new(0.5, 0.5),
