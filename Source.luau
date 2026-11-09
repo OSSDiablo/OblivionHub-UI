@@ -322,67 +322,88 @@ e=f({Name='Content',Size=UDim2.new(1,0,0,0),AutomaticSize=Enum.AutomaticSize.Y,
 Text=b.Content or'',TextSize=13,FontFace=j.Regular,TextColor3=a.Muted,
 TextWrapped=true,TextTruncate=Enum.TextTruncate.None,TextYAlignment=Enum.
 TextYAlignment.Top,LayoutOrder=2,Parent=d})return q(self,b,{Set=function(b,a)e.
-Text=tostring(a)end,Get=function()return e.Text end},d,'Paragraph')end local av=
-{Primary=O,Danger='Error'}function k:Button(d)d=n(d,{Title='Name',Description=
-'Desc'})local i=av[d.Style]local e=i~=nil local j=d.Desc and y or R local c,f=G(
-self,'TextButton',j,d)c.ClipsDescendants=true if e then c.BackgroundColor3=a[i]c
-.BackgroundTransparency=0.12 f.Color=a[i]f.Transparency=0.4 c.MouseEnter:
-Connect(function()b(c,{BackgroundTransparency=0},0.12)b(f,{Transparency=0},0.12)
-end)c.MouseLeave:Connect(function()b(c,{BackgroundTransparency=0.12},0.25)b(f,{
-Transparency=0.4},0.25)end)else L(c,f)end local k,g=e and a.AccentDark or a.Text
-,0 if d.Icon then A(c,d.Icon,e and a.AccentDark or a.Accent,UDim2.new(0,14,0.5,0
-))g=26 end local m=M(c,d.Name or'Button',d.Desc,30)if g>0 then for b,a in
-ipairs(c:GetChildren())do if a:IsA('TextLabel')then a.Position+=UDim2.
-fromOffset(g,0)a.Size-=UDim2.fromOffset(g,0)end end end if e then for b,a in
-ipairs(c:GetChildren())do if a:IsA('TextLabel')then a.TextColor3=k end end end
-A(c,'chevron-right',e and a.AccentDark or a.Muted,UDim2.new(1,-30,0.5,0))c.
-MouseButton1Click:Connect(function()at(c,e and a.AccentDark or a.Accent)l(d.
-Callback)end)local h={}function h:SetText(a)m.Text=tostring(a)end h.SetTitle=h.
-SetText return q(self,d,h,c,'Button')end function k:Toggle(e)local j,n e,j,n=B(
-self,e,{Title='Name',Description='Desc',CurrentValue='Default',Value='Default'},
-'TextButton',56,'Toggle')local f=c('Frame',{AnchorPoint=Vector2.new(1,0.5),
-Position=UDim2.new(1,-14,0.5,0),Size=m and UDim2.fromOffset(44,24)or UDim2.
-fromOffset(36,20),BackgroundColor3=a.Surface3,BorderSizePixel=0,Parent=j})g(f,
-UDim.new(1,0))i(f,a.Stroke)local h=c('Frame',{AnchorPoint=Vector2.new(0,0.5),
-Position=UDim2.new(0,3,0.5,0),Size=m and UDim2.fromOffset(18,18)or UDim2.
-fromOffset(14,14),BackgroundColor3=a.Muted,BorderSizePixel=0,Parent=f})g(h,UDim.
-new(1,0))local p=c('ImageLabel',{AnchorPoint=Vector2.new(0.5,0.5),Position=UDim2
-.fromScale(0.5,0.5),Size=UDim2.new(1,24,1,24),BackgroundTransparency=1,Image=v.
-Glow,ImageColor3=a.Accent,ImageTransparency=1,ZIndex=0,Parent=f})local d={Value=
-e.Default==true}local function o(i)local e=d.Value local g=i and 0.25 or 0 b(f,{
-BackgroundColor3=e and a.Accent or a.Surface3},g)b(p,{ImageTransparency=e and
-0.75 or 1},g)local c=m and 18 or 14 b(h,{Position=e and UDim2.new(0,(m and 44 or
-36)-3-c,0.5,0)or UDim2.new(0,3,0.5,0)},g,Enum.EasingStyle.Back)b(h,{
-BackgroundColor3=e and a.AccentDark or a.Muted},g)if i then b(h,{Size=UDim2.
-fromOffset(c+4,c-2)},0.08)task.delay(0.08,function()b(h,{Size=UDim2.fromOffset(c
-,c)},0.2,Enum.EasingStyle.Back)end)end end local k=false function d:Set(a,b)a=a
-==true if a==d.Value then return end d.Value=a o(true)if not k then w(n)end if
-not b then l(e.Callback,a)end end function d:Get()return d.Value end o(false)j.
-MouseButton1Click:Connect(function()k=true d:Set(not d.Value)k=false end)local r
-=q(self,e,d,j,'Toggle')if d.Value then l(e.Callback,true)end return r end
-function k:Slider(d)local B='Frame'd=n(d,{Title='Name',Description='Desc',
-CurrentValue='Default',Value='Default',Increment='Step'})local k=math.min(d.Min
-or 0,d.Max or 100)local C=math.max(d.Min or 0,d.Max or 100)local W=d.Step or 1
-local H=d.Suffix or''local I=ai(k,C,W)local N=y+(d.Desc and 18 or 0)local t,Q=G(
-self,B,N,d)L(t,Q)f({Name='Title',Position=UDim2.fromOffset(14,12),Size=UDim2.
-new(1,-120,0,18),Text=d.Name or'Slider',Parent=t})if d.Desc then f({Name='Desc',
-Position=UDim2.fromOffset(14,31),Size=UDim2.new(1,-28,0,17),Text=d.Desc,TextSize
-=13,FontFace=j.Regular,TextColor3=a.Muted,Parent=t})end local o=c(B,{AnchorPoint
-=Vector2.new(1,0),Position=UDim2.new(1,-10,0,9),Size=UDim2.fromOffset(40,24),
-BackgroundColor3=a.Surface,BorderSizePixel=0,ClipsDescendants=true,Parent=t})g(o
-,UDim.new(0,6))local J=i(o)local z=f({Size=UDim2.new(1,0,1,0),TextSize=13,
-TextColor3=a.Accent,TextXAlignment=Enum.TextXAlignment.Center,TextTruncate=Enum.
-TextTruncate.None,Parent=o})local h=c('TextBox',{Position=UDim2.fromOffset(9,0),
-Size=UDim2.new(0,0,1,0),AutomaticSize=Enum.AutomaticSize.X,
-BackgroundTransparency=1,Text='',TextColor3=a.Text,TextSize=13,FontFace=j.Medium
-,TextXAlignment=Enum.TextXAlignment.Left,ClearTextOnFocus=false,Visible=false,
-Parent=o})c('UISizeConstraint',{MinSize=Vector2.new(14,0),Parent=h})local K=f({
-Size=UDim2.new(0,0,1,0),AutomaticSize=Enum.AutomaticSize.X,Text=H,TextSize=13,
-TextColor3=a.Accent,TextTruncate=Enum.TextTruncate.None,Visible=false,Parent=o})
-local D,E=c('TextButton',{Size=UDim2.fromScale(1,1),BackgroundTransparency=1,
-Text='',AutoButtonColor=false,ZIndex=2,Parent=o}),false local function F(c)local
-a if E then a=9+h.AbsoluteSize.X/self.Window.Scale.Scale+K.TextBounds.X+9 K.
-Position=UDim2.fromOffset(9+h.AbsoluteSize.X/self.Window.Scale.Scale,0)else a=z.
+Text=tostring(a)end,Get=function()return e.Text end},d,'Paragraph')end function
+k:Stats(b)b=n(b,{})local cols=math.max(1,math.floor(tonumber(b.Columns)or 2))
+local d=c('Frame',{Size=UDim2.new(1,0,0,0),AutomaticSize=Enum.AutomaticSize.Y,
+BackgroundTransparency=1,LayoutOrder=self:_nextOrder(),Parent=self.List})c(
+'UIGridLayout',{CellSize=UDim2.new(1/cols,-8*(cols-1)/cols,0,62),CellPadding=
+UDim2.fromOffset(8,8),SortOrder=Enum.SortOrder.LayoutOrder,Parent=d})local cards
+,order={},{}local api={}function api:Add(o)o=n(o,{Title='Name'})local key=o.Name
+or('Stat '..(#order+1))local card=c('Frame',{BackgroundColor3=a.Surface2,
+BorderSizePixel=0,LayoutOrder=#order+1,Parent=d})card:SetAttribute('NoDrag',true
+)g(card)i(card)if o.Icon then A(card,o.Icon,a.Muted,UDim2.new(0,14,0,21))end f({
+Name='Title',Position=UDim2.fromOffset(o.Icon and 36 or 14,12),Size=UDim2.new(1,
+-(o.Icon and 50 or 28),0,16),Text=key,TextSize=12,TextColor3=a.Muted,Parent=card
+})local value=f({Name='Value',Position=UDim2.fromOffset(14,34),Size=UDim2.new(1,
+-28,0,18),Text=o.Value~=nil and tostring(o.Value)or'\u{2026}',TextSize=15,Parent
+=card})cards[key]={Frame=card,Value=value}table.insert(order,key)return key end
+function api:Set(key,v)if type(key)=='table'then for k2,v2 in pairs(key)do api:
+Set(k2,v2)end return end local card=cards[key]if card then card.Value.Text=
+tostring(v)end end function api:Get(key)local card=cards[key]return card and
+card.Value.Text end function api:Remove(key)local card=cards[key]if card then
+card.Frame:Destroy()cards[key]=nil table.remove(order,table.find(order,key))end
+end for _,o in ipairs(b.Stats or{})do api:Add(o)end return q(self,b,api,d,
+'Stats')end local av={Primary=O,Danger='Error'}function k:Button(d)d=n(d,{Title=
+'Name',Description='Desc'})local i=av[d.Style]local e=i~=nil local j=d.Desc and
+y or R local c,f=G(self,'TextButton',j,d)c.ClipsDescendants=true if e then c.
+BackgroundColor3=a[i]c.BackgroundTransparency=0.12 f.Color=a[i]f.Transparency=
+0.4 c.MouseEnter:Connect(function()b(c,{BackgroundTransparency=0},0.12)b(f,{
+Transparency=0},0.12)end)c.MouseLeave:Connect(function()b(c,{
+BackgroundTransparency=0.12},0.25)b(f,{Transparency=0.4},0.25)end)else L(c,f)end
+local k,g=e and a.AccentDark or a.Text,0 if d.Icon then A(c,d.Icon,e and a.
+AccentDark or a.Accent,UDim2.new(0,14,0.5,0))g=26 end local m=M(c,d.Name or
+'Button',d.Desc,30)if g>0 then for b,a in ipairs(c:GetChildren())do if a:IsA(
+'TextLabel')then a.Position+=UDim2.fromOffset(g,0)a.Size-=UDim2.fromOffset(g,0)
+end end end if e then for b,a in ipairs(c:GetChildren())do if a:IsA('TextLabel')
+then a.TextColor3=k end end end A(c,'chevron-right',e and a.AccentDark or a.
+Muted,UDim2.new(1,-30,0.5,0))c.MouseButton1Click:Connect(function()at(c,e and a.
+AccentDark or a.Accent)l(d.Callback)end)local h={}function h:SetText(a)m.Text=
+tostring(a)end h.SetTitle=h.SetText return q(self,d,h,c,'Button')end function k:
+Toggle(e)local j,n e,j,n=B(self,e,{Title='Name',Description='Desc',CurrentValue=
+'Default',Value='Default'},'TextButton',56,'Toggle')local f=c('Frame',{
+AnchorPoint=Vector2.new(1,0.5),Position=UDim2.new(1,-14,0.5,0),Size=m and UDim2.
+fromOffset(44,24)or UDim2.fromOffset(36,20),BackgroundColor3=a.Surface3,
+BorderSizePixel=0,Parent=j})g(f,UDim.new(1,0))i(f,a.Stroke)local h=c('Frame',{
+AnchorPoint=Vector2.new(0,0.5),Position=UDim2.new(0,3,0.5,0),Size=m and UDim2.
+fromOffset(18,18)or UDim2.fromOffset(14,14),BackgroundColor3=a.Muted,
+BorderSizePixel=0,Parent=f})g(h,UDim.new(1,0))local p=c('ImageLabel',{
+AnchorPoint=Vector2.new(0.5,0.5),Position=UDim2.fromScale(0.5,0.5),Size=UDim2.
+new(1,24,1,24),BackgroundTransparency=1,Image=v.Glow,ImageColor3=a.Accent,
+ImageTransparency=1,ZIndex=0,Parent=f})local d={Value=e.Default==true}
+local function o(i)local e=d.Value local g=i and 0.25 or 0 b(f,{BackgroundColor3
+=e and a.Accent or a.Surface3},g)b(p,{ImageTransparency=e and 0.75 or 1},g)local
+c=m and 18 or 14 b(h,{Position=e and UDim2.new(0,(m and 44 or 36)-3-c,0.5,0)or
+UDim2.new(0,3,0.5,0)},g,Enum.EasingStyle.Back)b(h,{BackgroundColor3=e and a.
+AccentDark or a.Muted},g)if i then b(h,{Size=UDim2.fromOffset(c+4,c-2)},0.08)
+task.delay(0.08,function()b(h,{Size=UDim2.fromOffset(c,c)},0.2,Enum.EasingStyle.
+Back)end)end end local k=false function d:Set(a,b)a=a==true if a==d.Value then
+return end d.Value=a o(true)if not k then w(n)end if not b then l(e.Callback,a)
+end end function d:Get()return d.Value end o(false)j.MouseButton1Click:Connect(
+function()k=true d:Set(not d.Value)k=false end)local r=q(self,e,d,j,'Toggle')if
+d.Value then l(e.Callback,true)end return r end function k:Slider(d)local B=
+'Frame'd=n(d,{Title='Name',Description='Desc',CurrentValue='Default',Value=
+'Default',Increment='Step'})local k=math.min(d.Min or 0,d.Max or 100)local C=
+math.max(d.Min or 0,d.Max or 100)local W=d.Step or 1 local H=d.Suffix or''local
+I=ai(k,C,W)local N=y+(d.Desc and 18 or 0)local t,Q=G(self,B,N,d)L(t,Q)f({Name=
+'Title',Position=UDim2.fromOffset(14,12),Size=UDim2.new(1,-120,0,18),Text=d.Name
+or'Slider',Parent=t})if d.Desc then f({Name='Desc',Position=UDim2.fromOffset(14,
+31),Size=UDim2.new(1,-28,0,17),Text=d.Desc,TextSize=13,FontFace=j.Regular,
+TextColor3=a.Muted,Parent=t})end local o=c(B,{AnchorPoint=Vector2.new(1,0),
+Position=UDim2.new(1,-10,0,9),Size=UDim2.fromOffset(40,24),BackgroundColor3=a.
+Surface,BorderSizePixel=0,ClipsDescendants=true,Parent=t})g(o,UDim.new(0,6))
+local J=i(o)local z=f({Size=UDim2.new(1,0,1,0),TextSize=13,TextColor3=a.Accent,
+TextXAlignment=Enum.TextXAlignment.Center,TextTruncate=Enum.TextTruncate.None,
+Parent=o})local h=c('TextBox',{Position=UDim2.fromOffset(9,0),Size=UDim2.new(0,0
+,1,0),AutomaticSize=Enum.AutomaticSize.X,BackgroundTransparency=1,Text='',
+TextColor3=a.Text,TextSize=13,FontFace=j.Medium,TextXAlignment=Enum.
+TextXAlignment.Left,ClearTextOnFocus=false,Visible=false,Parent=o})c(
+'UISizeConstraint',{MinSize=Vector2.new(14,0),Parent=h})local K=f({Size=UDim2.
+new(0,0,1,0),AutomaticSize=Enum.AutomaticSize.X,Text=H,TextSize=13,TextColor3=a.
+Accent,TextTruncate=Enum.TextTruncate.None,Visible=false,Parent=o})local D,E=c(
+'TextButton',{Size=UDim2.fromScale(1,1),BackgroundTransparency=1,Text='',
+AutoButtonColor=false,ZIndex=2,Parent=o}),false local function F(c)local a if E
+then a=9+h.AbsoluteSize.X/self.Window.Scale.Scale+K.TextBounds.X+9 K.Position=
+UDim2.fromOffset(9+h.AbsoluteSize.X/self.Window.Scale.Scale,0)else a=z.
 TextBounds.X+18 end a=math.max(a,36)if c then o.Size=UDim2.fromOffset(a,24)else
 b(o,{Size=UDim2.fromOffset(a,24)},0.2)end end z:GetPropertyChangedSignal(
 'TextBounds'):Connect(function()if not E then F(false)end end)h:

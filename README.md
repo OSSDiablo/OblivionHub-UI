@@ -177,6 +177,7 @@ Window:LoadConfig()
 | Divider | `Tab:CreateDivider()` | |
 | Label | `Tab:CreateLabel("Text")` | |
 | Paragraph | `Tab:CreateParagraph({ Title, Content })` | |
+| Stats | `Tab:CreateStats({ Columns = 2, Stats = { { Name, Icon, Value }, ... } })` | |
 | Button | `Tab:CreateButton({ Name, Callback })` | nothing |
 | Toggle | `Tab:CreateToggle({ Name, CurrentValue, Callback })` | `true` / `false` |
 | Slider | `Tab:CreateSlider({ Name, Range = {min, max}, Increment, CurrentValue, Callback })` | number |
@@ -202,6 +203,22 @@ Speed:Set(50)          -- change the value
 print(Speed:Get())     -- read the value
 Speed:SetLocked(true)  -- lock it
 Speed:SetVisible(false) -- hide it
+```
+
+Stats are the info cards from the Home tab, usable in any tab. Update them by name:
+
+```lua
+local Info = Main:CreateStats({
+	Stats = {
+		{ Name = "Coins", Icon = "coins", Value = 0 },
+		{ Name = "Kills", Icon = "skull", Value = 0 },
+	},
+})
+
+Info:Set("Coins", 120)            -- one card
+Info:Set({ Coins = 125, Kills = 3 }) -- several at once
+Info:Add({ Name = "Deaths", Icon = "heart-crack", Value = 0 })
+Info:Remove("Deaths")
 ```
 
 ## Built-in tabs

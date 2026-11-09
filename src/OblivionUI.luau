@@ -1304,6 +1304,84 @@ function k:Paragraph(b)
 		end,
 	}, d, "Paragraph")
 end
+function k:Stats(b)
+	b = n(b, {})
+	local cols = math.max(1, math.floor(tonumber(b.Columns) or 2))
+	local d = c("Frame", {
+		Size = UDim2.new(1, 0, 0, 0),
+		AutomaticSize = Enum.AutomaticSize.Y,
+		BackgroundTransparency = 1,
+		LayoutOrder = self:_nextOrder(),
+		Parent = self.List,
+	})
+	c("UIGridLayout", {
+		CellSize = UDim2.new(1 / cols, -8 * (cols - 1) / cols, 0, 62),
+		CellPadding = UDim2.fromOffset(8, 8),
+		SortOrder = Enum.SortOrder.LayoutOrder,
+		Parent = d,
+	})
+	local cards, order = {}, {}
+	local api = {}
+	function api:Add(o)
+		o = n(o, { Title = "Name" })
+		local key = o.Name or ("Stat " .. (#order + 1))
+		local card = c("Frame", { BackgroundColor3 = a.Surface2, BorderSizePixel = 0, LayoutOrder = #order + 1, Parent = d })
+		card:SetAttribute("NoDrag", true)
+		g(card)
+		i(card)
+		if o.Icon then
+			A(card, o.Icon, a.Muted, UDim2.new(0, 14, 0, 21))
+		end
+		f({
+			Name = "Title",
+			Position = UDim2.fromOffset(o.Icon and 36 or 14, 12),
+			Size = UDim2.new(1, -(o.Icon and 50 or 28), 0, 16),
+			Text = key,
+			TextSize = 12,
+			TextColor3 = a.Muted,
+			Parent = card,
+		})
+		local value = f({
+			Name = "Value",
+			Position = UDim2.fromOffset(14, 34),
+			Size = UDim2.new(1, -28, 0, 18),
+			Text = o.Value ~= nil and tostring(o.Value) or "…",
+			TextSize = 15,
+			Parent = card,
+		})
+		cards[key] = { Frame = card, Value = value }
+		table.insert(order, key)
+		return key
+	end
+	function api:Set(key, v)
+		if type(key) == "table" then
+			for k2, v2 in pairs(key) do
+				api:Set(k2, v2)
+			end
+			return
+		end
+		local card = cards[key]
+		if card then
+			card.Value.Text = tostring(v)
+		end
+	end
+	function api:Get(key)
+		local card = cards[key]
+		return card and card.Value.Text
+	end
+	function api:Remove(key)
+		local card = cards[key]
+		if card then
+			card.Frame:Destroy()
+			cards[key] = nil
+			table.remove(order, table.find(order, key))
+		end
+	end
+	for _, o in ipairs(b.Stats or {}) do
+		api:Add(o)
+	end
+	return q(self, b, api, d, "Stats")
+end
 local av = { Primary = O, Danger = "Error" }
 function k:Button(d)
 	d = n(d, { Title = "Name", Description = "Desc" })
