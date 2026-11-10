@@ -37,11 +37,11 @@ AccentDark=d(6,18,32),Text=d(236,238,241),Muted=d(138,144,153),Glow=d(190,220,
 d(255,220,160)}),Rose=x({Background=d(11,12,14),Surface=d(16,17,20),Surface2=d(
 21,23,26),Surface3=d(33,36,41),Stroke=d(34,37,42),StrokeHover=d(116,64,78),
 Accent=d(255,120,150),AccentDark=d(32,8,14),Text=d(236,238,241),Muted=d(138,144,
-153),Glow=d(255,200,214)})}e.Theme=table.clone(e.Themes.Mono)e.ThemeName='Mono'e
-.Assets={Shadow='rbxassetid://6014261993',Glow='rbxassetid://8992230677',Logo=
-'triangle'}e.Assets.ShadowSlice=Rect.new(49,49,450,450)local function bake(data,
-path)local ok,id=pcall(function()if not(writefile and getcustomasset)then return
-nil end local chars=
+153),Glow=d(255,200,214)})}e.Theme=table.clone(e.Themes.Crimson)e.ThemeName=
+'Crimson'e.Assets={Shadow='rbxassetid://6014261993',Glow=
+'rbxassetid://8992230677',Logo='triangle'}e.Assets.ShadowSlice=Rect.new(49,49,
+450,450)local function bake(data,path)local ok,id=pcall(function()if not(
+writefile and getcustomasset)then return nil end local chars=
 [[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/]]local map={}
 for i=1,64 do map[chars:byte(i)]=i-1 end local out=table.create(#data//4)for i=1
 ,#data,4 do local a,b,c,d=data:byte(i,i+3)local v=map[a]*262144+map[b]*4096+(map
@@ -728,33 +728,29 @@ id)..'&w=48&h=48'end local function resolvePlayer(v)if typeof(v)=='Instance'and
 v:IsA('Player')then return v.Parent and v or nil end if type(v)=='string'and v~=
 ''then local low=v:lower()for _,p in ipairs(I:GetPlayers())do if p.Name:lower()
 ==low or p.DisplayName:lower()==low then return p end end end return nil end
-local tileTints={red=Color3.fromRGB(255,107,107),orange=Color3.fromRGB(255,158,
-87),yellow=Color3.fromRGB(244,202,96),green=Color3.fromRGB(95,211,141),blue=
-Color3.fromRGB(96,165,250),purple=Color3.fromRGB(167,139,250),pink=Color3.
-fromRGB(244,114,182)}local function tintOf(t)if typeof(t)=='Color3'then return t
-end if type(t)=='string'then return tileTints[t:lower()]or a[t]or a.Accent end
-return a.Accent end function k:PlayerList(opts)opts=n(opts,{Title='Name',
-MultiSelect='Multi',Multiple='Multi'})local multi=opts.Multi==true local listH=
-math.max(tonumber(opts.Height)or 196,80)local rowH=m and 44 or 38 local
-collapsible=opts.Collapsed~=false local open=not collapsible local headH=46
-local topH=collapsible and headH+36 or headH local fullH=topH+listH+8 local
-frame,stroke=G(self,'Frame',open and fullH or headH,opts)frame.ClipsDescendants=
-true L(frame,stroke)f({Name='Title',Position=UDim2.fromOffset(14,0),Size=UDim2.
-new(1,-184,0,44),Text=opts.Name or'Players',Parent=frame})local searchBg=c(
-'Frame',{AnchorPoint=collapsible and Vector2.new(0,0)or Vector2.new(1,0),
-Position=collapsible and UDim2.fromOffset(9,headH)or UDim2.new(1,-9,0,9),Size=
-collapsible and UDim2.new(1,-18,0,28)or UDim2.fromOffset(156,28),
-BackgroundColor3=a.Surface3,BorderSizePixel=0,Parent=frame})g(searchBg,UDim.new(
-0,7))local searchStroke=i(searchBg,a.Stroke)local sIcon=A(searchBg,'search',a.
-Muted,UDim2.new(0,9,0.5,0))sIcon.Size=UDim2.fromOffset(14,14)local box=c(
-'TextBox',{Position=UDim2.fromOffset(30,0),Size=UDim2.new(1,-38,1,0),
-BackgroundTransparency=1,Text='',PlaceholderText=opts.PlaceholderText or'Search'
-,PlaceholderColor3=a.Muted,TextColor3=a.Text,TextSize=13,FontFace=j.Regular,
-TextXAlignment=Enum.TextXAlignment.Left,ClearTextOnFocus=false,Parent=searchBg})
-box.Focused:Connect(function()b(searchStroke,{Color=a.Accent,Transparency=0.3},
-0.15)end)box.FocusLost:Connect(function()b(searchStroke,{Color=a.Stroke,
-Transparency=0},0.25)end)local scroll=c('ScrollingFrame',{Position=UDim2.
-fromOffset(6,topH),Size=UDim2.new(1,-12,0,listH),BackgroundTransparency=1,
+local function tintOf(t)if typeof(t)=='Color3'then return t end if type(t)==
+'string'then return a[t]or a.Accent end return a.Accent end function k:
+PlayerList(opts)opts=n(opts,{Title='Name',MultiSelect='Multi',Multiple='Multi'})
+local multi=opts.Multi==true local listH=math.max(tonumber(opts.Height)or 196,80
+)local rowH=m and 44 or 38 local collapsible=opts.Collapsed~=false local open=
+not collapsible local headH=46 local topH=collapsible and headH+36 or headH
+local fullH=topH+listH+8 local frame,stroke=G(self,'Frame',open and fullH or
+headH,opts)frame.ClipsDescendants=true L(frame,stroke)f({Name='Title',Position=
+UDim2.fromOffset(14,0),Size=UDim2.new(1,-184,0,44),Text=opts.Name or'Players',
+Parent=frame})local searchBg=c('Frame',{AnchorPoint=collapsible and Vector2.new(
+0,0)or Vector2.new(1,0),Position=collapsible and UDim2.fromOffset(9,headH)or
+UDim2.new(1,-9,0,9),Size=collapsible and UDim2.new(1,-18,0,28)or UDim2.
+fromOffset(156,28),BackgroundColor3=a.Surface3,BorderSizePixel=0,Parent=frame})
+g(searchBg,UDim.new(0,7))local searchStroke=i(searchBg,a.Stroke)local sIcon=A(
+searchBg,'search',a.Muted,UDim2.new(0,9,0.5,0))sIcon.Size=UDim2.fromOffset(14,14
+)local box=c('TextBox',{Position=UDim2.fromOffset(30,0),Size=UDim2.new(1,-38,1,0
+),BackgroundTransparency=1,Text='',PlaceholderText=opts.PlaceholderText or
+'Search',PlaceholderColor3=a.Muted,TextColor3=a.Text,TextSize=13,FontFace=j.
+Regular,TextXAlignment=Enum.TextXAlignment.Left,ClearTextOnFocus=false,Parent=
+searchBg})box.Focused:Connect(function()b(searchStroke,{Color=a.Accent,
+Transparency=0.3},0.15)end)box.FocusLost:Connect(function()b(searchStroke,{Color
+=a.Stroke,Transparency=0},0.25)end)local scroll=c('ScrollingFrame',{Position=
+UDim2.fromOffset(6,topH),Size=UDim2.new(1,-12,0,listH),BackgroundTransparency=1,
 BorderSizePixel=0,ScrollBarThickness=2,ScrollBarImageColor3=a.Muted,CanvasSize=
 UDim2.new(),AutomaticCanvasSize=Enum.AutomaticSize.Y,ScrollingDirection=Enum.
 ScrollingDirection.Y,Parent=frame})c('UIListLayout',{SortOrder=Enum.SortOrder.
@@ -1328,9 +1324,11 @@ MouseButton1Click:Connect(function()local maxY=math.max(0,t.AbsoluteCanvasSize.Y
 -t.AbsoluteWindowSize.Y)local step=t.AbsoluteWindowSize.Y*0.6 aa:Create(t,
 TweenInfo.new(0.3,Enum.EasingStyle.Quint),{CanvasPosition=Vector2.new(0,math.
 min(maxY,t.CanvasPosition.Y+step))}):Play()end)local function tabEdges()local y=
-t.CanvasPosition.Y local below=t.AbsoluteCanvasSize.Y-t.AbsoluteWindowSize.Y-y>4
-fadeTop.Visible=y>4 fadeBottom.Visible=below moreBtn.Visible=below end t:
+t.CanvasPosition.Y fadeTop.Position=UDim2.new(0,8,t.Position.Y.Scale,t.Position.
+Y.Offset)local below=t.AbsoluteCanvasSize.Y-t.AbsoluteWindowSize.Y-y>4 fadeTop.
+Visible=y>4 fadeBottom.Visible=below moreBtn.Visible=below end t:
 GetPropertyChangedSignal('CanvasPosition'):Connect(tabEdges)t:
+GetPropertyChangedSignal('Position'):Connect(tabEdges)t:
 GetPropertyChangedSignal('AbsoluteCanvasSize'):Connect(tabEdges)t:
 GetPropertyChangedSignal('AbsoluteWindowSize'):Connect(tabEdges)task.defer(
 tabEdges)local E=c(q,{AnchorPoint=Vector2.new(0,0.5),Position=UDim2.fromOffset(
@@ -1411,7 +1409,7 @@ a:GetAttribute('OblivionNoTheme')then return end if a:IsA('GuiObject')then C(a,
 end if a:IsA('UIStroke')then C(a,'Color',b)elseif a:IsA('UIGradient')then aC(a,b
 )end end local function aj(a)for c,b in ipairs(e.Windows)do if b.Gui and b.Gui.
 Parent then for c,b in ipairs(b.Gui:GetDescendants())do aD(b,a)end end end end
-local function ak(a)if a=='Default'then a='Mono'end if type(a)=='string'then
+local function ak(a)if a=='Default'then a='Crimson'end if type(a)=='string'then
 local b=e.Themes[a]if not b then warn('[Oblivion] unknown theme: '..a)return nil
 end return table.clone(b),a elseif type(a)=='table'then local c=e.Themes[a.Base
 =='Default'and'Mono'or a.Base or'Mono']or e.Themes.Mono local b=table.clone(c)

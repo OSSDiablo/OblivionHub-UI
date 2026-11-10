@@ -186,8 +186,8 @@ e.Themes = {
 		Glow = d(255, 200, 214),
 	}),
 }
-e.Theme = table.clone(e.Themes.Mono)
-e.ThemeName = "Mono"
+e.Theme = table.clone(e.Themes.Crimson)
+e.ThemeName = "Crimson"
 e.Assets = { Shadow = "rbxassetid://6014261993", Glow = "rbxassetid://8992230677", Logo = "triangle" }
 e.Assets.ShadowSlice = Rect.new(49, 49, 450, 450)
 -- writes a baked base64 png to the workspace folder and returns a custom asset id
@@ -2929,21 +2929,12 @@ local function resolvePlayer(v)
 	end
 	return nil
 end
-local tileTints = {
-	red = Color3.fromRGB(255, 107, 107),
-	orange = Color3.fromRGB(255, 158, 87),
-	yellow = Color3.fromRGB(244, 202, 96),
-	green = Color3.fromRGB(95, 211, 141),
-	blue = Color3.fromRGB(96, 165, 250),
-	purple = Color3.fromRGB(167, 139, 250),
-	pink = Color3.fromRGB(244, 114, 182),
-}
 local function tintOf(t)
 	if typeof(t) == "Color3" then
 		return t
 	end
 	if type(t) == "string" then
-		return tileTints[t:lower()] or a[t] or a.Accent
+		return a[t] or a.Accent
 	end
 	return a.Accent
 end
@@ -5111,12 +5102,14 @@ function e.Window(ac, k)
 	end)
 	local function tabEdges()
 		local y = t.CanvasPosition.Y
+		fadeTop.Position = UDim2.new(0, 8, t.Position.Y.Scale, t.Position.Y.Offset)
 		local below = t.AbsoluteCanvasSize.Y - t.AbsoluteWindowSize.Y - y > 4
 		fadeTop.Visible = y > 4
 		fadeBottom.Visible = below
 		moreBtn.Visible = below
 	end
 	t:GetPropertyChangedSignal("CanvasPosition"):Connect(tabEdges)
+	t:GetPropertyChangedSignal("Position"):Connect(tabEdges)
 	t:GetPropertyChangedSignal("AbsoluteCanvasSize"):Connect(tabEdges)
 	t:GetPropertyChangedSignal("AbsoluteWindowSize"):Connect(tabEdges)
 	task.defer(tabEdges)
@@ -5419,7 +5412,7 @@ local function aj(a)
 end
 local function ak(a)
 	if a == "Default" then
-		a = "Mono"
+		a = "Crimson"
 	end
 	if type(a) == "string" then
 		local b = e.Themes[a]
