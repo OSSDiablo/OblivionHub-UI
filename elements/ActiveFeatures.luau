@@ -4,172 +4,115 @@ return function(Lib)
 
 	return function(tab, opts)
 		opts = opts or {}
+		local P = K.Pad
 		local card = K.card(tab, nil, { Name = "ActiveFeatures" })
-		K.pad(card, 14, 14, 12, 14)
-		new("UIListLayout", {
-			Padding = UDim.new(0, 12),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = card,
-		})
+		K.pad(card, P, P, P, P)
+		K.list(card, nil, 12)
 
-		local top = new("Frame", {
-			Size = UDim2.new(1, 0, 0, 44),
-			BackgroundTransparency = 1,
-			LayoutOrder = 1,
-			Parent = card,
-		})
-		K.text({
-			Size = UDim2.new(0.5, 0, 0, 14),
-			Text = string.upper(opts.Label or "Session"),
-			TextSize = 11,
-			FontFace = F.Bold,
-			TextColor3 = T.Muted,
-			Parent = top,
-		})
+		local head, _, right = K.head(card, "activity", opts.Label or "Session")
+		head.Size = UDim2.new(1, 0, 0, 20)
+		head.LayoutOrder = 1
 		local clock = K.text({
-			Position = UDim2.fromOffset(0, 14),
-			Size = UDim2.new(0.5, 0, 0, 30),
+			Size = UDim2.fromScale(0, 1),
+			AutomaticSize = Enum.AutomaticSize.X,
 			Text = "0:00",
-			TextSize = 26,
 			FontFace = F.Bold,
-			Parent = top,
+			TextXAlignment = Enum.TextXAlignment.Right,
+			TextTruncate = Enum.TextTruncate.None,
+			Parent = right,
 		})
 
-		local stats = new("Frame", {
-			AnchorPoint = Vector2.new(1, 0),
-			Position = UDim2.fromScale(1, 0),
-			Size = UDim2.new(0.5, 0, 1, 0),
+		local statRow = new("Frame", {
+			Size = UDim2.new(1, 0, 0, 18),
 			BackgroundTransparency = 1,
-			Parent = top,
-		})
-		new("UIListLayout", {
-			FillDirection = Enum.FillDirection.Horizontal,
-			HorizontalAlignment = Enum.HorizontalAlignment.Right,
-			Padding = UDim.new(0, 18),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = stats,
-		})
-		local statLabels = {}
-		for i, s in opts.Stats or { { Name = "Active" } } do
-			local col = new("Frame", {
-				Size = UDim2.fromOffset(0, 44),
-				AutomaticSize = Enum.AutomaticSize.X,
-				BackgroundTransparency = 1,
-				LayoutOrder = i,
-				Parent = stats,
-			})
-			K.text({
-				Size = UDim2.new(0, 0, 0, 14),
-				AutomaticSize = Enum.AutomaticSize.X,
-				Text = string.upper(s.Name),
-				TextSize = 11,
-				FontFace = F.Bold,
-				TextColor3 = T.Muted,
-				TextXAlignment = Enum.TextXAlignment.Right,
-				TextTruncate = Enum.TextTruncate.None,
-				Parent = col,
-			})
-			local v = K.text({
-				AnchorPoint = Vector2.new(1, 0),
-				Position = UDim2.new(1, 0, 0, 14),
-				Size = UDim2.new(0, 0, 0, 30),
-				AutomaticSize = Enum.AutomaticSize.X,
-				Text = tostring(s.Value or 0),
-				TextSize = 22,
-				FontFace = F.Bold,
-				TextXAlignment = Enum.TextXAlignment.Right,
-				TextTruncate = Enum.TextTruncate.None,
-				Parent = col,
-			})
-			statLabels[s.Name] = v
-		end
-
-		new("Frame", {
-			Size = UDim2.new(1, 0, 0, 1),
-			BackgroundColor3 = T.Stroke,
-			BorderSizePixel = 0,
 			LayoutOrder = 2,
 			Parent = card,
 		})
+		K.list(statRow, Enum.FillDirection.Horizontal, 16, { VerticalAlignment = Enum.VerticalAlignment.Center })
+		local statLabels = {}
+		for i, s in opts.Stats or { { Name = "Active" } } do
+			local nm = type(s) == "table" and s.Name or tostring(s)
+			local f = new("Frame", {
+				Size = UDim2.fromScale(0, 1),
+				AutomaticSize = Enum.AutomaticSize.X,
+				BackgroundTransparency = 1,
+				LayoutOrder = i,
+				Parent = statRow,
+			})
+			K.list(f, Enum.FillDirection.Horizontal, 5, { VerticalAlignment = Enum.VerticalAlignment.Center })
+			local v = type(s) == "table" and s.Value
+			statLabels[nm] = K.text({
+				Size = UDim2.fromScale(0, 1),
+				AutomaticSize = Enum.AutomaticSize.X,
+				Text = v ~= nil and (type(v) == "number" and K.short(v) or tostring(v)) or "0",
+				TextTruncate = Enum.TextTruncate.None,
+				LayoutOrder = 1,
+				Parent = f,
+			})
+			K.muted({
+				Size = UDim2.fromScale(0, 1),
+				AutomaticSize = Enum.AutomaticSize.X,
+				Text = string.lower(nm),
+				TextTruncate = Enum.TextTruncate.None,
+				LayoutOrder = 2,
+				Parent = f,
+			})
+		end
+
+		K.divider(card, { LayoutOrder = 3 })
 
 		local chips = new("Frame", {
 			Size = UDim2.new(1, 0, 0, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			BackgroundTransparency = 1,
-			LayoutOrder = 3,
+			LayoutOrder = 4,
 			Parent = card,
 		})
-		new("UIListLayout", {
-			FillDirection = Enum.FillDirection.Horizontal,
-			Wraps = true,
-			Padding = UDim.new(0, 6),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = chips,
-		})
-		local empty = K.text({
-			Size = UDim2.new(1, 0, 0, 28),
+		K.list(chips, Enum.FillDirection.Horizontal, 6, { Wraps = true })
+		local empty = K.muted({
+			Size = UDim2.new(1, 0, 0, 18),
 			Text = opts.EmptyText or "Nothing running. Turn a feature on and it shows up here.",
-			TextSize = 12,
-			FontFace = F.Regular,
-			TextColor3 = T.Muted,
-			LayoutOrder = 0,
-			Parent = chips,
+			LayoutOrder = 5,
+			Parent = card,
 		})
 
 		local api = { Frame = card }
 		local items = {}
 		local order = 0
 
-		local function chip(name, off)
+		local function chip(name)
 			order += 1
 			local b = new("TextButton", {
 				Size = UDim2.fromOffset(0, K.Touch and 32 or 28),
 				AutomaticSize = Enum.AutomaticSize.X,
-				BackgroundColor3 = T.Accent,
-				BackgroundTransparency = 0.88,
+				BackgroundColor3 = T.Background,
 				BorderSizePixel = 0,
 				AutoButtonColor = false,
 				Text = "",
 				LayoutOrder = order,
 				Parent = chips,
 			})
-			K.corner(b, UDim.new(1, 0))
+			K.corner(b, 8)
 			K.pad(b, 10, 8, 0, 0)
-			local s = K.stroke(b, T.Accent, 0.55)
-			new("UIListLayout", {
-				FillDirection = Enum.FillDirection.Horizontal,
-				VerticalAlignment = Enum.VerticalAlignment.Center,
-				Padding = UDim.new(0, 6),
-				SortOrder = Enum.SortOrder.LayoutOrder,
-				Parent = b,
-			})
-			local d = new("Frame", {
-				Size = UDim2.fromOffset(6, 6),
-				BackgroundColor3 = T.Accent,
-				BorderSizePixel = 0,
-				LayoutOrder = 1,
-				Parent = b,
-			})
-			K.corner(d, UDim.new(1, 0))
-			local l = K.text({
+			local s = K.stroke(b)
+			K.list(b, Enum.FillDirection.Horizontal, 6, { VerticalAlignment = Enum.VerticalAlignment.Center })
+			K.text({
 				Size = UDim2.fromScale(0, 1),
 				AutomaticSize = Enum.AutomaticSize.X,
 				Text = name,
 				TextSize = 13,
 				TextTruncate = Enum.TextTruncate.None,
-				LayoutOrder = 2,
+				LayoutOrder = 1,
 				Parent = b,
 			})
-			local x = K.icon(b, "x", 14, T.Muted, { LayoutOrder = 3 })
+			local x = K.icon(b, "x", 12, T.Muted, { LayoutOrder = 2 })
 			b.MouseEnter:Connect(function()
-				tween(s, { Color = K.Red, Transparency = 0.2 }, 0.12)
-				tween(x, { ImageColor3 = K.Red }, 0.12)
-				tween(l, { TextColor3 = K.Red }, 0.12)
+				tween(s, { Color = T.StrokeHover }, 0.12)
+				tween(x, { ImageColor3 = T.Text }, 0.12)
 			end)
 			b.MouseLeave:Connect(function()
-				tween(s, { Color = T.Accent, Transparency = 0.55 }, 0.12)
+				tween(s, { Color = T.Stroke }, 0.12)
 				tween(x, { ImageColor3 = T.Muted }, 0.12)
-				tween(l, { TextColor3 = T.Text }, 0.12)
 			end)
 			b.MouseButton1Click:Connect(function()
 				local it = items[name]
@@ -198,13 +141,14 @@ return function(Lib)
 					items[nm] = nil
 				end
 			end
-			local n = 0
+			local c = 0
 			for _ in items do
-				n += 1
+				c += 1
 			end
-			empty.Visible = n == 0
+			empty.Visible = c == 0
+			chips.Visible = c > 0
 			if statLabels.Active then
-				statLabels.Active.Text = tostring(n)
+				statLabels.Active.Text = tostring(c)
 			end
 		end
 
@@ -236,6 +180,7 @@ return function(Lib)
 			card:Destroy()
 		end
 
+		chips.Visible = false
 		return api
 	end
 end

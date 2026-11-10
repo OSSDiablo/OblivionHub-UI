@@ -5,6 +5,8 @@ return function(Lib)
 	local F = Lib.Fonts
 
 	local K = { T = T, F = F, Touch = Lib.Touch == true }
+	K.Pad = 14
+	K.BtnH = K.Touch and 32 or 28
 
 	function K.new(class, props)
 		local o = Instance.new(class)
@@ -21,12 +23,13 @@ return function(Lib)
 	function K.tween(o, p, d, style)
 		local tw = TweenService:Create(
 			o,
-			TweenInfo.new(d or 0.22, style or Enum.EasingStyle.Quint, Enum.EasingDirection.Out),
+			TweenInfo.new(d or 0.2, style or Enum.EasingStyle.Quint, Enum.EasingDirection.Out),
 			p
 		)
 		tw:Play()
 		return tw
 	end
+	local tween = K.tween
 
 	function K.corner(o, r)
 		return new("UICorner", {
@@ -60,6 +63,13 @@ return function(Lib)
 		return new("TextLabel", props)
 	end
 
+	function K.muted(props)
+		props.TextSize = props.TextSize or 13
+		props.FontFace = props.FontFace or F.Regular
+		props.TextColor3 = props.TextColor3 or T.Muted
+		return K.text(props)
+	end
+
 	function K.pad(o, l, r, t, b)
 		return new("UIPadding", {
 			PaddingLeft = UDim.new(0, l or 0),
@@ -68,6 +78,19 @@ return function(Lib)
 			PaddingBottom = UDim.new(0, b or t or l or 0),
 			Parent = o,
 		})
+	end
+
+	function K.list(parent, dir, gap, props)
+		local l = new("UIListLayout", {
+			FillDirection = dir or Enum.FillDirection.Vertical,
+			Padding = UDim.new(0, gap or 0),
+			SortOrder = Enum.SortOrder.LayoutOrder,
+			Parent = parent,
+		})
+		for k, v in props or {} do
+			l[k] = v
+		end
+		return l
 	end
 
 	function K.shade(lo)
@@ -96,6 +119,33 @@ return function(Lib)
 		K.corner(f, 10)
 		new("UIGradient", { Rotation = 90, Color = K.shade(175), Parent = f })
 		return f, K.stroke(f)
+	end
+
+	function K.inset(parent, props)
+		local f = new("Frame", {
+			BackgroundColor3 = T.Background,
+			BorderSizePixel = 0,
+			Parent = parent,
+		})
+		K.corner(f, 8)
+		local s = K.stroke(f)
+		for k, v in props or {} do
+			f[k] = v
+		end
+		return f, s
+	end
+
+	function K.divider(parent, props)
+		local f = new("Frame", {
+			Size = UDim2.new(1, 0, 0, 1),
+			BackgroundColor3 = T.Stroke,
+			BorderSizePixel = 0,
+			Parent = parent,
+		})
+		for k, v in props or {} do
+			f[k] = v
+		end
+		return f
 	end
 
 	function K.mix(a, b, t)
@@ -192,10 +242,11 @@ return function(Lib)
 			Parent = parent,
 		})
 		K.corner(o, UDim.new(1, 0))
+		local s = K.stroke(o)
 		for k, v in props or {} do
 			o[k] = v
 		end
-		return o
+		return o, s
 	end
 
 	function K.setAvatar(o, plr)
@@ -223,9 +274,8 @@ return function(Lib)
 	end
 
 	function K.word(parent, label, cb, props)
-		local h = K.Touch and 30 or 26
 		local b = new("TextButton", {
-			Size = UDim2.fromOffset(0, h),
+			Size = UDim2.fromOffset(0, K.BtnH),
 			AutomaticSize = Enum.AutomaticSize.X,
 			BackgroundColor3 = T.Surface3,
 			BorderSizePixel = 0,
@@ -236,24 +286,27 @@ return function(Lib)
 			FontFace = F.Medium,
 			Parent = parent,
 		})
-		K.corner(b, 7)
+		K.corner(b, 8)
 		K.pad(b, 12, 12, 0, 0)
 		local s = K.stroke(b)
+		local function rest()
+			return b:GetAttribute("On") and T.Accent or T.Stroke
+		end
 		b.MouseEnter:Connect(function()
-			if b.Active then
-				K.tween(s, { Color = T.StrokeHover }, 0.15)
+			if b.Active and not b:GetAttribute("On") then
+				tween(s, { Color = T.StrokeHover }, 0.12)
 			end
 		end)
 		b.MouseLeave:Connect(function()
-			K.tween(s, { Color = T.Stroke }, 0.15)
+			tween(s, { Color = rest() }, 0.12)
 		end)
 		b.MouseButton1Click:Connect(function()
 			if not b.Active then
 				return
 			end
-			K.tween(b, { BackgroundColor3 = T.Stroke }, 0.06)
+			tween(b, { BackgroundColor3 = T.Stroke }, 0.06)
 			task.delay(0.08, function()
-				K.tween(b, { BackgroundColor3 = T.Surface3 }, 0.2)
+				tween(b, { BackgroundColor3 = T.Surface3 }, 0.2)
 			end)
 			if cb then
 				task.spawn(cb)
@@ -265,54 +318,121 @@ return function(Lib)
 		return b, s
 	end
 
+	function K.setOn(btn, on)
+		btn:SetAttribute("On", on == true)
+		local s = btn:FindFirstChildOfClass("UIStroke")
+		if s then
+			tween(s, { Color = on and T.Accent or T.Stroke }, 0.15)
+		end
+		tween(btn, { TextColor3 = on and T.Accent or T.Text }, 0.15)
+	end
+
 	function K.enable(btn, on)
 		btn.Active = on
 		btn.AutoButtonColor = false
-		K.tween(btn, { TextColor3 = on and T.Text or T.Muted, BackgroundTransparency = on and 0 or 0.5 }, 0.15)
+		tween(btn, { TextColor3 = on and T.Text or T.Muted, BackgroundTransparency = on and 0 or 0.5 }, 0.15)
+		local s = btn:FindFirstChildOfClass("UIStroke")
+		if s then
+			tween(s, { Transparency = on and 0 or 0.5 }, 0.15)
+		end
 	end
 
-	function K.pill(parent, label, col, props)
-		local p = new("Frame", {
-			Size = UDim2.fromOffset(0, 22),
+	function K.status(parent, label, col, props)
+		local f = new("Frame", {
+			Size = UDim2.fromOffset(0, 20),
 			AutomaticSize = Enum.AutomaticSize.X,
-			BackgroundColor3 = col or T.Accent,
-			BackgroundTransparency = 0.86,
-			BorderSizePixel = 0,
+			BackgroundTransparency = 1,
 			Parent = parent,
 		})
-		K.corner(p, UDim.new(1, 0))
-		K.pad(p, 9, 9, 0, 0)
-		local s = K.stroke(p, col or T.Accent, 0.6)
+		K.list(f, Enum.FillDirection.Horizontal, 7, { VerticalAlignment = Enum.VerticalAlignment.Center })
+		local box = new("Frame", {
+			Size = UDim2.fromOffset(6, 6),
+			BackgroundTransparency = 1,
+			LayoutOrder = 1,
+			Parent = f,
+		})
+		local ring = new("Frame", {
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Position = UDim2.fromScale(0.5, 0.5),
+			Size = UDim2.fromOffset(6, 6),
+			BackgroundColor3 = col or T.Muted,
+			BackgroundTransparency = 1,
+			BorderSizePixel = 0,
+			Parent = box,
+		})
+		K.corner(ring, UDim.new(1, 0))
+		local dot = new("Frame", {
+			Size = UDim2.fromScale(1, 1),
+			BackgroundColor3 = col or T.Muted,
+			BorderSizePixel = 0,
+			Parent = box,
+		})
+		K.corner(dot, UDim.new(1, 0))
 		local t = K.text({
 			Size = UDim2.fromScale(0, 1),
 			AutomaticSize = Enum.AutomaticSize.X,
-			Text = label,
-			TextSize = 12,
-			FontFace = F.Bold,
-			TextColor3 = col or T.Accent,
+			Text = label or "",
+			TextSize = 13,
+			FontFace = F.Regular,
+			TextColor3 = T.Muted,
 			TextTruncate = Enum.TextTruncate.None,
-			Parent = p,
+			LayoutOrder = 2,
+			Parent = f,
 		})
 		for k, v in props or {} do
-			p[k] = v
+			f[k] = v
 		end
-		local api = { Frame = p, Label = t }
-		function api.Set(_, txt, c)
-			if txt then
+		local api = { Frame = f, Label = t, Dot = dot }
+		local token, pulsing, color = 0, false, nil
+		function api.Pulse(_, on, speed)
+			on = on == true
+			if on == pulsing then
+				return
+			end
+			pulsing = on
+			token += 1
+			local my = token
+			if not on then
+				ring.BackgroundTransparency = 1
+				return
+			end
+			speed = speed or 1
+			task.spawn(function()
+				while f.Parent and token == my do
+					ring.Size = UDim2.fromOffset(6, 6)
+					ring.BackgroundColor3 = dot.BackgroundColor3
+					ring.BackgroundTransparency = 0.45
+					tween(
+						ring,
+						{ Size = UDim2.fromOffset(16, 16), BackgroundTransparency = 1 },
+						speed,
+						Enum.EasingStyle.Quad
+					)
+					task.wait(speed + 0.15)
+				end
+			end)
+		end
+		function api.Set(_, txt, c, pulse)
+			if txt and t.Text ~= txt then
 				t.Text = txt
 			end
-			if c then
-				K.tween(p, { BackgroundColor3 = c }, 0.2)
-				K.tween(s, { Color = c }, 0.2)
-				K.tween(t, { TextColor3 = c }, 0.2)
+			if c and c ~= color then
+				color = c
+				tween(dot, { BackgroundColor3 = c }, 0.2)
+				tween(t, { TextColor3 = c == T.Muted and T.Muted or T.Text }, 0.2)
+			end
+			if pulse ~= nil then
+				api:Pulse(pulse)
 			end
 		end
+		api:Set(nil, col or T.Muted)
 		return api
 	end
+	K.pill = K.status
 
 	function K.bar(parent, h, col, props)
 		local track = new("Frame", {
-			Size = UDim2.new(1, 0, 0, h or 6),
+			Size = UDim2.new(1, 0, 0, h or 4),
 			BackgroundColor3 = T.Surface3,
 			BorderSizePixel = 0,
 			Parent = parent,
@@ -332,19 +452,45 @@ return function(Lib)
 		function api.Set(_, v, c)
 			v = math.clamp(tonumber(v) or 0, 0, 1)
 			api.Value = v
-			K.tween(fill, { Size = UDim2.fromScale(v, 1) }, 0.35)
+			tween(fill, { Size = UDim2.fromScale(v, 1) }, 0.35)
+			fill.Visible = v > 0
 			if c then
-				K.tween(fill, { BackgroundColor3 = c }, 0.25)
+				tween(fill, { BackgroundColor3 = c }, 0.25)
 			end
 		end
 		return api
 	end
 
+	function K.segments(parent, n, gap, h, props)
+		local f = new("Frame", {
+			Size = UDim2.new(1, 0, 0, h or 4),
+			BackgroundTransparency = 1,
+			Parent = parent,
+		})
+		for k, v in props or {} do
+			f[k] = v
+		end
+		local cells = {}
+		gap = gap or 3
+		for i = 1, n do
+			local c = new("Frame", {
+				Position = UDim2.new((i - 1) / n, (i - 1) * gap / n, 0, 0),
+				Size = UDim2.new(1 / n, -gap * (n - 1) / n, 1, 0),
+				BackgroundColor3 = T.Surface3,
+				BorderSizePixel = 0,
+				Parent = f,
+			})
+			K.corner(c, UDim.new(1, 0))
+			cells[i] = c
+		end
+		return f, cells
+	end
+
 	function K.head(card, icon, title, y)
 		local row = new("Frame", {
 			Name = "Head",
-			Position = UDim2.fromOffset(14, y or 10),
-			Size = UDim2.new(1, -28, 0, 24),
+			Position = UDim2.fromOffset(K.Pad, y or K.Pad),
+			Size = UDim2.new(1, -K.Pad * 2, 0, 20),
 			BackgroundTransparency = 1,
 			Parent = card,
 		})
@@ -356,7 +502,7 @@ return function(Lib)
 		local t = K.text({
 			Name = "Title",
 			Position = UDim2.fromOffset(x, 0),
-			Size = UDim2.new(1, -x - 150, 1, 0),
+			Size = UDim2.new(1, -x - 180, 1, 0),
 			Text = title or "",
 			Parent = row,
 		})
@@ -364,17 +510,13 @@ return function(Lib)
 			Name = "Right",
 			AnchorPoint = Vector2.new(1, 0),
 			Position = UDim2.fromScale(1, 0),
-			Size = UDim2.new(0, 150, 1, 0),
+			Size = UDim2.new(0, 180, 1, 0),
 			BackgroundTransparency = 1,
 			Parent = row,
 		})
-		new("UIListLayout", {
-			FillDirection = Enum.FillDirection.Horizontal,
+		K.list(right, Enum.FillDirection.Horizontal, 8, {
 			HorizontalAlignment = Enum.HorizontalAlignment.Right,
 			VerticalAlignment = Enum.VerticalAlignment.Center,
-			Padding = UDim.new(0, 6),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = right,
 		})
 		return row, t, right
 	end
@@ -397,17 +539,17 @@ return function(Lib)
 
 	function K.hover(btn, target, on, off)
 		btn.MouseEnter:Connect(function()
-			K.tween(target, on, 0.15)
+			tween(target, on, 0.12)
 		end)
 		btn.MouseLeave:Connect(function()
-			K.tween(target, off, 0.15)
+			tween(target, off, 0.12)
 		end)
 	end
 
-	K.Red = Color3.fromRGB(235, 72, 80)
-	K.Amber = Color3.fromRGB(242, 178, 64)
-	K.Green = Color3.fromRGB(86, 214, 128)
-	K.Blue = Color3.fromRGB(82, 156, 255)
+	K.Red = T.Error or Color3.fromRGB(255, 107, 107)
+	K.Amber = T.Warning or Color3.fromRGB(244, 184, 96)
+	K.Green = T.Success or Color3.fromRGB(95, 211, 141)
+	K.Blue = Color3.fromRGB(96, 165, 250)
 
 	return K
 end

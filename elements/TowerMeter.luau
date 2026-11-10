@@ -5,107 +5,66 @@ return function(Lib)
 
 	return function(tab, opts)
 		opts = opts or {}
-		local card = K.card(tab, 176, { Name = "TowerMeter" })
+		local P = K.Pad
+		local actions = opts.Actions or {}
+		local card = K.card(tab, #actions > 0 and (112 + K.BtnH + P) or 114, { Name = "TowerMeter" })
 
-		local col = new("Frame", {
-			Position = UDim2.fromOffset(16, 14),
-			Size = UDim2.new(0, 40, 1, -28),
-			BackgroundColor3 = T.Background,
-			BorderSizePixel = 0,
-			ClipsDescendants = true,
-			Parent = card,
-		})
-		K.corner(col, 8)
-		K.stroke(col)
-		local stack = new("Frame", {
-			Position = UDim2.fromOffset(4, 4),
-			Size = UDim2.new(1, -8, 1, -8),
-			BackgroundTransparency = 1,
-			Parent = col,
-		})
-		new("UIListLayout", {
-			VerticalAlignment = Enum.VerticalAlignment.Bottom,
-			Padding = UDim.new(0, 2),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = stack,
+		local _, _, right = K.head(card, "castle", opts.Label or "Climb")
+		local pct = K.text({
+			Size = UDim2.fromScale(0, 1),
+			AutomaticSize = Enum.AutomaticSize.X,
+			Text = "0%",
+			FontFace = F.Bold,
+			TextXAlignment = Enum.TextXAlignment.Right,
+			TextTruncate = Enum.TextTruncate.None,
+			Parent = right,
 		})
 
-		local marker = new("Frame", {
-			AnchorPoint = Vector2.new(0, 0.5),
-			Position = UDim2.new(0, 60, 1, -14),
-			Size = UDim2.fromOffset(32, 24),
+		local rail = new("Frame", {
+			Position = UDim2.fromOffset(P, 48),
+			Size = UDim2.new(1, -P * 2, 0, 22),
 			BackgroundTransparency = 1,
 			Parent = card,
 		})
-		new("Frame", {
-			AnchorPoint = Vector2.new(0, 0.5),
-			Position = UDim2.fromScale(0, 0.5),
-			Size = UDim2.fromOffset(8, 2),
-			BackgroundColor3 = T.Accent,
-			BorderSizePixel = 0,
-			Parent = marker,
+		local segs = new("Frame", {
+			Size = UDim2.fromScale(1, 1),
+			BackgroundTransparency = 1,
+			Parent = rail,
 		})
-		local face = K.avatar(marker, 22, {
-			AnchorPoint = Vector2.new(0, 0.5),
-			Position = UDim2.new(0, 8, 0.5, 0),
+		local plain = K.bar(rail, 4, T.Accent, { Position = UDim2.fromOffset(0, 9) })
+		local face = K.avatar(rail, 22, {
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Position = UDim2.new(0, 11, 0.5, 0),
 		})
-		K.stroke(face, T.Accent, 0, 1.5)
 		K.setAvatar(face, Players.LocalPlayer)
 
-		local info = new("Frame", {
-			Position = UDim2.fromOffset(104, 14),
-			Size = UDim2.new(1, -118, 1, -28),
-			BackgroundTransparency = 1,
+		local secText = K.text({
+			Position = UDim2.fromOffset(P, 82),
+			Size = UDim2.new(0.5, -P, 0, 18),
+			Text = opts.EmptyText or "No tower loaded",
+			TextColor3 = T.Muted,
 			Parent = card,
 		})
-		K.text({
-			Size = UDim2.new(1, 0, 0, 14),
-			Text = string.upper(opts.Label or "Climb"),
-			TextSize = 11,
-			FontFace = F.Bold,
-			TextColor3 = T.Muted,
-			Parent = info,
-		})
-		local pct = K.text({
-			Position = UDim2.fromOffset(0, 14),
-			Size = UDim2.new(1, 0, 0, 40),
-			Text = "0%",
-			TextSize = 34,
-			FontFace = F.Bold,
-			Parent = info,
-		})
-		local secText = K.text({
-			Position = UDim2.fromOffset(0, 56),
-			Size = UDim2.new(1, 0, 0, 18),
-			Text = opts.EmptyText or "No tower loaded",
-			TextSize = 13,
-			TextColor3 = T.Muted,
-			Parent = info,
-		})
-		local subText = K.text({
-			Position = UDim2.fromOffset(0, 74),
-			Size = UDim2.new(1, 0, 0, 16),
+		local subText = K.muted({
+			AnchorPoint = Vector2.new(1, 0),
+			Position = UDim2.new(1, -P, 0, 82),
+			Size = UDim2.new(0.5, -P, 0, 18),
 			Text = "",
-			TextSize = 12,
-			FontFace = F.Regular,
-			TextColor3 = T.Muted,
-			Parent = info,
+			TextXAlignment = Enum.TextXAlignment.Right,
+			Parent = card,
 		})
-		local words = new("Frame", {
-			AnchorPoint = Vector2.new(0, 1),
-			Position = UDim2.fromScale(0, 1),
-			Size = UDim2.new(1, 0, 0, K.Touch and 30 or 26),
-			BackgroundTransparency = 1,
-			Parent = info,
-		})
-		new("UIListLayout", {
-			FillDirection = Enum.FillDirection.Horizontal,
-			Padding = UDim.new(0, 6),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = words,
-		})
-		for i, a in opts.Actions or {} do
-			K.word(words, a.Name, a.Callback, { LayoutOrder = i })
+
+		if #actions > 0 then
+			local words = new("Frame", {
+				Position = UDim2.fromOffset(P, 112),
+				Size = UDim2.new(1, -P * 2, 0, K.BtnH),
+				BackgroundTransparency = 1,
+				Parent = card,
+			})
+			K.list(words, Enum.FillDirection.Horizontal, 8)
+			for i, a in actions do
+				K.word(words, a.Name, a.Callback, { LayoutOrder = i })
+			end
 		end
 
 		local api = { Frame = card }
@@ -113,28 +72,44 @@ return function(Lib)
 		local count = 0
 		local painted = false
 
+		local function paint(section)
+			if section == painted then
+				return
+			end
+			painted = section
+			for i, b in blocks do
+				local done = section and i < section
+				local here = section and i == section
+				tween(b, {
+					BackgroundColor3 = (done or here) and T.Accent or T.Surface3,
+					BackgroundTransparency = done and 0.55 or 0,
+				}, 0.25)
+			end
+		end
+
 		function api:SetSections(list)
 			for _, b in blocks do
 				b:Destroy()
 			end
 			blocks = {}
 			count = #(list or {})
-			for i, s in list or {} do
-				local c = typeof(s) == "Color3" and s or (type(s) == "table" and s.Color) or T.Surface3
+			local g = 4
+			for i = 1, count do
 				local b = new("Frame", {
-					Size = UDim2.new(1, 0, 1 / math.max(count, 1), -2),
-					BackgroundColor3 = c,
-					BackgroundTransparency = 0.55,
+					Position = UDim2.new((i - 1) / count, (i - 1) * g / count, 0, 8),
+					Size = UDim2.new(1 / count, -g * (count - 1) / count, 0, 6),
+					BackgroundColor3 = T.Surface3,
 					BorderSizePixel = 0,
-					LayoutOrder = count - i + 1,
-					Parent = stack,
+					Parent = segs,
 				})
-				K.corner(b, 3)
+				K.corner(b, UDim.new(1, 0))
 				blocks[i] = b
 			end
+			plain.Track.Visible = count == 0
 			painted = false
 			if count == 0 then
 				secText.Text = opts.EmptyText or "No tower loaded"
+				secText.TextColor3 = T.Muted
 			end
 		end
 
@@ -142,23 +117,15 @@ return function(Lib)
 			f = math.clamp(tonumber(f) or 0, 0, 1)
 			pct.Text = math.floor(f * 100 + 0.5) .. "%"
 			pct.TextColor3 = f >= 0.999 and K.Green or T.Text
-			local h = col.AbsoluteSize.Y
-			if h < 2 then
-				h = 148
-			end
-			local y = 14 + 4 + (h - 8) * (1 - f)
-			tween(marker, { Position = UDim2.fromOffset(60, math.clamp(y, 18, 14 + h - 4)) }, 0.35)
+			tween(face, { Position = UDim2.new(f, 11 - 22 * f, 0.5, 0) }, 0.35)
+			plain:Set(f)
 			section = tonumber(section)
-			if section ~= painted then
-				painted = section
-				for i, b in blocks do
-					local done = section and i < section
-					local here = section and i == section
-					tween(b, { BackgroundTransparency = here and 0 or (done and 0.35 or 0.75) }, 0.25)
-				end
+			if not section and count > 0 then
+				section = math.clamp(math.floor(f * count) + 1, 1, count)
 			end
+			paint(section)
 			if count > 0 then
-				secText.Text = section and ("Section " .. section .. " of " .. count) or (count .. " sections")
+				secText.Text = "Section " .. section .. " of " .. count
 				secText.TextColor3 = T.Text
 			end
 			if text then

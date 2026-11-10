@@ -5,100 +5,80 @@ return function(Lib)
 
 	return function(tab, opts)
 		opts = opts or {}
+		local P = K.Pad
 		local me = Players.LocalPlayer
-		local card = K.card(tab, 122, { Name = "Spectator" })
-		local conns = {}
+		local card = K.card(tab, 78 + K.BtnH + P, { Name = "Spectator" })
 
-		local function arrow(icon, x)
-			local b = new("TextButton", {
-				AnchorPoint = Vector2.new(x, 0),
-				Position = UDim2.new(x, x == 0 and 12 or -12, 0, 14),
-				Size = UDim2.fromOffset(40, 52),
-				BackgroundColor3 = T.Surface3,
-				BorderSizePixel = 0,
-				AutoButtonColor = false,
-				Text = "",
-				Parent = card,
-			})
-			K.corner(b, 9)
-			local s = K.stroke(b)
-			local ic = K.icon(b, icon, 18, T.Text, {
-				AnchorPoint = Vector2.new(0.5, 0.5),
-				Position = UDim2.fromScale(0.5, 0.5),
-			})
-			K.hover(b, s, { Color = T.StrokeHover }, { Color = T.Stroke })
-			return b, ic
-		end
-		local prev = arrow("chevron-left", 0)
-		local nextB = arrow("chevron-right", 1)
-
-		local mid = new("Frame", {
-			Position = UDim2.fromOffset(60, 14),
-			Size = UDim2.new(1, -120, 0, 52),
-			BackgroundTransparency = 1,
-			Parent = card,
-		})
-		local av = K.avatar(mid, 44, { Position = UDim2.new(0, 6, 0.5, -22) })
-		local ph = K.icon(av, "user-round", 18, T.Muted, {
+		local av = K.avatar(card, 40, { Position = UDim2.fromOffset(P, P) })
+		local ph = K.icon(av, "user-round", 16, T.Muted, {
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			Position = UDim2.fromScale(0.5, 0.5),
 		})
-		local avStroke = K.stroke(av, T.Stroke, 0, 1.5)
-		local live = new("Frame", {
-			AnchorPoint = Vector2.new(1, 1),
-			Position = UDim2.new(0, 50, 1, -2),
-			Size = UDim2.fromOffset(12, 12),
-			BackgroundColor3 = K.Red,
-			BorderSizePixel = 0,
-			Visible = false,
-			Parent = mid,
-		})
-		K.corner(live, UDim.new(1, 0))
-		K.stroke(live, T.Surface2, 0, 2)
 		local name = K.text({
-			Position = UDim2.fromOffset(62, 7),
-			Size = UDim2.new(1, -140, 0, 20),
+			Position = UDim2.fromOffset(64, 17),
+			Size = UDim2.new(1, -64 - P - 110, 0, 18),
 			Text = "No players",
-			FontFace = F.Bold,
 			TextColor3 = T.Muted,
-			Parent = mid,
+			Parent = card,
 		})
-		local user = K.text({
-			Position = UDim2.fromOffset(62, 27),
-			Size = UDim2.new(1, -140, 0, 16),
-			Text = "Nobody else is in this server",
-			TextSize = 12,
-			FontFace = F.Regular,
-			TextColor3 = T.Muted,
-			Parent = mid,
-		})
-		local idx = K.text({
-			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, -6, 0.5, 0),
-			Size = UDim2.fromOffset(70, 20),
+		local user = K.muted({
+			Position = UDim2.fromOffset(64, 35),
+			Size = UDim2.new(1, -64 - P - 110, 0, 16),
 			Text = "",
-			TextSize = 12,
-			FontFace = F.Medium,
-			TextColor3 = T.Muted,
-			TextXAlignment = Enum.TextXAlignment.Right,
-			Parent = mid,
+			Parent = card,
 		})
 
+		local stepper = K.inset(card, {
+			AnchorPoint = Vector2.new(1, 0),
+			Position = UDim2.new(1, -P, 0, 18),
+			Size = UDim2.fromOffset(100, 32),
+		})
+		local function chevron(icon, x, anchor)
+			local b = new("TextButton", {
+				AnchorPoint = Vector2.new(anchor, 0),
+				Position = UDim2.fromScale(x, 0),
+				Size = UDim2.new(0, 28, 1, 0),
+				BackgroundTransparency = 1,
+				AutoButtonColor = false,
+				Text = "",
+				Parent = stepper,
+			})
+			local ic = K.icon(b, icon, 16, T.Muted, {
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				Position = UDim2.fromScale(0.5, 0.5),
+			})
+			K.hover(b, ic, { ImageColor3 = T.Text }, { ImageColor3 = T.Muted })
+			return b
+		end
+		local prev = chevron("chevron-left", 0, 0)
+		local nextB = chevron("chevron-right", 1, 1)
+		local idx = K.muted({
+			AnchorPoint = Vector2.new(0.5, 0),
+			Position = UDim2.fromScale(0.5, 0),
+			Size = UDim2.new(0, 44, 1, 0),
+			Text = "",
+			TextSize = 12,
+			TextXAlignment = Enum.TextXAlignment.Center,
+			Parent = stepper,
+		})
+
+		K.divider(card, { Position = UDim2.fromOffset(P, 66), Size = UDim2.new(1, -P * 2, 0, 1) })
+
 		local words = new("Frame", {
-			Position = UDim2.new(0, 12, 1, -42),
-			Size = UDim2.new(1, -24, 0, 30),
+			Position = UDim2.fromOffset(P, 78),
+			Size = UDim2.new(1, -P * 2 - 100, 0, K.BtnH),
 			BackgroundTransparency = 1,
 			Parent = card,
 		})
-		new("UIListLayout", {
-			FillDirection = Enum.FillDirection.Horizontal,
-			HorizontalAlignment = Enum.HorizontalAlignment.Center,
-			Padding = UDim.new(0, 8),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = words,
+		K.list(words, Enum.FillDirection.Horizontal, 8)
+		local live = K.status(card, "Watching", T.Accent, {
+			AnchorPoint = Vector2.new(1, 0.5),
+			Position = UDim2.new(1, -P, 0, 78 + K.BtnH / 2),
+			Visible = false,
 		})
 
 		local api = { Frame = card }
+		local conns = {}
 		local list, i, cur = {}, 0, nil
 		local watching = false
 		local specWord
@@ -106,13 +86,11 @@ return function(Lib)
 		local function refreshWords()
 			if specWord then
 				specWord.Text = watching and (opts.StopText or "Stop") or (opts.SpectateText or "Spectate")
-				tween(specWord, {
-					BackgroundColor3 = watching and K.Red or T.Surface3,
-					BackgroundTransparency = watching and 0.82 or 0,
-				}, 0.15)
+				K.setOn(specWord, watching)
 			end
-			live.Visible = watching and cur ~= nil
-			tween(avStroke, { Color = watching and K.Red or (cur and T.Accent or T.Stroke) }, 0.2)
+			local on = watching and cur ~= nil
+			live.Frame.Visible = on
+			live:Pulse(on)
 		end
 
 		local function show()
@@ -129,7 +107,7 @@ return function(Lib)
 				name.Text = "No players"
 				name.TextColor3 = T.Muted
 				user.Text = "Nobody else is in this server"
-				idx.Text = ""
+				idx.Text = "0 of 0"
 			end
 			refreshWords()
 		end

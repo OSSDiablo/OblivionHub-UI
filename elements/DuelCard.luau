@@ -5,162 +5,117 @@ return function(Lib)
 
 	return function(tab, opts)
 		opts = opts or {}
+		local P = K.Pad
 		local me = Players.LocalPlayer
-		local card = K.card(tab, 168, { Name = "DuelCard" })
-		local _, title, right = K.head(card, "swords", opts.Title or "Duel", 10)
-		title.FontFace = F.Bold
-		local pill = K.pill(right, "Lobby", T.Muted)
+		local card = K.card(tab, 160, { Name = "DuelCard" })
 
-		local arena = new("Frame", {
-			Position = UDim2.fromOffset(12, 42),
-			Size = UDim2.new(1, -24, 0, 66),
-			BackgroundTransparency = 1,
+		local _, _, right = K.head(card, "swords", opts.Title or "Duel")
+		local status = K.status(right, "Lobby", T.Muted)
+
+		local meAv = K.avatar(card, 40, { Position = UDim2.fromOffset(P, 46) })
+		K.setAvatar(meAv, me)
+		K.text({
+			Position = UDim2.fromOffset(64, 48),
+			Size = UDim2.new(0.5, -96, 0, 18),
+			Text = me and me.DisplayName or "You",
+			Parent = card,
+		})
+		local meSub = K.muted({
+			Position = UDim2.fromOffset(64, 66),
+			Size = UDim2.new(0.5, -96, 0, 16),
+			Text = "You",
 			Parent = card,
 		})
 
-		local meAv = K.avatar(arena, 48, { Position = UDim2.new(0, 4, 0.5, -24) })
-		local meStroke = K.stroke(meAv, T.Accent, 0.3, 2)
-		K.setAvatar(meAv, me)
-		K.text({
-			Position = UDim2.fromOffset(62, 14),
-			Size = UDim2.new(0.5, -88, 0, 18),
-			Text = me.DisplayName,
-			FontFace = F.Bold,
-			Parent = arena,
-		})
-		local meSub = K.text({
-			Position = UDim2.fromOffset(62, 32),
-			Size = UDim2.new(0.5, -88, 0, 16),
-			Text = "You",
-			TextSize = 12,
-			FontFace = F.Regular,
-			TextColor3 = T.Muted,
-			Parent = arena,
-		})
-
-		local vs = new("Frame", {
+		K.muted({
 			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.fromScale(0.5, 0.5),
-			Size = UDim2.fromOffset(38, 38),
-			BackgroundColor3 = T.Surface3,
-			BorderSizePixel = 0,
-			Parent = arena,
-		})
-		K.corner(vs, UDim.new(1, 0))
-		local vsStroke = K.stroke(vs)
-		local vsText = K.text({
-			Size = UDim2.fromScale(1, 1),
-			Text = "VS",
-			TextSize = 13,
-			FontFace = F.Bold,
-			TextColor3 = T.Muted,
+			Position = UDim2.new(0.5, 0, 0, 66),
+			Size = UDim2.fromOffset(24, 16),
+			Text = "vs",
+			TextSize = 12,
 			TextXAlignment = Enum.TextXAlignment.Center,
-			Parent = vs,
+			Parent = card,
 		})
 
 		local foes = new("Frame", {
-			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, -4, 0.5, 0),
-			Size = UDim2.fromOffset(120, 48),
+			AnchorPoint = Vector2.new(1, 0),
+			Position = UDim2.new(1, -P, 0, 46),
+			Size = UDim2.fromOffset(40, 40),
 			BackgroundTransparency = 1,
-			Parent = arena,
+			Parent = card,
 		})
 		local slots = {}
-		for i = 1, 3 do
-			local a = K.avatar(foes, 44, {
-				AnchorPoint = Vector2.new(1, 0.5),
-				Position = UDim2.new(1, -(i - 1) * 28, 0.5, 0),
-				ZIndex = 4 - i,
+		for i = 3, 1, -1 do
+			local a, s = K.avatar(foes, 40, {
+				AnchorPoint = Vector2.new(1, 0),
+				Position = UDim2.new(1, -(i - 1) * 26, 0, 0),
 				Visible = false,
 			})
-			K.stroke(a, K.Red, 0.35, 2)
+			s.Color = T.Surface2
+			s.Thickness = 2
 			slots[i] = a
 		end
-		local ph = K.avatar(foes, 44, {
-			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, 0, 0.5, 0),
-		})
-		K.icon(ph, "user-round", 18, T.Muted, {
+		local ph = K.avatar(foes, 40, { AnchorPoint = Vector2.new(1, 0), Position = UDim2.fromScale(1, 0) })
+		K.icon(ph, "user-round", 16, T.Muted, {
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			Position = UDim2.fromScale(0.5, 0.5),
 		})
-		K.stroke(ph, T.Stroke, 0, 1.5)
 		local foeName = K.text({
 			AnchorPoint = Vector2.new(1, 0),
-			Position = UDim2.new(1, -56, 0, 14),
-			Size = UDim2.new(0.5, -86, 0, 18),
+			Position = UDim2.new(1, -(P + 50), 0, 48),
+			Size = UDim2.new(0.5, -96, 0, 18),
 			Text = "No opponent",
-			FontFace = F.Bold,
 			TextColor3 = T.Muted,
 			TextXAlignment = Enum.TextXAlignment.Right,
-			Parent = arena,
-		})
-		local foeSub = K.text({
-			AnchorPoint = Vector2.new(1, 0),
-			Position = UDim2.new(1, -56, 0, 32),
-			Size = UDim2.new(0.5, -86, 0, 16),
-			Text = "Waiting for a match",
-			TextSize = 12,
-			FontFace = F.Regular,
-			TextColor3 = T.Muted,
-			TextXAlignment = Enum.TextXAlignment.Right,
-			Parent = arena,
-		})
-
-		local strip = new("Frame", {
-			Position = UDim2.new(0, 12, 1, -50),
-			Size = UDim2.new(1, -24, 0, 38),
-			BackgroundColor3 = T.Surface3,
-			BackgroundTransparency = 0.4,
-			BorderSizePixel = 0,
 			Parent = card,
 		})
-		K.corner(strip, 9)
-		K.stroke(strip)
-		new("UIListLayout", {
-			FillDirection = Enum.FillDirection.Horizontal,
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = strip,
+		local foeSub = K.muted({
+			AnchorPoint = Vector2.new(1, 0),
+			Position = UDim2.new(1, -(P + 50), 0, 66),
+			Size = UDim2.new(0.5, -96, 0, 16),
+			Text = "",
+			TextXAlignment = Enum.TextXAlignment.Right,
+			Parent = card,
 		})
-		local stats = opts.Stats or { "Matches", "Kills", "Deaths" }
+
+		local stats = K.inset(card, {
+			Position = UDim2.fromOffset(P, 98),
+			Size = UDim2.new(1, -P * 2, 0, 48),
+		})
+		local names = opts.Stats or { "Matches", "Kills", "Deaths" }
 		local statLabels = {}
-		for i, name in stats do
+		local n = #names
+		for i, nm in names do
 			local cell = new("Frame", {
-				Size = UDim2.fromScale(1 / #stats, 1),
+				Position = UDim2.fromScale((i - 1) / n, 0),
+				Size = UDim2.fromScale(1 / n, 1),
 				BackgroundTransparency = 1,
-				LayoutOrder = i,
-				Parent = strip,
+				Parent = stats,
 			})
-			if i > 1 then
-				new("Frame", {
-					Position = UDim2.new(0, 0, 0.5, -9),
-					Size = UDim2.fromOffset(1, 18),
-					BackgroundColor3 = T.Stroke,
-					BorderSizePixel = 0,
-					Parent = cell,
-				})
-			end
-			local v = K.text({
-				AnchorPoint = Vector2.new(1, 0.5),
-				Position = UDim2.new(0.5, -3, 0.5, 0),
-				Size = UDim2.new(0.5, -6, 1, 0),
+			statLabels[nm] = K.text({
+				Position = UDim2.fromOffset(0, 7),
+				Size = UDim2.new(1, 0, 0, 18),
 				Text = "0",
 				TextSize = 16,
 				FontFace = F.Bold,
-				TextXAlignment = Enum.TextXAlignment.Right,
+				TextXAlignment = Enum.TextXAlignment.Center,
 				Parent = cell,
 			})
-			K.text({
-				AnchorPoint = Vector2.new(0, 0.5),
-				Position = UDim2.new(0.5, 3, 0.5, 1),
-				Size = UDim2.new(0.5, -6, 1, 0),
-				Text = name,
+			K.muted({
+				Position = UDim2.fromOffset(0, 27),
+				Size = UDim2.new(1, 0, 0, 14),
+				Text = nm,
 				TextSize = 12,
-				FontFace = F.Regular,
-				TextColor3 = T.Muted,
+				TextXAlignment = Enum.TextXAlignment.Center,
 				Parent = cell,
 			})
-			statLabels[name] = v
+			if i > 1 then
+				K.divider(cell, {
+					AnchorPoint = Vector2.new(0, 0.5),
+					Position = UDim2.fromScale(0, 0.5),
+					Size = UDim2.fromOffset(1, 24),
+				})
+			end
 		end
 
 		local api = { Frame = card }
@@ -186,17 +141,15 @@ return function(Lib)
 				end
 			end
 			ph.Visible = #list == 0
-			local fw = 44 + math.max(math.min(#list, 3) - 1, 0) * 28
-			foes.Size = UDim2.fromOffset(fw, 48)
-			foeName.Position = UDim2.new(1, -(fw + 12), 0, 14)
-			foeName.Size = UDim2.new(0.5, -(fw + 42), 0, 18)
-			foeSub.Position = UDim2.new(1, -(fw + 12), 0, 32)
-			foeSub.Size = UDim2.new(0.5, -(fw + 42), 0, 16)
+			local fw = 40 + math.max(math.min(#list, 3) - 1, 0) * 26
+			foes.Size = UDim2.fromOffset(fw, 40)
+			foeName.Position = UDim2.new(1, -(P + fw + 10), 0, 48)
+			foeSub.Position = UDim2.new(1, -(P + fw + 10), 0, 66)
 			if #list == 0 then
 				foeName.Text = "No opponent"
 				foeName.TextColor3 = T.Muted
 			else
-				foeName.Text = list[1].DisplayName .. (#list > 1 and ("  +" .. (#list - 1)) or "")
+				foeName.Text = list[1].DisplayName .. (#list > 1 and (" +" .. (#list - 1)) or "")
 				foeName.TextColor3 = T.Text
 			end
 		end
@@ -205,19 +158,12 @@ return function(Lib)
 			if s ~= cur then
 				cur = s
 				if s == "Duel" or s == "In duel" then
-					pill:Set("In duel", T.Accent)
-					tween(vsStroke, { Color = T.Accent }, 0.2)
-					tween(vsText, { TextColor3 = T.Accent }, 0.2)
+					status:Set("In duel", T.Accent, true)
 				elseif s == "Dead" then
-					pill:Set("Dead", K.Red)
-					tween(vsStroke, { Color = T.Stroke }, 0.2)
-					tween(vsText, { TextColor3 = T.Muted }, 0.2)
+					status:Set("Dead", K.Red, false)
 				else
-					pill:Set(s or "Lobby", T.Muted)
-					tween(vsStroke, { Color = T.Stroke }, 0.2)
-					tween(vsText, { TextColor3 = T.Muted }, 0.2)
+					status:Set(s or "Lobby", T.Muted, false)
 				end
-				tween(meStroke, { Transparency = s == "Dead" and 0.85 or 0.3 }, 0.2)
 				meAv.ImageTransparency = s == "Dead" and 0.5 or 0
 			end
 			if sub then

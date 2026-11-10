@@ -4,145 +4,130 @@ return function(Lib)
 
 	return function(tab, opts)
 		opts = opts or {}
+		local P = K.Pad
 		local actions = opts.Actions or {}
-		local cols = opts.Columns or (K.Touch and 3 or 4)
-		local tileH = K.Touch and 70 or 64
-
 		local card = K.card(tab, nil, { Name = "ActionGrid" })
-		K.pad(card, 12, 12, 12, 12)
-		new("UIListLayout", {
-			Padding = UDim.new(0, 10),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = card,
-		})
+		K.pad(card, P, P, P, P)
+		K.list(card, nil, 12)
 
 		local head = new("Frame", {
-			Size = UDim2.new(1, 0, 0, 36),
+			Size = UDim2.new(1, 0, 0, 32),
 			BackgroundTransparency = 1,
 			LayoutOrder = 1,
 			Parent = card,
 		})
-		local av = K.avatar(head, 36)
-		local avIcon = K.icon(av, "user-round", 18, T.Muted, {
+		local av, avStroke = K.avatar(head, 32)
+		local avIcon = K.icon(av, "user-round", 16, T.Muted, {
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			Position = UDim2.fromScale(0.5, 0.5),
 		})
-		local avStroke = K.stroke(av, T.Stroke, 0, 1.5)
 		local name = K.text({
-			Position = UDim2.fromOffset(46, 0),
-			Size = UDim2.new(1, -140, 0, 20),
+			Position = UDim2.fromOffset(42, -1),
+			Size = UDim2.new(1, -42 - 90, 0, 18),
 			Text = opts.EmptyText or "No target",
-			FontFace = F.Bold,
 			TextColor3 = T.Muted,
 			Parent = head,
 		})
-		local user = K.text({
-			Position = UDim2.fromOffset(46, 19),
-			Size = UDim2.new(1, -140, 0, 16),
+		local user = K.muted({
+			Position = UDim2.fromOffset(42, 17),
+			Size = UDim2.new(1, -42 - 90, 0, 15),
 			Text = opts.EmptyDesc or "Pick a player to unlock the actions",
-			TextSize = 12,
-			FontFace = F.Regular,
-			TextColor3 = T.Muted,
 			Parent = head,
 		})
-		local count = K.pill(head, "0 on", T.Muted, {
+		local count = K.status(head, "", T.Accent, {
 			AnchorPoint = Vector2.new(1, 0.5),
 			Position = UDim2.fromScale(1, 0.5),
 			Visible = false,
 		})
 
-		local grid = new("Frame", {
+		local rowsF = new("Frame", {
 			Size = UDim2.new(1, 0, 0, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			BackgroundTransparency = 1,
 			LayoutOrder = 2,
 			Parent = card,
 		})
-		local gap = 8
-		new("UIGridLayout", {
-			CellSize = UDim2.new(1 / cols, -gap * (cols - 1) / cols, 0, tileH),
-			CellPadding = UDim2.fromOffset(gap, gap),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = grid,
-		})
+		K.list(rowsF, nil, 8)
+
+		local n = #actions
+		local maxCols = opts.Columns or (K.Touch and 3 or 4)
+		local rows = math.max(math.ceil(n / maxCols), 1)
+		local perRow = math.ceil(n / rows)
+		local tileH = K.Touch and 64 or 56
+		local g = 8
 
 		local api = { Frame = card }
 		local target = nil
 		local tiles = {}
 
 		local function onCount()
-			local n = 0
+			local c = 0
 			for _, t in tiles do
 				if t.Toggle and t.On then
-					n += 1
+					c += 1
 				end
 			end
-			count.Frame.Visible = n > 0
-			count:Set(n .. " on", T.Accent)
+			count.Frame.Visible = c > 0
+			count:Set(c .. " active", T.Accent)
 		end
 
 		local function paint(t, d)
 			local live = target ~= nil or t.Free
 			local on = t.Toggle and t.On
-			tween(t.Btn, {
-				BackgroundColor3 = on and T.Accent or T.Surface3,
-				BackgroundTransparency = on and 0.85 or (live and 0 or 0.45),
+			tween(t.Btn, { BackgroundTransparency = live and 0 or 0.5 }, d)
+			tween(t.Stroke, { Color = on and T.Accent or T.Stroke, Transparency = live and 0 or 0.5 }, d)
+			tween(t.Icon, {
+				ImageColor3 = on and T.Accent or (live and T.Text or T.Muted),
+				ImageTransparency = live and 0 or 0.5,
 			}, d)
-			tween(t.Stroke, { Color = on and T.Accent or T.Stroke, Transparency = on and 0.3 or 0 }, d)
-			tween(
-				t.Icon,
-				{ ImageColor3 = on and T.Accent or (live and T.Text or T.Muted), ImageTransparency = live and 0 or 0.5 },
-				d
-			)
-			tween(
-				t.Label,
-				{ TextColor3 = live and (on and T.Text or T.Muted) or T.Muted, TextTransparency = live and 0 or 0.4 },
-				d
-			)
-			t.Dot.Visible = on
+			tween(t.Label, {
+				TextColor3 = on and T.Text or T.Muted,
+				TextTransparency = live and 0 or 0.5,
+			}, d)
 		end
 
+		local row
 		for i, a in actions do
+			local col = (i - 1) % perRow
+			if col == 0 then
+				row = new("Frame", {
+					Size = UDim2.new(1, 0, 0, tileH),
+					BackgroundTransparency = 1,
+					LayoutOrder = i,
+					Parent = rowsF,
+				})
+			end
+			local k = math.min(perRow, n - (i - 1 - col))
 			local btn = new("TextButton", {
-				BackgroundColor3 = T.Surface3,
+				Position = UDim2.new(col / k, col * g / k, 0, 0),
+				Size = UDim2.new(1 / k, -g * (k - 1) / k, 1, 0),
+				BackgroundColor3 = T.Background,
 				BorderSizePixel = 0,
 				AutoButtonColor = false,
 				Text = "",
-				LayoutOrder = i,
-				Parent = grid,
+				Parent = row,
 			})
-			K.corner(btn, 10)
+			K.corner(btn, 8)
 			local s = K.stroke(btn)
-			local ic = K.icon(btn, a.Icon or "zap", 20, T.Text, {
+			local ic = K.icon(btn, a.Icon or "zap", 18, T.Text, {
 				AnchorPoint = Vector2.new(0.5, 0),
-				Position = UDim2.new(0.5, 0, 0, 13),
+				Position = UDim2.new(0.5, 0, 0, K.Touch and 13 or 10),
 			})
 			local lb = K.text({
 				AnchorPoint = Vector2.new(0.5, 1),
-				Position = UDim2.new(0.5, 0, 1, -9),
-				Size = UDim2.new(1, -10, 0, 16),
+				Position = UDim2.new(0.5, 0, 1, -8),
+				Size = UDim2.new(1, -12, 0, 16),
 				Text = a.Name,
 				TextSize = 12,
 				TextColor3 = T.Muted,
 				TextXAlignment = Enum.TextXAlignment.Center,
 				Parent = btn,
 			})
-			local dot = new("Frame", {
-				AnchorPoint = Vector2.new(1, 0),
-				Position = UDim2.new(1, -8, 0, 8),
-				Size = UDim2.fromOffset(6, 6),
-				BackgroundColor3 = T.Accent,
-				BorderSizePixel = 0,
-				Visible = false,
-				Parent = btn,
-			})
-			K.corner(dot, UDim.new(1, 0))
 			local t = {
 				Btn = btn,
 				Stroke = s,
 				Icon = ic,
 				Label = lb,
-				Dot = dot,
 				Toggle = a.Toggle == true,
 				Free = a.NeedsTarget == false,
 				On = false,
@@ -173,9 +158,9 @@ return function(Lib)
 						task.spawn(t.Callback, t.On, target)
 					end
 				else
-					tween(btn, { BackgroundColor3 = T.Accent, BackgroundTransparency = 0.7 }, 0.06)
+					tween(btn, { BackgroundColor3 = T.Surface3 }, 0.06)
 					task.delay(0.1, function()
-						paint(t, 0.3)
+						tween(btn, { BackgroundColor3 = T.Background }, 0.3)
 					end)
 					if type(t.Callback) == "function" then
 						task.spawn(t.Callback, target)
@@ -196,14 +181,12 @@ return function(Lib)
 				user.Text = "@" .. plr.Name
 				avIcon.Visible = false
 				K.setAvatar(av, plr)
-				tween(avStroke, { Color = T.Accent, Transparency = 0.4 }, 0.2)
 			else
 				name.Text = opts.EmptyText or "No target"
 				name.TextColor3 = T.Muted
 				user.Text = opts.EmptyDesc or "Pick a player to unlock the actions"
 				av.Image = ""
 				avIcon.Visible = true
-				tween(avStroke, { Color = T.Stroke, Transparency = 0 }, 0.2)
 			end
 			for _, t in tiles do
 				paint(t, 0.2)

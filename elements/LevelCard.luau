@@ -4,90 +4,84 @@ return function(Lib)
 
 	return function(tab, opts)
 		opts = opts or {}
-		local card = K.card(tab, 100, { Name = "LevelCard" })
+		local P = K.Pad
+		local card = K.card(tab, 112, { Name = "LevelCard" })
 
-		local left = new("Frame", {
-			Position = UDim2.fromOffset(14, 12),
-			Size = UDim2.fromOffset(118, 58),
+		local top = new("Frame", {
+			Position = UDim2.fromOffset(P, P),
+			Size = UDim2.new(1, -P * 2 - 120, 0, 24),
 			BackgroundTransparency = 1,
 			Parent = card,
 		})
+		K.list(top, Enum.FillDirection.Horizontal, 8, { VerticalAlignment = Enum.VerticalAlignment.Bottom })
 		K.text({
-			Size = UDim2.new(1, 0, 0, 16),
-			Text = string.upper(opts.Label or "Level"),
-			TextSize = 11,
-			FontFace = F.Bold,
-			TextColor3 = T.Muted,
-			Parent = left,
-		})
-		local level = K.text({
-			Position = UDim2.fromOffset(0, 16),
-			Size = UDim2.new(1, 0, 0, 38),
-			Text = "0",
-			TextSize = 32,
-			FontFace = F.Bold,
-			Parent = left,
-		})
-		local bump = K.text({
-			Position = UDim2.fromOffset(0, 16),
-			Size = UDim2.new(1, 0, 0, 38),
-			Text = "",
-			TextSize = 14,
-			FontFace = F.Bold,
-			TextColor3 = T.Accent,
-			TextXAlignment = Enum.TextXAlignment.Right,
-			TextTransparency = 1,
-			Parent = left,
-		})
-
-		new("Frame", {
-			Position = UDim2.fromOffset(140, 16),
-			Size = UDim2.fromOffset(1, 48),
-			BackgroundColor3 = T.Stroke,
-			BorderSizePixel = 0,
-			Parent = card,
-		})
-
-		local info = new("Frame", {
-			Position = UDim2.fromOffset(156, 14),
-			Size = UDim2.new(1, -170, 0, 52),
-			BackgroundTransparency = 1,
-			Parent = card,
-		})
-		local pill = K.pill(info, "Idle", T.Muted, {
-			AnchorPoint = Vector2.new(1, 0),
-			Position = UDim2.fromScale(1, 0),
-		})
-		local title = K.text({
-			Size = UDim2.new(1, -96, 0, 22),
-			Text = opts.EmptyText or "No quest",
-			TextColor3 = T.Muted,
-			Parent = info,
-		})
-		local sub = K.text({
-			Position = UDim2.fromOffset(0, 24),
-			Size = UDim2.new(1, 0, 0, 18),
-			Text = opts.EmptyDesc or "Start the farm to pick a quest",
-			TextSize = 12,
+			Size = UDim2.fromScale(0, 1),
+			AutomaticSize = Enum.AutomaticSize.X,
+			Text = opts.Label or "Level",
 			FontFace = F.Regular,
 			TextColor3 = T.Muted,
-			Parent = info,
+			TextYAlignment = Enum.TextYAlignment.Bottom,
+			TextTruncate = Enum.TextTruncate.None,
+			LayoutOrder = 1,
+			Parent = top,
+		})
+		local level = K.text({
+			Size = UDim2.new(0, 0, 1, 2),
+			AutomaticSize = Enum.AutomaticSize.X,
+			Text = "0",
+			TextSize = 20,
+			FontFace = F.Bold,
+			TextYAlignment = Enum.TextYAlignment.Bottom,
+			TextTruncate = Enum.TextTruncate.None,
+			LayoutOrder = 2,
+			Parent = top,
+		})
+		local bumpBox = new("Frame", {
+			Size = UDim2.new(0, 48, 1, 0),
+			BackgroundTransparency = 1,
+			LayoutOrder = 3,
+			Parent = top,
+		})
+		local bump = K.text({
+			Size = UDim2.fromScale(1, 1),
+			Text = "",
+			TextSize = 13,
+			FontFace = F.Bold,
+			TextColor3 = T.Accent,
+			TextTransparency = 1,
+			TextYAlignment = Enum.TextYAlignment.Bottom,
+			Parent = bumpBox,
 		})
 
-		local bar = K.bar(card, 6, T.Accent, {
-			Position = UDim2.new(0, 14, 1, -22),
-			Size = UDim2.new(1, -86, 0, 6),
+		local status = K.status(card, "Idle", T.Muted, {
+			AnchorPoint = Vector2.new(1, 0.5),
+			Position = UDim2.new(1, -P, 0, 26),
 		})
-		local ptext = K.text({
-			AnchorPoint = Vector2.new(1, 0),
-			Position = UDim2.new(1, -14, 1, -31),
-			Size = UDim2.fromOffset(64, 24),
-			Text = "",
-			TextSize = 12,
-			FontFace = F.Medium,
+
+		local title = K.text({
+			Position = UDim2.fromOffset(P, 50),
+			Size = UDim2.new(1, -P * 2 - 96, 0, 18),
+			Text = opts.EmptyText or "No quest",
 			TextColor3 = T.Muted,
+			Parent = card,
+		})
+		local ptext = K.muted({
+			AnchorPoint = Vector2.new(1, 0),
+			Position = UDim2.new(1, -P, 0, 50),
+			Size = UDim2.fromOffset(90, 18),
+			Text = "",
 			TextXAlignment = Enum.TextXAlignment.Right,
 			Parent = card,
+		})
+		local sub = K.muted({
+			Position = UDim2.fromOffset(P, 68),
+			Size = UDim2.new(1, -P * 2, 0, 16),
+			Text = opts.EmptyDesc or "Start the farm to pick a quest",
+			Parent = card,
+		})
+		local bar = K.bar(card, 4, T.Accent, {
+			Position = UDim2.fromOffset(P, 94),
+			Size = UDim2.new(1, -P * 2, 0, 4),
 		})
 
 		local api = { Frame = card }
@@ -100,18 +94,19 @@ return function(Lib)
 			end
 			level.Text = K.fmt(n)
 			if cur and n > cur then
-				bump.Text = "+" .. (n - cur)
-				bump.Position = UDim2.fromOffset(0, 16)
+				bump.Text = "+" .. K.fmt(n - cur)
+				bump.Position = UDim2.fromOffset(0, 4)
 				bump.TextTransparency = 0
 				level.TextColor3 = T.Accent
 				tween(level, { TextColor3 = T.Text }, 1.2)
-				tween(bump, { Position = UDim2.fromOffset(0, -2), TextTransparency = 1 }, 1.4)
+				tween(bump, { Position = UDim2.fromOffset(0, -6), TextTransparency = 1 }, 1.4)
 			end
 			cur = n
 		end
 
 		function api:SetState(txt, col)
-			pill:Set(txt or "Idle", col or T.Muted)
+			local c = col or T.Muted
+			status:Set(txt or "Idle", c, c ~= T.Muted)
 		end
 
 		function api:Set(d)
@@ -123,7 +118,7 @@ return function(Lib)
 				local has = d.Title and d.Title ~= ""
 				title.Text = has and d.Title or (opts.EmptyText or "No quest")
 				title.TextColor3 = has and T.Text or T.Muted
-				sub.Text = d.Sub or ""
+				sub.Text = d.Sub or (has and "" or (opts.EmptyDesc or "Start the farm to pick a quest"))
 			end
 			if d.Progress ~= nil then
 				bar:Set(d.Progress)

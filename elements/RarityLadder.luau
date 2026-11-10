@@ -4,134 +4,78 @@ return function(Lib)
 
 	return function(tab, opts)
 		opts = opts or {}
+		local P = K.Pad
 		local card = K.card(tab, nil, { Name = "RarityLadder" })
-		K.pad(card, 14, 14, 12, 14)
-		new("UIListLayout", {
-			Padding = UDim.new(0, 10),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = card,
-		})
+		K.pad(card, P, P, P, P)
+		K.list(card, nil, 12)
 
-		local head = new("Frame", {
-			Size = UDim2.new(1, 0, 0, 22),
-			BackgroundTransparency = 1,
-			LayoutOrder = 1,
-			Parent = card,
-		})
-		local hx = 0
-		if opts.Icon then
-			K.icon(head, opts.Icon, 16, T.Muted, { Position = UDim2.new(0, 0, 0.5, -8) })
-			hx = 24
-		end
-		K.text({
-			Position = UDim2.fromOffset(hx, 0),
-			Size = UDim2.new(1, -hx - 140, 1, 0),
-			Text = opts.Name or opts.Title or "Minimum rarity",
-			Parent = head,
-		})
-		local value = K.text({
-			AnchorPoint = Vector2.new(1, 0),
-			Position = UDim2.fromScale(1, 0),
-			Size = UDim2.new(0, 140, 1, 0),
+		local head, _, right = K.head(card, opts.Icon, opts.Name or opts.Title or "Minimum rarity")
+		head.Size = UDim2.new(1, 0, 0, 20)
+		head.LayoutOrder = 1
+		local meta = K.muted({
+			Size = UDim2.fromScale(0, 1),
+			AutomaticSize = Enum.AutomaticSize.X,
 			Text = "",
-			FontFace = F.Bold,
-			TextSize = 13,
+			RichText = true,
 			TextXAlignment = Enum.TextXAlignment.Right,
-			Parent = head,
+			TextTruncate = Enum.TextTruncate.None,
+			Parent = right,
 		})
 
-		local spectrum = new("Frame", {
-			Size = UDim2.new(1, 0, 0, 4),
+		local cellH = K.Touch and 36 or 32
+		local grid = new("Frame", {
+			Size = UDim2.new(1, 0, 0, 0),
+			AutomaticSize = Enum.AutomaticSize.Y,
 			BackgroundTransparency = 1,
 			LayoutOrder = 2,
 			Parent = card,
 		})
-		new("UIListLayout", {
-			FillDirection = Enum.FillDirection.Horizontal,
-			Padding = UDim.new(0, 3),
+		local layout = new("UIGridLayout", {
+			CellPadding = UDim2.fromOffset(6, 6),
+			CellSize = UDim2.new(0.25, -4.5, 0, cellH),
 			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = spectrum,
+			Parent = grid,
 		})
-
-		local chips = new("Frame", {
-			Size = UDim2.new(1, 0, 0, 0),
-			AutomaticSize = Enum.AutomaticSize.Y,
-			BackgroundTransparency = 1,
-			LayoutOrder = 3,
-			Parent = card,
-		})
-		new("UIListLayout", {
-			FillDirection = Enum.FillDirection.Horizontal,
-			Wraps = true,
-			Padding = UDim.new(0, 6),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-			Parent = chips,
-		})
-		new("UIPadding", { PaddingBottom = UDim.new(0, 0), Parent = chips })
-
-		local hint = K.text({
-			Size = UDim2.new(1, 0, 0, 14),
-			Text = opts.Hint or "Tap a rarity, everything at or above it counts",
-			TextSize = 12,
-			FontFace = F.Regular,
-			TextColor3 = T.Muted,
-			LayoutOrder = 4,
-			Parent = card,
-		})
-		if opts.Hint == false then
-			hint.Visible = false
+		local function fit()
+			local w = grid.AbsoluteSize.X
+			local cols = (w > 0 and w < 360) and 3 or 4
+			layout.CellSize = UDim2.new(1 / cols, -6 * (cols - 1) / cols, 0, cellH)
 		end
+		grid:GetPropertyChangedSignal("AbsoluteSize"):Connect(fit)
+		task.defer(fit)
 
-		local list, colors, nodes = {}, {}, {}
-		local selected = nil
 		local api = { Frame = card }
 		local save = K.flag(tab, opts, api, "Dropdown")
+		local list, colors, selected = {}, {}, nil
+		local nodes = {}
 
 		local function colorOf(name)
 			local c = colors[name]
-			if typeof(c) == "Color3" then
-				return c
-			end
-			return T.Accent
+			return typeof(c) == "Color3" and c or T.Accent
 		end
 
 		local function indexOf(name)
-			for i, n in list do
-				if n == name then
-					return i
-				end
-			end
-			return nil
+			return name and table.find(list, name)
 		end
 
 		local function paint(instant)
 			local si = indexOf(selected) or 1
 			local d = instant and 0 or 0.2
-			for i, n in list do
-				local node = nodes[n]
-				if node then
-					local c = colorOf(n)
+			for i, name in list do
+				local nd = nodes[name]
+				if nd then
 					local lit = i >= si
 					local sel = i == si
-					tween(node.Btn, {
-						BackgroundColor3 = lit and c or T.Surface3,
-						BackgroundTransparency = lit and 0.84 or 0,
-					}, d)
-					tween(node.Stroke, {
-						Color = lit and c or T.Stroke,
-						Transparency = sel and 0 or (lit and 0.55 or 0),
-						Thickness = sel and 1.5 or 1,
-					}, d)
-					tween(node.Dot, { BackgroundTransparency = lit and 0 or 0.65 }, d)
-					tween(node.Label, { TextColor3 = lit and T.Text or T.Muted }, d)
-					node.Label.FontFace = sel and F.Bold or F.Medium
-					if node.Seg then
-						tween(node.Seg, { BackgroundTransparency = lit and 0 or 0.8 }, d)
-					end
+					tween(nd.Stroke, { Color = sel and T.Accent or (nd.Hover and T.StrokeHover or T.Stroke) }, d)
+					tween(nd.Dot, { BackgroundTransparency = lit and 0 or 0.75 }, d)
+					tween(nd.Label, { TextColor3 = lit and T.Text or T.Muted }, d)
 				end
 			end
-			value.Text = selected or ""
-			value.TextColor3 = selected and colorOf(selected) or T.Muted
+			if selected then
+				meta.Text = string.format('<font color="#%s">%s</font> and up', T.Text:ToHex(), selected)
+			else
+				meta.Text = ""
+			end
 		end
 
 		local function pick(name, fire)
@@ -150,75 +94,51 @@ return function(Lib)
 		end
 
 		local function build()
-			for _, node in nodes do
-				node.Btn:Destroy()
-				if node.Seg then
-					node.Seg:Destroy()
-				end
+			for _, nd in nodes do
+				nd.Btn:Destroy()
 			end
 			nodes = {}
-			local n = #list
 			for i, name in list do
-				local c = colorOf(name)
 				local btn = new("TextButton", {
-					Size = UDim2.fromOffset(0, K.Touch and 32 or 28),
-					AutomaticSize = Enum.AutomaticSize.X,
-					BackgroundColor3 = T.Surface3,
+					BackgroundColor3 = T.Background,
 					BorderSizePixel = 0,
 					AutoButtonColor = false,
 					Text = "",
 					LayoutOrder = i,
-					Parent = chips,
+					Parent = grid,
 				})
-				K.corner(btn, UDim.new(1, 0))
-				K.pad(btn, 10, 12, 0, 0)
+				K.corner(btn, 8)
 				local s = K.stroke(btn)
-				new("UIListLayout", {
-					FillDirection = Enum.FillDirection.Horizontal,
-					VerticalAlignment = Enum.VerticalAlignment.Center,
-					Padding = UDim.new(0, 7),
-					SortOrder = Enum.SortOrder.LayoutOrder,
-					Parent = btn,
-				})
 				local dot = new("Frame", {
-					Size = UDim2.fromOffset(8, 8),
-					BackgroundColor3 = c,
+					AnchorPoint = Vector2.new(0, 0.5),
+					Position = UDim2.new(0, 10, 0.5, 0),
+					Size = UDim2.fromOffset(6, 6),
+					BackgroundColor3 = colorOf(name),
 					BorderSizePixel = 0,
-					LayoutOrder = 1,
 					Parent = btn,
 				})
 				K.corner(dot, UDim.new(1, 0))
 				local label = K.text({
-					Size = UDim2.fromScale(0, 1),
-					AutomaticSize = Enum.AutomaticSize.X,
+					Position = UDim2.fromOffset(24, 0),
+					Size = UDim2.new(1, -32, 1, 0),
 					Text = name,
 					TextSize = 13,
 					TextColor3 = T.Muted,
-					TextTruncate = Enum.TextTruncate.None,
-					LayoutOrder = 2,
 					Parent = btn,
 				})
-				local seg = new("Frame", {
-					Size = UDim2.new(1 / n, -3 * (n - 1) / n, 1, 0),
-					BackgroundColor3 = c,
-					BackgroundTransparency = 0.8,
-					BorderSizePixel = 0,
-					LayoutOrder = i,
-					Parent = spectrum,
-				})
-				K.corner(seg, UDim.new(1, 0))
+				local nd = { Btn = btn, Stroke = s, Dot = dot, Label = label, Hover = false }
 				btn.MouseEnter:Connect(function()
-					if name ~= selected then
-						tween(s, { Color = c, Transparency = 0.3 }, 0.12)
-					end
+					nd.Hover = true
+					paint(false)
 				end)
 				btn.MouseLeave:Connect(function()
+					nd.Hover = false
 					paint(false)
 				end)
 				btn.MouseButton1Click:Connect(function()
 					pick(name, true)
 				end)
-				nodes[name] = { Btn = btn, Stroke = s, Dot = dot, Label = label, Seg = seg }
+				nodes[name] = nd
 			end
 			if not indexOf(selected) then
 				selected = list[1]
