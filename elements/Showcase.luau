@@ -163,7 +163,6 @@ return function(Lib)
 			Size = UDim2.new(1, 0, 0, 92),
 			BackgroundColor3 = T.Surface2,
 			BorderSizePixel = 0,
-			ClipsDescendants = true,
 			LayoutOrder = 2,
 			Parent = root,
 		})
@@ -177,16 +176,6 @@ return function(Lib)
 			}),
 			Parent = hero,
 		})
-		local glow = new("Frame", {
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Position = UDim2.new(1, -40, 0.5, 0),
-			Size = UDim2.fromOffset(220, 220),
-			BackgroundColor3 = T.Accent,
-			BackgroundTransparency = 0.94,
-			BorderSizePixel = 0,
-			Parent = hero,
-		})
-		corner(glow, 110)
 		local total = text({
 			Position = UDim2.fromOffset(16, 14),
 			Size = UDim2.new(1, -32, 0, 34),
