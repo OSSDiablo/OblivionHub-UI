@@ -126,10 +126,15 @@ return function(Lib)
 			Size = UDim2.new(1, 0, 0, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 			BackgroundTransparency = 1,
-			LayoutOrder = tab:_nextOrder(),
+			LayoutOrder = opts.Order or 3,
 			Parent = tab.List,
 		})
 		root:SetAttribute("NoDrag", true)
+		for _, o in tab.List:GetChildren() do
+			if o ~= root and o:IsA("GuiObject") and o.LayoutOrder >= root.LayoutOrder then
+				o.LayoutOrder += 1
+			end
+		end
 		new("UIListLayout", { Padding = UDim.new(0, 8), SortOrder = Enum.SortOrder.LayoutOrder, Parent = root })
 
 		local head =
