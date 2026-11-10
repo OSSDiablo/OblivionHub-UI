@@ -5035,47 +5035,32 @@ function e.Window(ac, k)
 		TextColor3 = a.Muted,
 		Parent = K,
 	})
-	local t = c("ScrollingFrame", {
-		Name = "Tabs",
+	local tabMask = c("CanvasGroup", {
+		Name = "TabsMask",
 		Position = UDim2.fromOffset(0, 80),
 		Size = UDim2.new(1, 0, 1, -116),
+		BackgroundTransparency = 1,
+		BorderSizePixel = 0,
+		Parent = D,
+	})
+	local tabMaskGrad = c("UIGradient", { Rotation = 90, Parent = tabMask })
+	local t = c("ScrollingFrame", {
+		Name = "Tabs",
+		Size = UDim2.fromScale(1, 1),
 		BackgroundTransparency = 1,
 		BorderSizePixel = 0,
 		ScrollBarThickness = 0,
 		AutomaticCanvasSize = Enum.AutomaticSize.Y,
 		CanvasSize = UDim2.new(),
-		Parent = D,
+		Parent = tabMask,
 	})
 	d.TabList = t
+	d.TabMask = tabMask
 	if m then
 		t:SetAttribute("NoDrag", true)
 	end
 	o(t, 16, 16, 4, 4)
 	c(M, { SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 4), Parent = t })
-	local function tabFade(top)
-		local f = c(q, {
-			Name = top and "TabsFadeTop" or "TabsFadeBottom",
-			AnchorPoint = Vector2.new(0, top and 0 or 1),
-			Position = top and UDim2.fromOffset(8, 80) or UDim2.new(0, 8, 1, -36),
-			Size = UDim2.new(1, -12, 0, top and 28 or 44),
-			BackgroundColor3 = a.Surface,
-			BorderSizePixel = 0,
-			Visible = false,
-			ZIndex = 3,
-			Parent = D,
-		})
-		c("UIGradient", {
-			Rotation = top and 90 or -90,
-			Transparency = NumberSequence.new({
-				NumberSequenceKeypoint.new(0, 0),
-				NumberSequenceKeypoint.new(0.55, 0.35),
-				NumberSequenceKeypoint.new(1, 1),
-			}),
-			Parent = f,
-		})
-		return f
-	end
-	local fadeTop, fadeBottom = tabFade(true), tabFade(false)
 	local moreBtn = c("ImageButton", {
 		Name = "TabsMore",
 		AnchorPoint = Vector2.new(0.5, 1),
@@ -5102,14 +5087,22 @@ function e.Window(ac, k)
 	end)
 	local function tabEdges()
 		local y = t.CanvasPosition.Y
-		fadeTop.Position = UDim2.new(0, 8, t.Position.Y.Scale, t.Position.Y.Offset)
 		local below = t.AbsoluteCanvasSize.Y - t.AbsoluteWindowSize.Y - y > 4
-		fadeTop.Visible = y > 4
-		fadeBottom.Visible = below
+		local h = math.max(t.AbsoluteWindowSize.Y, 1)
+		local up = y > 4 and math.clamp(32 / h, 0, 0.45) or 0
+		local dn = below and math.clamp(48 / h, 0, 0.45) or 0
+		local kp = { NumberSequenceKeypoint.new(0, up > 0 and 1 or 0) }
+		if up > 0 then
+			kp[#kp + 1] = NumberSequenceKeypoint.new(up, 0)
+		end
+		if dn > 0 then
+			kp[#kp + 1] = NumberSequenceKeypoint.new(1 - dn, 0)
+		end
+		kp[#kp + 1] = NumberSequenceKeypoint.new(1, dn > 0 and 1 or 0)
+		tabMaskGrad.Transparency = NumberSequence.new(kp)
 		moreBtn.Visible = below
 	end
 	t:GetPropertyChangedSignal("CanvasPosition"):Connect(tabEdges)
-	t:GetPropertyChangedSignal("Position"):Connect(tabEdges)
 	t:GetPropertyChangedSignal("AbsoluteCanvasSize"):Connect(tabEdges)
 	t:GetPropertyChangedSignal("AbsoluteWindowSize"):Connect(tabEdges)
 	task.defer(tabEdges)
@@ -5133,7 +5126,7 @@ function e.Window(ac, k)
 		end
 		R = b
 		local a = d:_indicatorY(d.CurrentTab)
-		local c = t.Position.Y.Offset
+		local c = tabMask.Position.Y.Offset
 		local e = c + t.AbsoluteSize.Y / d.Scale.Scale
 		E.Visible = a > c and a < e
 		E.Position = UDim2.fromOffset(19, a)
@@ -9180,7 +9173,7 @@ function h:_indicatorY(a)
 	local b = self.TabList
 	local c = self.Scale.Scale
 	return (a._button.AbsolutePosition.Y - b.AbsolutePosition.Y + a._button.AbsoluteSize.Y / 2) / c
-		+ b.Position.Y.Offset
+		+ (self.TabMask or b).Position.Y.Offset
 end
 function h:_placeIndicator(d)
 	local a = self.Indicator

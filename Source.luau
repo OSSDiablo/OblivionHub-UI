@@ -1301,34 +1301,32 @@ Fit,Parent=K})u(Q,k.Icon or v.Logo)d._logo=Q d._titleLabel=f({Position=UDim2.
 fromOffset(60,25),Size=UDim2.new(1,-70,0,20),Text=k.Name or'Oblivion',TextSize=
 20,TextTruncate=Enum.TextTruncate.AtEnd,Parent=K})d._subtitleLabel=f({Position=
 UDim2.fromOffset(60,45),Size=UDim2.new(1,-70,0,14),Text=k.Subtitle or'',TextSize
-=13,FontFace=j.Regular,TextColor3=a.Muted,Parent=K})local t=c('ScrollingFrame',{
-Name='Tabs',Position=UDim2.fromOffset(0,80),Size=UDim2.new(1,0,1,-116),
-BackgroundTransparency=1,BorderSizePixel=0,ScrollBarThickness=0,
-AutomaticCanvasSize=Enum.AutomaticSize.Y,CanvasSize=UDim2.new(),Parent=D})d.
-TabList=t if m then t:SetAttribute('NoDrag',true)end o(t,16,16,4,4)c(M,{
-SortOrder=Enum.SortOrder.LayoutOrder,Padding=UDim.new(0,4),Parent=t})
-local function tabFade(top)local f=c(q,{Name=top and'TabsFadeTop'or
-'TabsFadeBottom',AnchorPoint=Vector2.new(0,top and 0 or 1),Position=top and
-UDim2.fromOffset(8,80)or UDim2.new(0,8,1,-36),Size=UDim2.new(1,-12,0,top and 28
-or 44),BackgroundColor3=a.Surface,BorderSizePixel=0,Visible=false,ZIndex=3,
-Parent=D})c('UIGradient',{Rotation=top and 90 or-90,Transparency=NumberSequence.
-new({NumberSequenceKeypoint.new(0,0),NumberSequenceKeypoint.new(0.55,0.35),
-NumberSequenceKeypoint.new(1,1)}),Parent=f})return f end local fadeTop,
-fadeBottom=tabFade(true),tabFade(false)local moreBtn=c('ImageButton',{Name=
-'TabsMore',AnchorPoint=Vector2.new(0.5,1),Position=UDim2.new(0.5,2,1,-38),Size=
-UDim2.fromOffset(26,18),BackgroundColor3=a.Surface2,BorderSizePixel=0,
-AutoButtonColor=false,Visible=false,ZIndex=4,Parent=D})g(moreBtn,UDim.new(1,0))
-i(moreBtn)local _,moreIcon=A(moreBtn,'chevron-down',a.Muted,UDim2.new(0.5,-6,0.5
-,0))moreIcon.Parent.Size=UDim2.fromOffset(12,12)moreIcon.ZIndex=5 moreBtn.
-MouseButton1Click:Connect(function()local maxY=math.max(0,t.AbsoluteCanvasSize.Y
--t.AbsoluteWindowSize.Y)local step=t.AbsoluteWindowSize.Y*0.6 aa:Create(t,
-TweenInfo.new(0.3,Enum.EasingStyle.Quint),{CanvasPosition=Vector2.new(0,math.
-min(maxY,t.CanvasPosition.Y+step))}):Play()end)local function tabEdges()local y=
-t.CanvasPosition.Y fadeTop.Position=UDim2.new(0,8,t.Position.Y.Scale,t.Position.
-Y.Offset)local below=t.AbsoluteCanvasSize.Y-t.AbsoluteWindowSize.Y-y>4 fadeTop.
-Visible=y>4 fadeBottom.Visible=below moreBtn.Visible=below end t:
-GetPropertyChangedSignal('CanvasPosition'):Connect(tabEdges)t:
-GetPropertyChangedSignal('Position'):Connect(tabEdges)t:
+=13,FontFace=j.Regular,TextColor3=a.Muted,Parent=K})local tabMask=c(
+'CanvasGroup',{Name='TabsMask',Position=UDim2.fromOffset(0,80),Size=UDim2.new(1,
+0,1,-116),BackgroundTransparency=1,BorderSizePixel=0,Parent=D})local tabMaskGrad
+=c('UIGradient',{Rotation=90,Parent=tabMask})local t=c('ScrollingFrame',{Name=
+'Tabs',Size=UDim2.fromScale(1,1),BackgroundTransparency=1,BorderSizePixel=0,
+ScrollBarThickness=0,AutomaticCanvasSize=Enum.AutomaticSize.Y,CanvasSize=UDim2.
+new(),Parent=tabMask})d.TabList=t d.TabMask=tabMask if m then t:SetAttribute(
+'NoDrag',true)end o(t,16,16,4,4)c(M,{SortOrder=Enum.SortOrder.LayoutOrder,
+Padding=UDim.new(0,4),Parent=t})local moreBtn=c('ImageButton',{Name='TabsMore',
+AnchorPoint=Vector2.new(0.5,1),Position=UDim2.new(0.5,2,1,-38),Size=UDim2.
+fromOffset(26,18),BackgroundColor3=a.Surface2,BorderSizePixel=0,AutoButtonColor=
+false,Visible=false,ZIndex=4,Parent=D})g(moreBtn,UDim.new(1,0))i(moreBtn)local _
+,moreIcon=A(moreBtn,'chevron-down',a.Muted,UDim2.new(0.5,-6,0.5,0))moreIcon.
+Parent.Size=UDim2.fromOffset(12,12)moreIcon.ZIndex=5 moreBtn.MouseButton1Click:
+Connect(function()local maxY=math.max(0,t.AbsoluteCanvasSize.Y-t.
+AbsoluteWindowSize.Y)local step=t.AbsoluteWindowSize.Y*0.6 aa:Create(t,TweenInfo
+.new(0.3,Enum.EasingStyle.Quint),{CanvasPosition=Vector2.new(0,math.min(maxY,t.
+CanvasPosition.Y+step))}):Play()end)local function tabEdges()local y=t.
+CanvasPosition.Y local below=t.AbsoluteCanvasSize.Y-t.AbsoluteWindowSize.Y-y>4
+local h=math.max(t.AbsoluteWindowSize.Y,1)local up=y>4 and math.clamp(32/h,0,
+0.45)or 0 local dn=below and math.clamp(48/h,0,0.45)or 0 local kp={
+NumberSequenceKeypoint.new(0,up>0 and 1 or 0)}if up>0 then kp[#kp+1]=
+NumberSequenceKeypoint.new(up,0)end if dn>0 then kp[#kp+1]=
+NumberSequenceKeypoint.new(1-dn,0)end kp[#kp+1]=NumberSequenceKeypoint.new(1,dn>
+0 and 1 or 0)tabMaskGrad.Transparency=NumberSequence.new(kp)moreBtn.Visible=
+below end t:GetPropertyChangedSignal('CanvasPosition'):Connect(tabEdges)t:
 GetPropertyChangedSignal('AbsoluteCanvasSize'):Connect(tabEdges)t:
 GetPropertyChangedSignal('AbsoluteWindowSize'):Connect(tabEdges)task.defer(
 tabEdges)local E=c(q,{AnchorPoint=Vector2.new(0,0.5),Position=UDim2.fromOffset(
@@ -1336,9 +1334,9 @@ tabEdges)local E=c(q,{AnchorPoint=Vector2.new(0,0.5),Position=UDim2.fromOffset(
 Visible=false,ZIndex=2,Parent=D})g(E,UDim.new(1,0))d.Indicator=E local R=t.
 CanvasPosition.Y table.insert(d._frameSteps,function()local b=t.CanvasPosition.Y
 if b==R or not d.CurrentTab or not d._introDone then return end R=b local a=d:
-_indicatorY(d.CurrentTab)local c=t.Position.Y.Offset local e=c+t.AbsoluteSize.Y/
-d.Scale.Scale E.Visible=a>c and a<e E.Position=UDim2.fromOffset(19,a)end)local S
-=c(q,{Position=UDim2.new(0,22,1,-36),Size=UDim2.new(1,-44,0,22),
+_indicatorY(d.CurrentTab)local c=tabMask.Position.Y.Offset local e=c+t.
+AbsoluteSize.Y/d.Scale.Scale E.Visible=a>c and a<e E.Position=UDim2.fromOffset(
+19,a)end)local S=c(q,{Position=UDim2.new(0,22,1,-36),Size=UDim2.new(1,-44,0,22),
 BackgroundTransparency=1,Parent=D})local x=c(q,{Size=UDim2.fromOffset(0,22),
 AutomaticSize=Enum.AutomaticSize.X,BackgroundColor3=a.Surface,BorderSizePixel=0,
 Parent=S})g(x,UDim.new(0,5))i(x)o(x,7,7)local Y=f({Size=UDim2.new(0,0,1,0),
@@ -2475,49 +2473,50 @@ Callback=a.OnCancel},{Title=a.ConfirmText or'Confirm',Variant='Primary',Callback
 ,a)break end end end if a then a._listeners=a._listeners or{}table.insert(a.
 _listeners,d)end return d end function h:_indicatorY(a)local b=self.TabList
 local c=self.Scale.Scale return(a._button.AbsolutePosition.Y-b.AbsolutePosition.
-Y+a._button.AbsoluteSize.Y/2)/c+b.Position.Y.Offset end function h:
-_placeIndicator(d)local a=self.Indicator local c=self:_indicatorY(d)if not a.
-Visible then a.Visible=true a.Position=UDim2.fromOffset(19,c)a.Size=UDim2.
-fromOffset(3,0)end b(a,{Position=UDim2.fromOffset(19,c),Size=UDim2.fromOffset(3,
-16)},0.35,Enum.EasingStyle.Back)end function h:SelectTab(c)if type(c)=='string'
-then for b,a in ipairs(self.Tabs)do if a.Name==c then c=a break end end end if
-type(c)~='table'or self.CurrentTab==c then return end local d=self.CurrentTab
-self.CurrentTab=c self:_settleTransition()local f=(self._transitionGeneration or
-0)+1 self._transitionGeneration=f if d then b(d._button,{BackgroundTransparency=
-1},0.2)b(d._stroke,{Transparency=1},0.2)b(d._label,{TextColor3=a.Muted},0.2)if d
-._icon then b(d._icon,{ImageColor3=a.Muted},0.2)end local c=self._outLayer d.
-_page.Parent=c self._outPage=d._page c.GroupTransparency=0 c.Position=UDim2.
-fromOffset(0,0)c.Visible=true b(c,{GroupTransparency=1,Position=UDim2.
-fromOffset(0,-10)},0.18)task.delay(0.18,function()if self._transitionGeneration
-==f then self:_settleOut()end end)end b(c._button,{BackgroundTransparency=0.25},
-0.2)b(c._label,{TextColor3=a.Text},0.2)if c._icon then b(c._icon,{ImageColor3=a.
-Accent},0.2)end self:_placeIndicator(c)local e=c._page e.Position=UDim2.
-fromOffset(0,0)e.Visible=true e.Parent=self._inLayer self._inPage=e aL(self.
-_inLayer)task.delay(0.32,function()if self._transitionGeneration==f then self:
-_settleIn()end end)end function h:_settleOut()local a=self._outPage if a then a.
-Parent=self.Content a.Visible=false self._outPage=nil end self._outLayer.Visible
-=false end function h:_settleIn()local a=self._inPage if a then a.Parent=self.
-Content a.Position=UDim2.fromOffset(0,0)self._inPage=nil end self._inLayer.
-Visible=false end function h:_settleTransition()self:_settleOut()self:_settleIn(
-)end function h:Toggle(a)if not self._introDone then return end if a==nil then a
-=not self.Open end if a==self.Open then return end self.Open=a if self.
-_syncOpenButton then self:_syncOpenButton()end if a then self.Root.Visible=true
-b(self.Scale,{Scale=self._fitScale or 1},0.4,Enum.EasingStyle.Back)b(self.Body,{
-GroupTransparency=0},0.25)b(self.BodyStroke,{Transparency=0},0.25)b(self.Shadow,
-{ImageTransparency=0.6},0.3)else b(self.Scale,{Scale=(self._fitScale or 1)*0.94}
-,0.2,Enum.EasingStyle.Quint)b(self.Body,{GroupTransparency=1},0.16)b(self.
-BodyStroke,{Transparency=1},0.12)b(self.Shadow,{ImageTransparency=1},0.16)task.
-delay(0.2,function()if not self.Open then self.Root.Visible=false end end)end
-end function h:SetKeepOnScreen(a)self.KeepOnScreen=a~=false if self.KeepOnScreen
-then self:_clampToScreen()end end function h:SetKeybind(a)a=F(a)if not a then
-return end self.Keybind=a self._keyChipLabel.Text=W(a)end function h:SetTitle(a)
-self._titleLabel.Text=tostring(a)end function h:SetSubtitle(a)self.
-_subtitleLabel.Text=tostring(a)end function h:SetIcon(a)u(self._logo,a)end
-function h:Notify(d)local logo=e.Assets and e.Assets.Logo d=n(d,{Text='Content',
-Message='Content',Image='Icon'})local duration=d.Duration or 4 local kind=aB[d.
-Type]local tone=kind and a[kind]or a.Accent local icons={Info='info',Success=
-'circle-check',Warning='triangle-alert',Error='circle-x'}local icon=d.Icon or
-icons[d.Type]self._notifyOrder+=1 local slot=c('Frame',{Size=UDim2.new(1,0,0,0),
+Y+a._button.AbsoluteSize.Y/2)/c+(self.TabMask or b).Position.Y.Offset end
+function h:_placeIndicator(d)local a=self.Indicator local c=self:_indicatorY(d)
+if not a.Visible then a.Visible=true a.Position=UDim2.fromOffset(19,c)a.Size=
+UDim2.fromOffset(3,0)end b(a,{Position=UDim2.fromOffset(19,c),Size=UDim2.
+fromOffset(3,16)},0.35,Enum.EasingStyle.Back)end function h:SelectTab(c)if type(
+c)=='string'then for b,a in ipairs(self.Tabs)do if a.Name==c then c=a break end
+end end if type(c)~='table'or self.CurrentTab==c then return end local d=self.
+CurrentTab self.CurrentTab=c self:_settleTransition()local f=(self.
+_transitionGeneration or 0)+1 self._transitionGeneration=f if d then b(d._button
+,{BackgroundTransparency=1},0.2)b(d._stroke,{Transparency=1},0.2)b(d._label,{
+TextColor3=a.Muted},0.2)if d._icon then b(d._icon,{ImageColor3=a.Muted},0.2)end
+local c=self._outLayer d._page.Parent=c self._outPage=d._page c.
+GroupTransparency=0 c.Position=UDim2.fromOffset(0,0)c.Visible=true b(c,{
+GroupTransparency=1,Position=UDim2.fromOffset(0,-10)},0.18)task.delay(0.18,
+function()if self._transitionGeneration==f then self:_settleOut()end end)end b(c
+._button,{BackgroundTransparency=0.25},0.2)b(c._label,{TextColor3=a.Text},0.2)if
+c._icon then b(c._icon,{ImageColor3=a.Accent},0.2)end self:_placeIndicator(c)
+local e=c._page e.Position=UDim2.fromOffset(0,0)e.Visible=true e.Parent=self.
+_inLayer self._inPage=e aL(self._inLayer)task.delay(0.32,function()if self.
+_transitionGeneration==f then self:_settleIn()end end)end function h:_settleOut(
+)local a=self._outPage if a then a.Parent=self.Content a.Visible=false self.
+_outPage=nil end self._outLayer.Visible=false end function h:_settleIn()local a=
+self._inPage if a then a.Parent=self.Content a.Position=UDim2.fromOffset(0,0)
+self._inPage=nil end self._inLayer.Visible=false end function h:
+_settleTransition()self:_settleOut()self:_settleIn()end function h:Toggle(a)if
+not self._introDone then return end if a==nil then a=not self.Open end if a==
+self.Open then return end self.Open=a if self._syncOpenButton then self:
+_syncOpenButton()end if a then self.Root.Visible=true b(self.Scale,{Scale=self.
+_fitScale or 1},0.4,Enum.EasingStyle.Back)b(self.Body,{GroupTransparency=0},0.25
+)b(self.BodyStroke,{Transparency=0},0.25)b(self.Shadow,{ImageTransparency=0.6},
+0.3)else b(self.Scale,{Scale=(self._fitScale or 1)*0.94},0.2,Enum.EasingStyle.
+Quint)b(self.Body,{GroupTransparency=1},0.16)b(self.BodyStroke,{Transparency=1},
+0.12)b(self.Shadow,{ImageTransparency=1},0.16)task.delay(0.2,function()if not
+self.Open then self.Root.Visible=false end end)end end function h:
+SetKeepOnScreen(a)self.KeepOnScreen=a~=false if self.KeepOnScreen then self:
+_clampToScreen()end end function h:SetKeybind(a)a=F(a)if not a then return end
+self.Keybind=a self._keyChipLabel.Text=W(a)end function h:SetTitle(a)self.
+_titleLabel.Text=tostring(a)end function h:SetSubtitle(a)self._subtitleLabel.
+Text=tostring(a)end function h:SetIcon(a)u(self._logo,a)end function h:Notify(d)
+local logo=e.Assets and e.Assets.Logo d=n(d,{Text='Content',Message='Content',
+Image='Icon'})local duration=d.Duration or 4 local kind=aB[d.Type]local tone=
+kind and a[kind]or a.Accent local icons={Info='info',Success='circle-check',
+Warning='triangle-alert',Error='circle-x'}local icon=d.Icon or icons[d.Type]self
+._notifyOrder+=1 local slot=c('Frame',{Size=UDim2.new(1,0,0,0),
 BackgroundTransparency=1,LayoutOrder=self._notifyOrder,Parent=self.NotifyHolder}
 )local mover=c('Frame',{Position=UDim2.fromOffset(40,0),Size=UDim2.new(1,0,0,0),
 AutomaticSize=Enum.AutomaticSize.Y,BackgroundTransparency=1,Parent=slot})local

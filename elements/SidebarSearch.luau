@@ -22,7 +22,7 @@ return function(Lib)
 			local first = Window.Tabs and Window.Tabs[1]
 			local mt = first and getmetatable(first)
 			local proto = mt and type(mt.__index) == "table" and mt.__index
-			local list = Window.TabList
+			local list = Window.TabMask or Window.TabList
 			if not proto or not list then
 				return
 			end
